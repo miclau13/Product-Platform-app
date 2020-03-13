@@ -13,6 +13,7 @@ export const SkipButton = ({
   skipBtnLabel,
   skipFadeOpacity
 }) => {
+  console.log("SkipButton skipFadeOpacity",skipFadeOpacity)
   if (Platform.OS === "ios") {
     return (
       <Animated.View style={[styles.btnContainer, {

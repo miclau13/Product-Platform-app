@@ -23,14 +23,15 @@ const Intro: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const [slideIndex, setSlideIndex] = React.useState(0);
 
-  const _onIndexChanged = React.useCallback((index) => {
+  const _onIndexChanged = React.useCallback<IntroViewProps['_onIndexChanged']>((index) => {
+    console.log("_onIndexChanged index",index)
     setSlideIndex(index)
-  }, [slideIndex])
-
+  }, [slideIndex]);
+  console.log("Intro index",slideIndex)
   return (
     <IntroView
-    slideIndex={slideIndex}
-    _onIndexChanged={_onIndexChanged}
+      slideIndex={slideIndex}
+      _onIndexChanged={_onIndexChanged}
     />
   )
 };

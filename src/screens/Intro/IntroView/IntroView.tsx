@@ -7,7 +7,7 @@ import { IntroViewProps } from '../Intro';
 
 const DoneButton = () => {
   return (
-    <Text style={styles.buttonText}>Done</Text>
+    <Text style={styles.controllText}>Done</Text>
   )
 }
 
@@ -16,9 +16,14 @@ const IntroView: React.ComponentType<IntroViewProps> = (props) => {
     slideIndex,
     _onIndexChanged,
   } = props;
-  
+  console.log("IntroView slideIndex",slideIndex)
+
   return (
     <Swiper 
+      index={slideIndex}
+      loop={false}
+      nextButton={slideIndex == 2 ? <DoneButton /> : null}
+      onIndexChanged={_onIndexChanged}
       showsButtons={true}
       style={styles.wrapper}
     >

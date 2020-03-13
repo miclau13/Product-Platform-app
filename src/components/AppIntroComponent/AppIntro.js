@@ -190,7 +190,7 @@ export default class AppIntro extends Component {
   renderPagination = (index, total, context) => {
     console.log("hi renderPagination index",index)
     console.log("hi renderPagination total",total)
-    console.log("hi renderPagination context",context)
+    // console.log("hi renderPagination context",context)
     let isDoneBtnShow;
     let isSkipBtnShow;
     if (index === total - 1) {
@@ -208,7 +208,8 @@ export default class AppIntro extends Component {
     }
     return (
       <View style={[this.styles.paginationContainer]}>
-        {this.props.showSkipButton ? <SkipButton
+        <Text>HIH</Text>
+        {/* {this.props.showSkipButton ? <SkipButton
           {...this.props}
           {...this.state}
           isSkipBtnShow={isSkipBtnShow}
@@ -228,7 +229,7 @@ export default class AppIntro extends Component {
             onNextBtnClick={this.onNextBtnClick.bind(this, context)}
             onDoneBtnClick={this.props.onDoneBtnClick} /> :
             <View style={this.styles.btnContainer} />
-          }
+          } */}
       </View>
     );
   }
