@@ -7,7 +7,7 @@ import styles from './styles';
 import { HomeViewProps } from '../Home';
 
 const HomeView: React.ComponentType<HomeViewProps> = (props) => {
-  const { categoryList } = props;
+  const { categoryList, onPress } = props;
   
   return (
     <SafeAreaView>
@@ -18,7 +18,6 @@ const HomeView: React.ComponentType<HomeViewProps> = (props) => {
             <Card
               key={index}
               image={image}
-              // image={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
               imageProps={imageProps}
               title={title}
             >
@@ -26,14 +25,12 @@ const HomeView: React.ComponentType<HomeViewProps> = (props) => {
                 {description}
               </Text>
               <Button
+                onPress={onPress}
                 { ...buttonProps }
               />
             </Card>
           )
-        })
-
-        }
-        
+        })}
       </ScrollView>
     </SafeAreaView>
   );

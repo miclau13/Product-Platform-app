@@ -1,31 +1,24 @@
 import React from "react";
-import { Icon } from "react-native-elements";
-import { RouteProp } from "@react-navigation/native";
-import { BottomTabNavigationOptions, BottomTabBarOptions } from "@react-navigation/bottom-tabs"; 
+import { Route } from "@react-navigation/native";
+import { StackNavigationOptions } from "@react-navigation/stack"; 
 
-export const IntroTabOptions = {
-  tabBarVisible: false
-};
+import { getHeaderTitle } from './utils';
+import { StackParamList } from './Navigator';
 
-export const screenOptions: BottomTabNavigationOptions | ((props: {
-  route: RouteProp<Record<string, object>, string>;
+export const screenOptions: StackNavigationOptions | ((props: {
+  route: Pick<Route<keyof StackParamList>, "key" | "name">;
   navigation: any;
-}) => BottomTabNavigationOptions) = (props) => {
+}) => StackNavigationOptions) = (props) => {
   const { route } = props;
   return ({
-    tabBarIcon: ({ focused, color, size }) => {
-      let iconName;
-      if (route.name === 'Home') {
-        iconName = focused
-          ? 'home'
-          : 'home-outline';
-      };
-      return <Icon color={color} name={iconName} size={size} type="material-community" />
-    }
+    title: 'Crazyee'
   })
 };
 
-export const tabBarOptions: BottomTabBarOptions = {
-  // activeTintColor: 'tomato',
-  // inactiveTintColor: 'gray',
+export const homeTabsOptions = (props) => {
+  const { route } = props;
+  return ({
+    headerLeft: null,
+    headerTitle: getHeaderTitle(route),
+  })
 };

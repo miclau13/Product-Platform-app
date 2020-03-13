@@ -34,6 +34,9 @@ const Home: React.ComponentType<Props> = (props) => {
 
   const [loading] = React.useState(false);
   const categoryList = getDefaultCategoryList();
+  const onPress = () => {
+    navigation.navigate("Intro1")
+  }
   if (loading) {
     return (
       <LoadingComponent />
@@ -41,7 +44,7 @@ const Home: React.ComponentType<Props> = (props) => {
   };
 
   return (
-    <HomeView categoryList={categoryList} />
+    <HomeView categoryList={categoryList} onPress={onPress}/>
   )
 };
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { Icon } from "react-native-elements";
 import { Route } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack"; 
 

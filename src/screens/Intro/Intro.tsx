@@ -1,12 +1,13 @@
 import React from 'react';
+import { Alert, ImageProps } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultPageList } from './utils';
 import IntroView from './IntroView';
-import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import { StackParamList } from '../../navigator/Navigator';
 
 type IntroScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
+  StackParamList,
   'Intro'
 >;
 
@@ -14,24 +15,47 @@ type Props = {
   navigation: IntroScreenNavigationProp;
 };
 
-export interface IntroViewProps {
-  slideIndex: number;
-  _onIndexChanged(index: number): void;
+export type Page = {
+  backgroundColor: string;
+  description: string;
+  fontColor: string;
+  img: ImageProps['source'];
+  imgStyle: ImageProps['style'];
+  level: number;
+  title: string;
 };
+
+export interface IntroViewProps {
+  pageList: Page[];
+  _doneBtnHandle(): void;
+  _nextBtnHandle(index: number): void;
+  _onSlideChangeHandle(index: number, total: number): void;
+  _onSkipBtnHandle(index: number): void;
+};
+
+const pageList = getDefaultPageList();
 
 const Intro: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-  const [slideIndex, setSlideIndex] = React.useState(0);
 
-  const _onIndexChanged = React.useCallback<IntroViewProps['_onIndexChanged']>((index) => {
-    console.log("_onIndexChanged index",index)
-    setSlideIndex(index)
-  }, [slideIndex]);
-  console.log("Intro index",slideIndex)
+  const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = () => {
+    navigation.navigate("HomeTabs");
+  };
+  const _nextBtnHandle: IntroViewProps['_nextBtnHandle'] = (index) => {
+  };
+  const _onSlideChangeHandle: IntroViewProps['_onSlideChangeHandle'] = (index, total) => {
+  };
+  const _onSkipBtnHandle: IntroViewProps['_onSkipBtnHandle'] = (index) => {
+    navigation.navigate("HomeTabs");
+  };
+
   return (
     <IntroView
-      slideIndex={slideIndex}
-      _onIndexChanged={_onIndexChanged}
+      _doneBtnHandle={_doneBtnHandle}
+      _nextBtnHandle={_nextBtnHandle}
+      _onSlideChangeHandle={_onSlideChangeHandle}
+      _onSkipBtnHandle={_onSkipBtnHandle}
+      pageList={pageList}
     />
   )
 };

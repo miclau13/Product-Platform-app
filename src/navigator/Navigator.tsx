@@ -1,21 +1,26 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeStackScreen from './NavigationStack/HomeStack';
-import InfoStackScreen from './NavigationStack/IntroStack';
-import { IntroTabOptions, screenOptions, tabBarOptions } from './NavigatorOptions';
+import { homeTabsOptions, screenOptions } from './NavigatorOptions';
+import HomeTabs from './TabNavigator/HomeTabs';
+import IntroScreen from '../screens/Intro';
 
-const Tab = createBottomTabNavigator();
+export type StackParamList = {
+  HomeTabs: undefined;
+  Intro: undefined;
+};
+
+const Stack = createStackNavigator<StackParamList>();
 
 const Navigator = () => {
   return (
-    <Tab.Navigator
+    <Stack.Navigator
+      initialRouteName="Intro"
       screenOptions={screenOptions}
-      tabBarOptions={tabBarOptions}
     >
-      <Tab.Screen name="Info" component={InfoStackScreen} options={IntroTabOptions} />
-      <Tab.Screen name="Home" component={HomeStackScreen} />
-    </Tab.Navigator>
+      <Stack.Screen name="HomeTabs" component={HomeTabs} options={homeTabsOptions}/>
+      <Stack.Screen name="Intro" component={IntroScreen} />
+    </Stack.Navigator>
   )
 };
 

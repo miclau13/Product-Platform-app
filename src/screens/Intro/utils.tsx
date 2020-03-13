@@ -19,7 +19,7 @@ const pageList: Page[] = [
     title: "Intro Page 1", 
   },
   { 
-    backgroundColor: '##a4b602',
+    backgroundColor: '#a4b602',
     description: '(Description 2)',
     fontColor: '#fff',
     img: SanitizerCoverImage,
