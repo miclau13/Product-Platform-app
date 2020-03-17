@@ -1,11 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeStackScreen from '../../NavigationStack/HomeStack';
+import HomeStack from '../../NavigationStack/HomeStack';
 import { screenOptions, tabBarOptions } from './NavigatorOptions';
 
 export type RootTabsParamList = {
-  Home: undefined;
+  HomeStack: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabsParamList>();
@@ -13,10 +13,11 @@ const Tab = createBottomTabNavigator<RootTabsParamList>();
 const RootTab = () => {
   return (
     <Tab.Navigator
+      initialRouteName="HomeStack"
       screenOptions={screenOptions}
       tabBarOptions={tabBarOptions}
     >
-      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen name="HomeStack" component={HomeStack} />
     </Tab.Navigator>
   )
 };

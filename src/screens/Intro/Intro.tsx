@@ -1,10 +1,12 @@
+import * as SecureStore from 'expo-secure-store';
 import React from 'react';
-import { Alert, ImageProps } from 'react-native';
+import { ImageProps } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultPageList } from './utils';
 import IntroView from './IntroView';
 import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import DisplayIntroContext from '../../context/DisplayIntroContext';
 
 type IntroScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -37,16 +39,20 @@ const pageList = getDefaultPageList();
 
 const Intro: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-
-  const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = () => {
-    navigation.navigate("Home");
+  const { removeIntro } = React.useContext(DisplayIntroContext);
+  const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = async () => {
+    // navigation.navigate("HomeStack");
+    await SecureStore.setItemAsync("displayIntro", "NO");
+    removeIntro();
   };
   const _nextBtnHandle: IntroViewProps['_nextBtnHandle'] = (index) => {
   };
   const _onSlideChangeHandle: IntroViewProps['_onSlideChangeHandle'] = (index, total) => {
   };
-  const _onSkipBtnHandle: IntroViewProps['_onSkipBtnHandle'] = (index) => {
-    navigation.navigate("Home");
+  const _onSkipBtnHandle: IntroViewProps['_onSkipBtnHandle'] = async (index) => {
+    // navigation.navigate("HomeStack");
+    await SecureStore.setItemAsync("displayIntro", "NO");
+    removeIntro();
   };
 
   return (

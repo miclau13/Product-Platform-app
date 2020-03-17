@@ -1,8 +1,8 @@
 import React from 'react';
-import { TileProps, IconProps } from 'react-native-elements';
+import { TileProps, IconProps, ListItemProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { getDefaultProductInfo } from './utils';
+import { getDefaultList, getDefaultProductInfo } from './utils';
 import ProductInfoView from './ProductInfoView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
@@ -17,12 +17,14 @@ type Props = {
 };
 
 export type ProductInfo = TileProps;
+export type SimilarProduct = ListItemProps;
 
 export interface ProductInfoViewProps {
   addIconOnPress: IconProps['onPress'];
   favorite: boolean;
   favoriteIconOnPress: IconProps['onPress'];
   productInfo: ProductInfo;
+  similarProductList: SimilarProduct[];
 };
 
 const ProductInfo: React.ComponentType<Props> = (props) => {
@@ -31,6 +33,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   const [loading] = React.useState(false);
   const [favorite, setFavorite] = React.useState(false);
 
+  const similarProductList = getDefaultList();
   const productInfo = getDefaultProductInfo();
   const favouriteIconOnPress = React.useCallback<ProductInfoViewProps['favoriteIconOnPress']>(() => {
     setFavorite((value)=> !value);
@@ -50,6 +53,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       addIconOnPress={addIconOnPress}
       favorite={favorite}
       favoriteIconOnPress={favouriteIconOnPress}
+      similarProductList={similarProductList}
       productInfo={productInfo}
     />
   )

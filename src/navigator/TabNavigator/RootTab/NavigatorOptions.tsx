@@ -13,14 +13,14 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
   return ({
     tabBarIcon: ({ focused, color, size }) => {
       let iconName;
-      if (route.name === 'Home') {
+      if (route.name === 'HomeStack') {
         iconName = focused
           ? 'home'
           : 'home-outline';
       };
       return <Icon color={color} name={iconName} size={size * 1.5} type="material-community" />
     },
-    tabBarVisible: !!route.state,
+    // tabBarVisible: route.name !== "Intro",
     // tabBarLabel: false,
   })
 };

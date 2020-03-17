@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, ImageRequireSource } from 'react-native';
 
-import { ProductInfo } from './ProductInfo';
+import { ProductInfo, SimilarProduct } from './ProductInfo';
 
-const Mask1Image: ProductInfo['imageSrc'] = require('./assets/mask1.jpeg');
+const Mask1Image: ImageRequireSource = require('./assets/mask1.jpeg');
 const productInfo: ProductInfo = {
   activeOpacity: 1,
   caption: 
@@ -26,4 +26,21 @@ Mask size: H90 x W145mm`,
 
 export const getDefaultProductInfo = () => {
   return productInfo;
-}
+};
+
+const list: SimilarProduct[] = [
+  {
+    title: 'Kowa PM2.5 High-Density Mask',
+    leftAvatar: { source: Mask1Image },
+    subtitle: 'Packing: 6pcs\nMask size: H90 x W145mm'
+  },
+  {
+    title: 'Kowa PM2.5 High-Density Mask',
+    leftAvatar: { source: Mask1Image },
+    subtitle: 'Packing: 6pcs\nMask size: H90 x W145mm'
+  },
+];
+
+export const getDefaultList = () => {
+  return list;
+};

@@ -19,11 +19,9 @@ const HomeStack = createStackNavigator<HomeStackParamList>();
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator
-      initialRouteName="Intro"
-      // headerMode="none"
+      initialRouteName="Home"
       screenOptions={screenOptions}
     >
-      <HomeStack.Screen name="Intro" component={IntroScreen} />
       <HomeStack.Screen name="Home" component={HomeScreen} options={HomeScreenOptions}/>
       <HomeStack.Screen name="ProductComparison" component={ProductComparisonScreen} options={ProductComparisonScreenOptions}/>
       <HomeStack.Screen name="ProductInfo" component={ProductInfoScreen} options={ProductInfoScreenOptions}/>
