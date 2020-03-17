@@ -3,8 +3,10 @@ import { Icon } from "react-native-elements";
 import { RouteProp } from "@react-navigation/native";
 import { BottomTabNavigationOptions, BottomTabBarOptions } from "@react-navigation/bottom-tabs"; 
 
+import { RootTabsParamList } from './RootTab';
+
 export const screenOptions: BottomTabNavigationOptions | ((props: {
-  route: RouteProp<Record<string, object>, string>;
+  route: RouteProp<RootTabsParamList, keyof RootTabsParamList>;
   navigation: any;
 }) => BottomTabNavigationOptions) = (props) => {
   const { route } = props;
@@ -17,12 +19,12 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
           : 'home-outline';
       };
       return <Icon color={color} name={iconName} size={size * 1.5} type="material-community" />
-    }
+    },
+    tabBarVisible: !!route.state,
+    // tabBarLabel: false,
   })
 };
 
 export const tabBarOptions: BottomTabBarOptions = {
-  // activeTintColor: 'tomato',
-  // inactiveTintColor: 'gray',
-  showLabel: false
+  showLabel: false,
 };

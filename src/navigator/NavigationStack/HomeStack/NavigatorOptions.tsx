@@ -1,15 +1,19 @@
 import React from "react";
-import { Route } from "@react-navigation/native";
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationOptions } from "@react-navigation/stack"; 
 
 import { HomeStackParamList } from './HomeStack';
+import { headerPrimaryColor } from '../../../styles';
 
 export const screenOptions: StackNavigationOptions | ((props: {
-  route: Pick<Route<keyof HomeStackParamList>, "key" | "name">;
+  route: RouteProp<HomeStackParamList, keyof HomeStackParamList>;
   navigation: any;
 }) => StackNavigationOptions) = (props) => {
   const { route } = props;
   return ({
-    title: 'Crazyee'
+    headerBackTitleVisible: false,
+    headerStyle: { backgroundColor: headerPrimaryColor },
+    headerTintColor: 'black',
+    title: 'Crazyee',
   })
 };

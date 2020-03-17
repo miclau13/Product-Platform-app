@@ -1,0 +1,1 @@
+export const headerPrimaryColor = '#3CB371' // medium sea green

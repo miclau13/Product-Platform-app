@@ -4,9 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackScreen from '../../NavigationStack/HomeStack';
 import { screenOptions, tabBarOptions } from './NavigatorOptions';
 
-const Tab = createBottomTabNavigator();
+export type RootTabsParamList = {
+  Home: undefined;
+};
 
-const Navigator = () => {
+const Tab = createBottomTabNavigator<RootTabsParamList>();
+
+const RootTab = () => {
   return (
     <Tab.Navigator
       screenOptions={screenOptions}
@@ -17,4 +21,4 @@ const Navigator = () => {
   )
 };
 
-export default Navigator;
+export default RootTab;

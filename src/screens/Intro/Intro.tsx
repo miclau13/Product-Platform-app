@@ -4,10 +4,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultPageList } from './utils';
 import IntroView from './IntroView';
-import { StackParamList } from '../../navigator/Navigator';
+import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
 
 type IntroScreenNavigationProp = StackNavigationProp<
-  StackParamList,
+  HomeStackParamList,
   'Intro'
 >;
 
@@ -39,14 +39,14 @@ const Intro: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
 
   const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = () => {
-    navigation.navigate("HomeTabs");
+    navigation.navigate("Home");
   };
   const _nextBtnHandle: IntroViewProps['_nextBtnHandle'] = (index) => {
   };
   const _onSlideChangeHandle: IntroViewProps['_onSlideChangeHandle'] = (index, total) => {
   };
   const _onSkipBtnHandle: IntroViewProps['_onSkipBtnHandle'] = (index) => {
-    navigation.navigate("HomeTabs");
+    navigation.navigate("Home");
   };
 
   return (

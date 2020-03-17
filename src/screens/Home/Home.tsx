@@ -27,6 +27,7 @@ export type CategoryList = {
 
 export interface HomeViewProps {
   categoryList: CategoryList;
+  onPress: ButtonProps['onPress'];
 };
 
 const Home: React.ComponentType<Props> = (props) => {
@@ -34,9 +35,10 @@ const Home: React.ComponentType<Props> = (props) => {
 
   const [loading] = React.useState(false);
   const categoryList = getDefaultCategoryList();
-  const onPress = () => {
-    navigation.navigate("Intro1")
-  }
+  const onPress: ButtonProps['onPress'] = () => {
+    navigation.navigate("ProductInfo");
+  };
+  
   if (loading) {
     return (
       <LoadingComponent />
