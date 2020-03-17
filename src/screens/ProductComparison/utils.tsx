@@ -1,10 +1,10 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import { ProductInfo } from './ProductComparison';
+import { ProductComparison } from './ProductComparison';
 
-const Mask1Image: ProductInfo['imageSrc'] = require('./assets/mask1.jpeg');
-const productInfo: ProductInfo = {
+const Mask1Image: ProductComparison['imageSrc'] = require('./assets/mask1.jpeg');
+const productInfo: ProductComparison = {
   activeOpacity: 1,
   caption: 
 `Kowa PM2.5 High-Density Mask 6pcs S Size

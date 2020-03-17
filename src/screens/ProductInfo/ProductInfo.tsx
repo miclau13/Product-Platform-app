@@ -36,7 +36,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     setFavorite((value)=> !value);
   }, []);
   const addIconOnPress = React.useCallback<ProductInfoViewProps['addIconOnPress']>(() => {
-  
+    navigation.navigate('ProductComparison');
   }, []);
 
   if (loading) {

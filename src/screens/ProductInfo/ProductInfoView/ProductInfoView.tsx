@@ -27,7 +27,7 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
           <Text>
             {caption}
           </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", justifyContent: 'center' }}>
             <Icon
               reverse
               color='#00aced'

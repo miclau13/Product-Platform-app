@@ -1,15 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  button: {
-    borderRadius: 0, 
-    marginBottom: 0,
-    marginLeft: 0, 
-    marginRight: 0, 
+  cellContainter: {
+    alignItems: 'center', 
+    flex: 1, 
+    flexDirection: 'row', 
+    paddingVertical: 16
   },
-  title: {
-    marginBottom: 10,
-    textAlign: 'center',
+  celltext: {
+    marginLeft: 16
+  },
+  leftHeader: {
+    justifyContent: 'flex-end',
   },
 });
 
