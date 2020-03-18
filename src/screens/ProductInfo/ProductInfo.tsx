@@ -1,4 +1,5 @@
 import React from 'react';
+import { Share } from 'react-native';
 import { TileProps, IconProps, ListItemProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -24,6 +25,7 @@ export interface ProductInfoViewProps {
   favorite: boolean;
   favoriteIconOnPress: IconProps['onPress'];
   productInfo: ProductInfo;
+  shareIconOnPress: IconProps['onPress'];
   similarProductList: SimilarProduct[];
 };
 
@@ -41,6 +43,29 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   const addIconOnPress = React.useCallback<ProductInfoViewProps['addIconOnPress']>(() => {
     navigation.navigate('ProductComparison');
   }, []);
+  const shareIconOnPress = React.useCallback<ProductInfoViewProps['addIconOnPress']>(async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'Share Message content\n',
+        title:
+          'Shar Message Title',
+        url:
+          'https://miclotest01.azurewebsites.net/search'
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  },[]);
 
   if (loading) {
     return (
@@ -53,6 +78,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       addIconOnPress={addIconOnPress}
       favorite={favorite}
       favoriteIconOnPress={favouriteIconOnPress}
+      shareIconOnPress={shareIconOnPress}
       similarProductList={similarProductList}
       productInfo={productInfo}
     />

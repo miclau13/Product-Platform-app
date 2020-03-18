@@ -6,7 +6,7 @@ import styles from './styles';
 import { ProductInfoViewProps } from '../ProductInfo';
 
 const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
-  const { addIconOnPress, favorite, favoriteIconOnPress, productInfo, similarProductList } = props;
+  const { addIconOnPress, favorite, favoriteIconOnPress, productInfo, shareIconOnPress, similarProductList } = props;
   const {
     activeOpacity,
     caption,
@@ -31,13 +31,14 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
             <Icon
               reverse
               color='#00aced'
-              name={ favorite ? 'favorite' : 'favorite-border'}
+              name={favorite ? 'favorite' : 'favorite-border'}
               onPress={favoriteIconOnPress}
             />
             <Icon
               reverse
               name='share'
               color='#00aced'
+              onPress={shareIconOnPress}
             />
             <Icon
               reverse
