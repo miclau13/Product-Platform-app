@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { AirbnbRating, Icon, ListItem, Rating, Text, Tile } from 'react-native-elements';
+import { Icon, ListItem, Text, Tile } from 'react-native-elements';
 
 import styles from './styles';
 import { ProductInfoViewProps } from '../ProductInfo';

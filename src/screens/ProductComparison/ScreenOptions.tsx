@@ -9,7 +9,7 @@ import { headerPrimaryColor } from '../../styles';
 const options: RouteConfig<HomeStackParamList, keyof HomeStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
   const { navigation } = props;
   const handleHeaderRightOnPress: IconProps['onPress'] = () => {
-    console.log("Pressed")
+    navigation.navigate("ProductSearch");
   };
   return {
     headerRight: (props) => {
