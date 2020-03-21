@@ -17,7 +17,13 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
         iconName = focused
           ? 'home'
           : 'home-outline';
-      };
+      } else if (route.name === 'CameraStack') {
+        iconName = focused
+          ? 'camera'
+          : 'camera-outline';
+      }  else if (route.name === 'BarCodeScannerStack') {
+        iconName = 'barcode-scan';
+      }
       return <Icon color={color} name={iconName} size={size * 1.5} type="material-community" />
     },
     // tabBarVisible: route.name !== "Intro",

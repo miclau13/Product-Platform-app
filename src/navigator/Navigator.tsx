@@ -5,6 +5,9 @@ import RootTab from './TabNavigator/RootTab';
 import RootStack from './NavigationStack/RootStack';
 import { DisplayIntroContextProvider } from '../context/DisplayIntroContext';
 
+export type StackParamList = {
+};
+
 const Navigator = () => {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
