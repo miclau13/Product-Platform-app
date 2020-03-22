@@ -21,8 +21,10 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
         iconName = focused
           ? 'camera'
           : 'camera-outline';
-      }  else if (route.name === 'BarCodeScannerStack') {
+      } else if (route.name === 'BarCodeScannerStack') {
         iconName = 'barcode-scan';
+      } else if (route.name === 'RecordsStack') {
+        iconName = 'history';
       }
       return <Icon color={color} name={iconName} size={size * 1.5} type="material-community" />
     },

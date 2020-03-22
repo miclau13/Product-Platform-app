@@ -2,14 +2,15 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import BarCodeScannerStack from '../../NavigationStack/BarCodeScannerStack';
-import CameraStack from '../../NavigationStack/CameraStack';
 import HomeStack from '../../NavigationStack/HomeStack';
+import RecordsStack from '../../NavigationStack/RecordsStack';
 import { screenOptions, tabBarOptions } from './NavigatorOptions';
 
 export type RootTabsParamList = {
   BarCodeScannerStack: undefined;
   CameraStack: undefined;
   HomeStack: undefined;
+  RecordsStack: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabsParamList>();
@@ -23,7 +24,7 @@ const RootTab = () => {
     >
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="BarCodeScannerStack" component={BarCodeScannerStack} />
-      {/* <Tab.Screen name="CameraStack" component={CameraStack} /> */}
+      <Tab.Screen name="RecordsStack" component={RecordsStack} />
     </Tab.Navigator>
   )
 };
