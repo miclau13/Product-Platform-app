@@ -1,12 +1,27 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { Input } from 'react-native-elements';
+import { Button, Input, Tile } from 'react-native-elements';
 
 import styles from './styles';
-import { AddProductViewProps } from '../AddProduct';
+import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
+
+const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
+  console.log("props",props)
+  const { imageSrc } = props;
+  return (
+    <Tile 
+      containerStyle={styles.tileContainerStyle}
+      contentContainerStyle={styles.tileContentContainerStyle}
+      height={150}
+      icon={!imageSrc ? { name: 'photo-camera' } : { name: 'delete', color: 'red', type: 'material-community' }} 
+      {...props} 
+    />
+  )
+};
 
 const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
-  
+  const { imageTileList, onImagePress } = props;
+// console.log("imageTileList",imageTileList)
   return (
     <SafeAreaView>
       <ScrollView>
@@ -37,6 +52,18 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
         placeholder='100.00'
       />
       <View style={{ margin: 8 }}></View>
+      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+        {imageTileList.map(imageTile => {
+          const { index, imageSrc } = imageTile;
+          return (
+            <AddProductTileView 
+              key={index}
+              imageSrc={imageSrc}
+              onPress={onImagePress(index)}
+            /> 
+          )
+        })}
+      </View>
       <Input
         multiline
         inputContainerStyle={styles.textAreaContainer}
@@ -57,6 +84,12 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
         placeholder='Add Remarks (Optional)'
       />
       <View style={{ margin: 8 }}></View>
+      <Button
+        containerStyle={{ margin: 8 }}
+        // titleStyle={ marginRight: 8 },
+        title='Submit' 
+      >
+      </Button>
       </ScrollView>
     </SafeAreaView>
   );

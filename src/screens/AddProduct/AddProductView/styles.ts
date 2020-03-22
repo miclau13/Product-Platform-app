@@ -15,6 +15,16 @@ const styles = StyleSheet.create({
   textArea: {
     height: 150,
     justifyContent: "flex-start"
+  },
+  tileContainerStyle: {
+    flex: 0.25,
+    flexGrow: 1,
+    margin: 0, 
+    padding: 8,
+    shadowOpacity: 0,
+  },
+  tileContentContainerStyle: {
+    height: 0,
   }
 });
 
