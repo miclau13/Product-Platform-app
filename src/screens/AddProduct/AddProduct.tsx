@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import React from 'react';
 import { ActionSheetIOS } from 'react-native';
-import { TileProps } from 'react-native-elements'; 
+import { ButtonProps, TileProps } from 'react-native-elements'; 
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import AddProductView from './AddProductView';
@@ -23,6 +23,7 @@ export type AddProductTileViewProps = TileProps;
 export interface AddProductViewProps {
   imageTileList: Array<imageTile>;
   onImagePress(index: number): TileProps['onPress'];
+  onSubmitButtonPress: ButtonProps['onPress'];
 };
 export type imageTile = {
   index: number;
@@ -126,6 +127,10 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     );
   };
 
+  const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(() => {
+    // navigation.navigate('Records')
+  }, [navigation])
+
   if (loading) {
     return (
       <LoadingComponent />
@@ -136,6 +141,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     <AddProductView 
       imageTileList={imageTileList}
       onImagePress={onImagePress}
+      onSubmitButtonPress={onSubmitButtonPress}
     />
   )
 };

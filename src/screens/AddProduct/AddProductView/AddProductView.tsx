@@ -6,7 +6,6 @@ import styles from './styles';
 import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
-  console.log("props",props)
   const { imageSrc } = props;
   return (
     <Tile 
@@ -20,8 +19,8 @@ const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props)
 };
 
 const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
-  const { imageTileList, onImagePress } = props;
-// console.log("imageTileList",imageTileList)
+  const { imageTileList, onImagePress, onSubmitButtonPress } = props;
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -86,7 +85,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
       <View style={{ margin: 8 }}></View>
       <Button
         containerStyle={{ margin: 8 }}
-        // titleStyle={ marginRight: 8 },
+        onPress={onSubmitButtonPress}
         title='Submit' 
       >
       </Button>

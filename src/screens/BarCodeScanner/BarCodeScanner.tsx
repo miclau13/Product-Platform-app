@@ -1,6 +1,6 @@
 import { BarCodeScanner as ExpoBarCodeScanner, BarCodeScannerProps as ExpoBarCodeScannerProps } from 'expo-barcode-scanner';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ButtonProps } from 'react-native';
+import { Alert, ButtonProps } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCodeScannerView';
@@ -22,8 +22,36 @@ export interface BarCodeScannerViewProps {
 };
 
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
+  const { navigation } = props;
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+
+  // For BarCodeScannerView
+  const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(({ type, data }) => {
+    setScanned(true);
+    if (type && data) {
+      navigation.navigate('ProductInfo');
+    } else {
+      Alert.alert(
+        'Help Us Out?',
+  `The product was not found. Please help us out by sending us 4 photos: 
+  
+        1. Barcode
+        2. Product Front of Package
+        3. Nutrition Panel
+        4. Ingredients
+  `,
+        [
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+          {text: 'OK', onPress: () => navigation.navigate('AddProduct')},
+        ],
+      ); 
+    }
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  }, [scanned]);
+  const handleButtonScanAgainOnPress = useCallback<BarCodeScannerViewProps['handleButtonScanAgainOnPress']>(() => {
+    setScanned(false);
+  }, [scanned]);
 
   useEffect(() => {
     (async () => {
@@ -31,15 +59,6 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       setHasPermission(status === 'granted');
     })();
   }, []);
-
-  // For BarCodeScannerView
-  const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  }, [scanned]);
-  const handleButtonScanAgainOnPress = useCallback<BarCodeScannerViewProps['handleButtonScanAgainOnPress']>(() => {
-    setScanned(false);
-  }, [scanned]);
 
   if (hasPermission === null) {
     return <RequestingAccessView />;

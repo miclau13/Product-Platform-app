@@ -3,10 +3,10 @@ import { Icon, IconProps } from 'react-native-elements';
 import { EventMapBase, NavigationState, RouteConfig } from '@react-navigation/native';
 
 import strings from './strings';
-import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { headerPrimaryColor } from '../../styles';
 
-const options: RouteConfig<HomeStackParamList, keyof HomeStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
+const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
   const { navigation } = props;
   const handleHeaderRightOnPress: IconProps['onPress'] = () => {
     navigation.navigate("ProductSearch");
