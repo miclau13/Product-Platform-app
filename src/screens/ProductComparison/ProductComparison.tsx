@@ -33,8 +33,7 @@ const ProductComparison: React.ComponentType<Props> = (props) => {
   };
 
   return (
-    <ProductComparisonView 
-    />
+    <ProductComparisonView />
   )
 };
 

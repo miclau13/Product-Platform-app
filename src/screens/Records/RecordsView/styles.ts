@@ -1,20 +1,25 @@
 import { StyleSheet } from 'react-native';
+import { headerPrimaryColor } from '../../../styles';
 
 const styles = StyleSheet.create({
-  button: {
-    borderRadius: 0, 
-    marginBottom: 0,
-    marginLeft: 0, 
-    marginRight: 0, 
+  container: {
+    flex: 1,
   },
-  similarProductTitle: {
-    textAlign: 'center',
-    marginBottom: 8,
+});
+
+export const buttonGroupStyles = StyleSheet.create({
+  containerStyle: {
+    backgroundColor: 'transparent', 
+    borderWidth: 0,
   },
-  title: {
-    marginBottom: 10,
-    textAlign: 'center',
+  selectedButtonStyle: {
+    backgroundColor: 'transparent',  
+    borderBottomWidth: 1,
+    borderBottomColor: headerPrimaryColor,
   },
+  selectedTextStyle: {
+    color: '#5e6977',
+  }
 });
 
 export default styles;

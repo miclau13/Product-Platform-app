@@ -1,16 +1,39 @@
 import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ButtonGroup, ButtonGroupProps, ListItem } from 'react-native-elements';
 
-import styles from './styles';
+import styles, { buttonGroupStyles } from './styles';
 import { RecordsViewProps } from '../Records';
 
+const RecordsButtonsGroupView: React.ComponentType<ButtonGroupProps> = (props) => {
+  return (
+    <ButtonGroup
+      containerStyle={buttonGroupStyles.containerStyle}
+      innerBorderStyle={{ width: 0 }}
+      selectedButtonStyle={buttonGroupStyles.selectedButtonStyle}
+      selectedTextStyle={buttonGroupStyles.selectedTextStyle}
+      underlayColor='transparent'
+      { ...props }
+    />
+  );
+};
+
 const RecordsView: React.ComponentType<RecordsViewProps> = (props) => {
-  const { recordsItemsList } = props;
+  const { 
+    buttons, 
+    onButtonIndexPress,
+    recordsItemsList,
+    selectedButtonIndex,
+  } = props;
   
   return (
-    <SafeAreaView>
-      <ScrollView>
+    <SafeAreaView style={styles.container}>
+      <RecordsButtonsGroupView
+        buttons={buttons}
+        onPress={onButtonIndexPress}
+        selectedIndex={selectedButtonIndex}
+      />
+      <ScrollView style={styles.container}>
         {recordsItemsList.map((item, i) => (
             <ListItem
               key={i}

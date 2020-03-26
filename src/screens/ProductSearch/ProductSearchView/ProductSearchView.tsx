@@ -1,10 +1,11 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { Button, Card, Rating, Text } from 'react-native-elements';
+import { Button, Card, Icon, Rating, Text } from 'react-native-elements';
 import NumberFormat from 'react-number-format';
 
 import styles from './styles';
 import { ProductSearchViewProps, ProductSearchItemCardProps } from '../ProductSearch';
+import SearchBarComponent from '../../../components/SearchComponent';
 
 const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (props) => {
   const { buttonProps, description, onPress, ...cardProps } = props;
@@ -42,12 +43,31 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
 };
 
 const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) => {
-  const { productList, onPress } = props;
+  const { 
+    handleHistoryIconOnPress,
+    productList, 
+    onPress,
+
+    search,
+    updateSearch,
+  } = props;
   
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topBarContainer}>
+        <SearchBarComponent 
+          value={search}
+          onChangeText={updateSearch}
+        />
+        <Icon
+          containerStyle={styles.iconContainer}
+          onPress={handleHistoryIconOnPress}
+          name="history"
+          size={36}
+      />
+      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.productListContainer}>
           {productList.map(category => {
             return (
               <ProductSearchItemCard key={category.description} {...category} onPress={onPress} />

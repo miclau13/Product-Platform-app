@@ -9,6 +9,8 @@ import ProductComparisonScreen, { options as ProductComparisonScreenOptions } fr
 import ProductInfoScreen, { options as ProductInfoScreenOptions } from "../../../screens/ProductInfo";
 import ProductSearchScreen, { options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
+import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
+import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: undefined;
@@ -18,6 +20,8 @@ export type BarCodeScannerStackParamList = {
   ProductInfo: undefined;
   ProductSearch: undefined;
   Records: undefined;
+  RecordsHistory: undefined;
+  RecordsSaved: undefined;
 };
 
 const BarCodeScannerStack = createStackNavigator<BarCodeScannerStackParamList>();
@@ -25,7 +29,8 @@ const BarCodeScannerStack = createStackNavigator<BarCodeScannerStackParamList>()
 const BarCodeScannerStackScreen = () => {
   return (
     <BarCodeScannerStack.Navigator
-      initialRouteName="ProductCategories"
+      // initialRouteName="ProductCategories"
+      initialRouteName="BarCodeScanner"
       screenOptions={screenOptions}
     >
       <BarCodeScannerStack.Screen name="BarCodeScanner" component={BarCodeScannerScreen} options={BarCodeScannerScreenOptions}/>
@@ -35,6 +40,8 @@ const BarCodeScannerStackScreen = () => {
       <BarCodeScannerStack.Screen name="ProductInfo" component={ProductInfoScreen} options={ProductInfoScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductSearch" component={ProductSearchScreen} options={ProductSearchScreenOptions}/>
       <BarCodeScannerStack.Screen name="Records" component={RecordsScreen} options={RecordsScreenOptions}/>
+      <BarCodeScannerStack.Screen name="RecordsHistory" component={RecordsHistoryScreen} options={RecordsHistoryScreenOptions}/>
+      <BarCodeScannerStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>
     </BarCodeScannerStack.Navigator>
   );
 };

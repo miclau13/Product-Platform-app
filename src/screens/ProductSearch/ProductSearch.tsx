@@ -1,14 +1,14 @@
 import React from 'react';
-import { ButtonProps, CardProps } from 'react-native-elements';
+import { ButtonProps, CardProps, IconProps, SearchBarProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultProductList } from './utils';
 import ProductSearchView from './ProductSearchView';
 import LoadingComponent from '../../components/LoadingComponent';
-import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import { SearchStackParamList } from '../../navigator/NavigationStack/SearchStack';
 
 type ProductSearchScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
+  SearchStackParamList,
   'ProductSearch'
 >;
 
@@ -26,8 +26,13 @@ export type Product = {
 };
 
 export interface ProductSearchViewProps {
+  handleHistoryIconOnPress: IconProps['onPress'];
   productList: Product[];
   onPress: ButtonProps['onPress'];
+
+  // For Search
+  search: string;
+  updateSearch: SearchBarProps['onChangeText'];
 };
 
 export interface ProductSearchItemCardProps extends Product {
@@ -37,11 +42,24 @@ export interface ProductSearchItemCardProps extends Product {
 const ProductSearch: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
 
-  const [loading] = React.useState(false);
+  const [loading] = React.useState(false);  
+  const [search, setSearch] = React.useState('');
+
   const productList = getDefaultProductList();
-  const onPress: ButtonProps['onPress'] = () => {
+
+  // For ProductSearchView
+  const handleHistoryIconOnPress = React.useCallback<ProductSearchViewProps['handleHistoryIconOnPress']>(() => {
+    navigation.navigate('Records');
+  }, [navigation]);
+
+  const onPress = React.useCallback<ProductSearchItemCardProps['onPress']>(() => {
     navigation.goBack();
-  };
+  }, [navigation]);
+
+  // For Search
+  const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {
+    setSearch(search);
+  }, [search]);
   
   if (loading) {
     return (
@@ -50,7 +68,14 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   };
 
   return (
-    <ProductSearchView productList={productList} onPress={onPress}/>
+    <ProductSearchView 
+      handleHistoryIconOnPress={handleHistoryIconOnPress}
+      productList={productList} 
+      onPress={onPress}
+
+      search={search}
+      updateSearch={updateSearch}
+    />
   )
 };
 

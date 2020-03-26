@@ -6,14 +6,16 @@ import AddProductScreen, { options as AddProductScreenOptions } from "../../../s
 import ProductComparisonScreen, { options as ProductComparisonScreenOptions } from "../../../screens/ProductComparison";
 import ProductInfoScreen, { options as ProductInfoScreenOptions } from "../../../screens/ProductInfo";
 import ProductSearchScreen, { options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
-import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
+import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
+import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
 
 export type RecordsStackParamList = {
   AddProduct: undefined;
   ProductComparison: undefined;
   ProductInfo: undefined;
   ProductSearch: undefined;
-  Records: undefined;
+  RecordsHistory: undefined;
+  RecordsSaved: undefined;
 };
 
 const RecordsStack = createStackNavigator<RecordsStackParamList>();
@@ -21,14 +23,14 @@ const RecordsStack = createStackNavigator<RecordsStackParamList>();
 const RecordsStackScreen = () => {
   return (
     <RecordsStack.Navigator
-      initialRouteName="Records"
+      initialRouteName="RecordsHistory"
       screenOptions={screenOptions}
     >
       <RecordsStack.Screen name="AddProduct" component={AddProductScreen} options={AddProductScreenOptions}/>
-      <RecordsStack.Screen name="ProductComparison" component={ProductComparisonScreen} options={ProductComparisonScreenOptions}/>
       <RecordsStack.Screen name="ProductInfo" component={ProductInfoScreen} options={ProductInfoScreenOptions}/>
       <RecordsStack.Screen name="ProductSearch" component={ProductSearchScreen} options={ProductSearchScreenOptions}/>
-      <RecordsStack.Screen name="Records" component={RecordsScreen} options={RecordsScreenOptions}/>
+      <RecordsStack.Screen name="RecordsHistory" component={RecordsHistoryScreen} options={RecordsHistoryScreenOptions}/>
+      <RecordsStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>
     </RecordsStack.Navigator>
   );
 };

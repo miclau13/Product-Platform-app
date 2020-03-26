@@ -3,16 +3,16 @@ import { Icon, IconProps } from 'react-native-elements';
 import { EventMapBase, NavigationState, RouteConfig } from '@react-navigation/native';
 
 import strings from './strings';
-import { SearchStackParamList } from '../../navigator/NavigationStack/SearchStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { headerPrimaryColor } from '../../styles';
 
-const options: RouteConfig<SearchStackParamList, keyof SearchStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
-  const { navigation, route } = props;
+const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
+  const { navigation } = props;
   const handleHeaderRightOnPress: IconProps['onPress'] = () => {
     navigation.navigate("AddProduct");
   };
-
   return {
+    headerLeft: null,
     headerRight: (props) => {
       return (
         <Icon
@@ -23,7 +23,7 @@ const options: RouteConfig<SearchStackParamList, keyof SearchStackParamList, Nav
         />
       )
     },
-    title: strings.title,
+    title: 'Records',
   };
 };
 

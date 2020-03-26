@@ -25,6 +25,10 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
         iconName = 'barcode-scan';
       } else if (route.name === 'RecordsStack') {
         iconName = 'history';
+      } else if (route.name === 'SearchStack') {
+        iconName = focused
+        ? 'feature-search'
+        : 'feature-search-outline';
       }
       return <Icon color={color} name={iconName} size={size * 1.5} type="material-community" />
     },

@@ -8,10 +8,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import AddProductView from './AddProductView';
 import LoadingComponent from '../../components/LoadingComponent';
-import { RecordsStackParamList } from '../../navigator/NavigationStack/RecordsStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type AddProductScreenNavigationProp = StackNavigationProp<
-  RecordsStackParamList,
+  BarCodeScannerStackParamList,
   'AddProduct'
 >;
 
@@ -128,7 +128,10 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   };
 
   const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(() => {
-    // navigation.navigate('Records')
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Records' }],
+    });
   }, [navigation])
 
   if (loading) {
