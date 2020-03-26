@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e1e1e1',
     justifyContent: 'center', 
   },
   productListContainer: {

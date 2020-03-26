@@ -1,7 +1,7 @@
 import { BarCodeScanner as ExpoBarCodeScanner, BarCodeScannerProps as ExpoBarCodeScannerProps } from 'expo-barcode-scanner';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, ButtonProps } from 'react-native';
-import { SearchBarProps, IconProps } from 'react-native-elements';
+import { Alert, Keyboard } from 'react-native';
+import { ButtonProps, SearchBarProps, IconProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCodeScannerView';
@@ -18,18 +18,25 @@ type Props = {
 
 export interface BarCodeScannerViewProps {
   handleBarCodeScanned: ExpoBarCodeScannerProps['onBarCodeScanned'];
-  handleButtonScanAgainOnPress: ButtonProps['onPress'];
+  handleScanAgainButtonOnPress: ButtonProps['onPress'];
+  handleCancelButtonOnPress: ButtonProps['onPress'];
   handleHistoryIconOnPress: IconProps['onPress'];
+  isSearchViewVisible: boolean;
   scanned: boolean;
 
   // For Search
+  onFocus: SearchBarProps['onFocus'];
   search: string;
   updateSearch: SearchBarProps['onChangeText'];
+
+  // For ProductSearchView
+  navigation: Props['navigation'];
 };
 
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const [hasPermission, setHasPermission] = useState(null);
+  const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [search, setSearch] = useState('');
 
@@ -37,13 +44,16 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const updateSearch = React.useCallback(search => {
     setSearch(search);
   }, [search]);
+  const onFocus = React.useCallback<BarCodeScannerViewProps['onFocus']>(() => {
+    setIsSearchViewVisible(true);
+  }, [isSearchViewVisible]);
 
   // For BarCodeScannerView
   const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(({ type, data }) => {
     setScanned(true);
     console.log("type", type)
     console.log("data", data)
-    if (type && !data.includes('0')) {
+    if (type && data) {
       navigation.navigate('ProductInfo');
       // setScanned(false);
     } else {
@@ -67,8 +77,13 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     }
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   }, [scanned]);
-  const handleButtonScanAgainOnPress = useCallback<BarCodeScannerViewProps['handleButtonScanAgainOnPress']>(() => {
+  const handleScanAgainButtonOnPress = useCallback<BarCodeScannerViewProps['handleScanAgainButtonOnPress']>(() => {
     setScanned(false);
+  }, [scanned]);
+  const handleCancelButtonOnPress = useCallback<BarCodeScannerViewProps['handleCancelButtonOnPress']>(() => {
+    setIsSearchViewVisible(false);
+    setSearch('');
+    Keyboard.dismiss();
   }, [scanned]);
   const handleHistoryIconOnPress = useCallback<BarCodeScannerViewProps['handleHistoryIconOnPress']>(() => {
     navigation.navigate('Records');
@@ -91,12 +106,17 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   return (
     <BarCodeScannerView 
       handleBarCodeScanned={handleBarCodeScanned}
-      handleButtonScanAgainOnPress={handleButtonScanAgainOnPress}
+      handleCancelButtonOnPress={handleCancelButtonOnPress}
+      handleScanAgainButtonOnPress={handleScanAgainButtonOnPress}
       handleHistoryIconOnPress={handleHistoryIconOnPress}
+      isSearchViewVisible={isSearchViewVisible}
       scanned={scanned}
 
+      onFocus={onFocus}
       search={search}
       updateSearch={updateSearch}
+
+      navigation={navigation}
     />
   )
 };

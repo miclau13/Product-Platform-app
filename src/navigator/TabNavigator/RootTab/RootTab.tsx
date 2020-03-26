@@ -20,14 +20,14 @@ const Tab = createBottomTabNavigator<RootTabsParamList>();
 const RootTab = () => {
   return (
     <Tab.Navigator
-      initialRouteName="SearchStack"
+      initialRouteName="BarCodeScannerStack"
       screenOptions={screenOptions}
       tabBarOptions={tabBarOptions}
     >
       {/* <Tab.Screen name="HomeStack" component={HomeStack} /> */}
-      {/* <Tab.Screen name="BarCodeScannerStack" component={BarCodeScannerStack} /> */}
+      <Tab.Screen name="BarCodeScannerStack" component={BarCodeScannerStack} />
       {/* <Tab.Screen name="RecordsStack" component={RecordsStack} /> */}
-      <Tab.Screen name="SearchStack" component={SearchStack} />
+      {/* <Tab.Screen name="SearchStack" component={SearchStack} /> */}
     </Tab.Navigator>
   )
 };

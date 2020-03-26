@@ -1,10 +1,11 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Text, View } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 
 import styles, { absoluteFillObject } from './styles';
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
+import ProductSearch from '../../ProductSearch';
 import SearchBarComponent from '../../../components/SearchComponent';
 
 export const NoAccessView: React.ComponentType = () => {
@@ -22,35 +23,52 @@ export const RequestingAccessView: React.ComponentType = () => {
 const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props) => {
   const { 
     handleBarCodeScanned,
-    handleButtonScanAgainOnPress,
+    handleCancelButtonOnPress,
+    handleScanAgainButtonOnPress,
     handleHistoryIconOnPress,
+    isSearchViewVisible,
     scanned,
 
+    onFocus,
     search,
     updateSearch,
+
+    navigation,
   } = props; 
   
   return (
     <View style={styles.container}>
       <View style={styles.topBarContainer}>
         <SearchBarComponent 
-          value={search}
           onChangeText={updateSearch}
+          onFocus={onFocus}
+          value={search}
         />
-        <Icon
-          containerStyle={styles.iconContainer}
-          onPress={handleHistoryIconOnPress}
-          name="history"
-          size={36}
-        />
+        {!isSearchViewVisible ? 
+          <Icon
+            containerStyle={styles.iconContainer}
+            onPress={handleHistoryIconOnPress}
+            name="history"
+            size={36}
+          /> : 
+          <Button
+            containerStyle={styles.buttonContainer}
+            onPress={handleCancelButtonOnPress}
+            title="Cancel"
+            type="clear"
+          />
+        }
       </View>
-      <View style={styles.container}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={absoluteFillObject}
-        />
-        {scanned && <Button title={'Tap to Scan Again'} onPress={handleButtonScanAgainOnPress} />}
-      </View>
+      {!isSearchViewVisible ? 
+        <View style={styles.container}>
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={absoluteFillObject}
+          />
+          {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
+        </View> :
+        <ProductSearch navigation={navigation}/>
+      }
     </View>
   );
 }

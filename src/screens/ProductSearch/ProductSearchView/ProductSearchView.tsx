@@ -54,18 +54,6 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
   
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topBarContainer}>
-        <SearchBarComponent 
-          value={search}
-          onChangeText={updateSearch}
-        />
-        <Icon
-          containerStyle={styles.iconContainer}
-          onPress={handleHistoryIconOnPress}
-          name="history"
-          size={36}
-      />
-      </View>
       <ScrollView style={styles.container}>
         <View style={styles.productListContainer}>
           {productList.map(category => {

@@ -5,11 +5,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { getDefaultProductList } from './utils';
 import ProductSearchView from './ProductSearchView';
 import LoadingComponent from '../../components/LoadingComponent';
-import { SearchStackParamList } from '../../navigator/NavigationStack/SearchStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+
+// type ProductSearchScreenNavigationProp = StackNavigationProp<
+//   SearchStackParamList,
+//   'ProductSearch'
+// >;
 
 type ProductSearchScreenNavigationProp = StackNavigationProp<
-  SearchStackParamList,
-  'ProductSearch'
+  BarCodeScannerStackParamList,
+  'BarCodeScanner'
 >;
 
 type Props = {
@@ -53,7 +58,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   }, [navigation]);
 
   const onPress = React.useCallback<ProductSearchItemCardProps['onPress']>(() => {
-    navigation.goBack();
+    navigation.navigate('ProductComparison');
   }, [navigation]);
 
   // For Search
