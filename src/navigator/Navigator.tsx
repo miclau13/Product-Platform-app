@@ -5,21 +5,24 @@ import RootTab from './TabNavigator/RootTab';
 import RootStack from './NavigationStack/RootStack';
 import LoadingComponent from '../components/LoadingComponent';
 import { DisplayIntroContextProvider } from '../context/DisplayIntroContext';
+import { SelectCategoryContextProvider } from '../context/SelectCategoryContext';
 
 export type StackParamList = {};
 
 interface State {
   displayIntro: boolean,
   loading: boolean,
+  selectCategory: boolean,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'DISABLE_LOADING';
+  type: 'REMOVE_INTRO' | 'REMOVE_SELECT_CATEGORY' | 'DISABLE_LOADING';
 };
 
 const initialState = {
   displayIntro: true,
   loading: true,
+  selectCategory: true,
 };
 const reducer = (prevState: State, action: Action) => {
   switch (action.type) {
@@ -27,6 +30,11 @@ const reducer = (prevState: State, action: Action) => {
       return {
         ...prevState,
         displayIntro: false,
+      };
+    case 'REMOVE_SELECT_CATEGORY':
+      return {
+        ...prevState,
+        selectCategory: false,
       };
     case 'DISABLE_LOADING':
       return {
@@ -46,17 +54,27 @@ const Navigator = () => {
     removeIntro: () => dispatch({ type: 'REMOVE_INTRO' })
   }), []);
 
+  const selectCategoryContext = React.useMemo(() => ({
+    removeCategoryList: () => dispatch({ type: 'REMOVE_SELECT_CATEGORY' }),
+    selectCategory: state.selectCategory
+  }), [state.selectCategory]);
+
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      let displayIntro;
+      let displayIntro, selectCategory;
       try {
+        // await SecureStore.setItemAsync("selectCategory", "YES");
+        // await SecureStore.setItemAsync("displayIntro", "YES");
         displayIntro = await SecureStore.getItemAsync("displayIntro");
+        selectCategory = await SecureStore.getItemAsync("selectCategory");
       } catch (e) {
         dispatch({ type: 'DISABLE_LOADING' });
       }
-
-      if (displayIntro) {
+      if (displayIntro === "NO") {
         dispatch({ type: 'REMOVE_INTRO' });
+      };
+      if (selectCategory === "NO") {
+        dispatch({ type: 'REMOVE_SELECT_CATEGORY' });
       };
       dispatch({ type: 'DISABLE_LOADING' });
     };
@@ -72,10 +90,13 @@ const Navigator = () => {
 
   return (
     <DisplayIntroContextProvider value={displayIntroContext}>
-      {!state.displayIntro ?
-        <RootTab /> : 
-        <RootStack />
+      {state.displayIntro ?
+        <RootStack />: 
+        <SelectCategoryContextProvider value={selectCategoryContext}>
+          <RootTab />
+        </SelectCategoryContextProvider>
       }
+      
     </DisplayIntroContextProvider>
   )
 };

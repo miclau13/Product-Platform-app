@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { getDefaultPageList } from './utils';
 import IntroView from './IntroView';
 import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
-import DisplayIntroContext from '../../context/DisplayIntroContext';
+import { useDisplayIntroContext } from '../../context/DisplayIntroContext';
 
 type IntroScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -39,7 +39,7 @@ const pageList = getDefaultPageList();
 
 const Intro: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-  const { removeIntro } = React.useContext(DisplayIntroContext);
+  const { removeIntro } = useDisplayIntroContext();
   const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = async () => {
     // navigation.navigate("HomeStack");
     await SecureStore.setItemAsync("displayIntro", "NO");

@@ -7,6 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { getDefaultCategoryList } from './utils';
 import ProductCategoriesView from './ProductCategoriesView';
 import LoadingComponent from '../../components/LoadingComponent';
+import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type ProductCategoriesScreenNavigationProp = StackNavigationProp<
@@ -34,11 +35,12 @@ export interface ProductCategoriesViewProps {
 
 const ProductCategories: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-
+  const { removeCategoryList } = useSelectCategoryContext();
   const [loading] = React.useState(false);
   const categoryList = getDefaultCategoryList();
   const onPress: ButtonProps['onPress'] = async () => {
     await SecureStore.setItemAsync("selectCategory", "NO");
+    removeCategoryList();
     navigation.navigate("BarCodeScanner");
   };
 
@@ -51,7 +53,7 @@ const ProductCategories: React.ComponentType<Props> = (props) => {
       ],
     );
     return () => {}
-  });
+  }, []);
   
   if (loading) {
     return (

@@ -1,7 +1,9 @@
 import React from 'react';
 
-const initialValue: [boolean, (V: boolean) => void] = [true, (selectCategory: boolean) => null ];
+// const initialValue: [boolean, (V: boolean) => void] = [true, (selectCategory: boolean) => null ];
 // [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+// const SelectCategoryContextContext = React.createContext(initialValue);
+const initialValue = { selectCategory: true, removeCategoryList: () => null };
 const SelectCategoryContextContext = React.createContext(initialValue);
 
 export const SelectCategoryContextContextConsumer = SelectCategoryContextContext.Consumer;

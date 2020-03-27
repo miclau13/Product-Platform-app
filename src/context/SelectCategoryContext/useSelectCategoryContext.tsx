@@ -1,7 +1,7 @@
 import React from 'react';
 import SelectCategoryContext from './SelectCategoryContext';
 
-export default function useDisplayIntro() {
+export default function useSelectCategoryContext() {
   const ctx = React.useContext(SelectCategoryContext);
   // console.log("useDisplayIntro ctx", ctx)
   if (ctx == null) {

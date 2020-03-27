@@ -1,7 +1,7 @@
 import React from 'react';
 import DisplayIntroContext from './DisplayIntroContext';
 
-export default function useDisplayIntro() {
+export default function useDisplayIntroContext() {
   const ctx = React.useContext(DisplayIntroContext);
   // console.log("useDisplayIntro ctx", ctx)
   if (ctx == null) {
