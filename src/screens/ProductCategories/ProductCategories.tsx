@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { Alert } from 'react-native';
 import { ButtonProps, CardProps } from 'react-native-elements';
@@ -36,7 +37,8 @@ const ProductCategories: React.ComponentType<Props> = (props) => {
 
   const [loading] = React.useState(false);
   const categoryList = getDefaultCategoryList();
-  const onPress: ButtonProps['onPress'] = () => {
+  const onPress: ButtonProps['onPress'] = async () => {
+    await SecureStore.setItemAsync("selectCategory", "NO");
     navigation.navigate("BarCodeScanner");
   };
 
@@ -48,6 +50,7 @@ const ProductCategories: React.ComponentType<Props> = (props) => {
         {text: 'OK', onPress: () => console.log('OK Pressed')},
       ],
     );
+    return () => {}
   });
   
   if (loading) {

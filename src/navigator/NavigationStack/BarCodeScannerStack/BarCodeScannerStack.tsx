@@ -1,7 +1,9 @@
+import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { screenOptions } from './NavigatorOptions';
+import LoadingComponent from '../../../components/LoadingComponent';
 import BarCodeScannerScreen, { options as BarCodeScannerScreenOptions } from '../../../screens/BarCodeScanner';
 import ProductCategoriesScreen, { options as ProductCategoriesScreenOptions } from '../../../screens/ProductCategories';
 import AddProductScreen, { options as AddProductScreenOptions } from "../../../screens/AddProduct";
@@ -26,11 +28,29 @@ export type BarCodeScannerStackParamList = {
 
 const BarCodeScannerStack = createStackNavigator<BarCodeScannerStackParamList>();
 
-const BarCodeScannerStackScreen = () => {
+const BarCodeScannerStackScreen = (props) => {
+  const [selectCategory, setSelectCategory] = React.useState("YES");
+  const [loading, setLoading] = React.useState(true);
+  React.useEffect(() => {
+    const bootStrapAsync = async () => {
+      const selectCategory = await SecureStore.getItemAsync("selectCategory");
+      console.log("BarCodeScannerStackScreen useEffect selectCategory",selectCategory)
+      setSelectCategory(selectCategory);
+      setLoading(false);
+    }
+    bootStrapAsync();
+  }, []);
+
+  if (loading) {
+    return (
+      <LoadingComponent />
+    );
+  };
+
   return (
     <BarCodeScannerStack.Navigator
-      // initialRouteName="ProductCategories"
-      initialRouteName="BarCodeScanner"
+      initialRouteName={selectCategory === "YES" ? "ProductCategories" : "BarCodeScanner"}
+      // initialRouteName="BarCodeScanner"
       screenOptions={screenOptions}
     >
       <BarCodeScannerStack.Screen name="BarCodeScanner" component={BarCodeScannerScreen} options={BarCodeScannerScreenOptions}/>
