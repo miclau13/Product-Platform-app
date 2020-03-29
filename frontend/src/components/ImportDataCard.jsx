@@ -32,7 +32,7 @@ export default function ImportDataCard() {
     //   },
     //   responseType: 'blob'
     // });  
-    const response = await axios.post(`http://localhost:5000/products/import`, formData, {
+    const response = await axios.post(`/products/import`, formData, {
       headers: { 
         'Content-Type': 'multipart/form-data'
       },
