@@ -1,5 +1,5 @@
 import React from 'react';
-import { TileProps, IconProps } from 'react-native-elements';
+import { TileProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import {  } from './utils';

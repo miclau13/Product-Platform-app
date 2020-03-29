@@ -6,7 +6,14 @@ import styles from './styles';
 import { ProductInfoViewProps } from '../ProductInfo';
 
 const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
-  const { addIconOnPress, favorite, favoriteIconOnPress, productInfo, shareIconOnPress, similarProductList } = props;
+  const { 
+    addIconOnPress, 
+    favorite, 
+    favoriteIconOnPress, 
+    productInfo, 
+    shareIconOnPress, 
+    similarProductList 
+  } = props;
   const {
     activeOpacity,
     caption,

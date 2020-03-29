@@ -44,3 +44,14 @@ const list: SimilarProduct[] = [
 export const getDefaultList = () => {
   return list;
 };
+
+export const convertToSimilarProductFormat = (list) => {
+  const result = list.map(item => {
+    return {
+      title: item.name,
+      leftAvatar: { source: Mask1Image },
+      subtitle: item.description
+    }
+  });
+  return result;
+}

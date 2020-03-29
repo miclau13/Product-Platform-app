@@ -3,7 +3,7 @@ import { Share } from 'react-native';
 import { TileProps, IconProps, ListItemProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { getDefaultList, getDefaultProductInfo } from './utils';
+import { convertToSimilarProductFormat, getDefaultList, getDefaultProductInfo } from './utils';
 import ProductInfoView from './ProductInfoView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
@@ -32,10 +32,10 @@ export interface ProductInfoViewProps {
 const ProductInfo: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
 
-  const [loading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [favorite, setFavorite] = React.useState(false);
 
-  const similarProductList = getDefaultList();
+  const [similarProductList, setSimilarProductList] = React.useState(getDefaultList());
   const productInfo = getDefaultProductInfo();
   const favouriteIconOnPress = React.useCallback<ProductInfoViewProps['favoriteIconOnPress']>(() => {
     setFavorite((value)=> !value);
@@ -66,6 +66,27 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       alert(error.message);
     }
   },[]);
+
+  React.useEffect(() => {
+    const getSimilarProducts = async (args: { category: string }) => {
+      try {
+        const response = await fetch(`http://192.168.0.104:5000/products?category=${args.category}`, {
+          method: 'get',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log("try")
+        const result = await response.json() || [];
+        setSimilarProductList(convertToSimilarProductFormat(result));
+      } catch (error) {
+        console.log(" getSimilarProducts error:", error);
+      };
+      setLoading(false);
+    };
+    getSimilarProducts({ category: 'mask' });
+  }, [])
 
   if (loading) {
     return (

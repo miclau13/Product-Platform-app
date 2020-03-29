@@ -56,7 +56,8 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     if (type && data) {
       navigation.navigate('ProductInfo');
       // setScanned(false);
-    } else {
+    } else
+     {
       Alert.alert(
         'Help Us Out?',
   `The product was not found. Please help us out by sending us 4 photos: 
