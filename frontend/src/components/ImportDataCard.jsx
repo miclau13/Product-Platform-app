@@ -26,12 +26,19 @@ export default function ImportDataCard() {
     let formData = new FormData();
     formData.append("file", fileInputRef.current.files[0]);
     setLoading(true);
-    const response = await axios.post(`/import_data`, formData, {
-      headers: {
+    // const response = await axios.post(`/import_data`, formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   },
+    //   responseType: 'blob'
+    // });  
+    const response = await axios.post(`http://localhost:5000/products/import`, formData, {
+      headers: { 
         'Content-Type': 'multipart/form-data'
       },
       responseType: 'blob'
     });  
+
     // const url = window.URL.createObjectURL(new Blob([response.data]));
     // const link = document.createElement('a');
     // link.href = url;
