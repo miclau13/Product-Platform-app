@@ -1,11 +1,11 @@
 {
   "name": "ls",
   "version": "1.0.0",
-  "description": "exercise",
+  "description": "Crazyee",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "yarn install",
+    "prestart": "npm install",
     "start": "node server.js",
     "server": "nodemon server.js"
   },
