@@ -1,54 +1,18 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "name": "ls",
+  "version": "1.0.0",
+  "description": "Crazyee",
+  "main": "index.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
-
     "build": "cd ./frontend && yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart:dev": "yarn install",
     "server": "cd ./backend && yarn server",
     "start:dev": "concurrently \"cd ./frontend && yarn start\" \"cd ./backend && yarn server\""
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@expo/react-native-action-sheet": "^3.5.0",
-    "@react-native-community/masked-view": "0.1.5",
-    "@react-navigation/bottom-tabs": "^5.1.1",
-    "@react-navigation/native": "^5.0.9",
-    "@react-navigation/stack": "^5.1.1",
-    "assign-deep": "^1.0.1",
-    "expo": "~36.0.0",
-    "expo-barcode-scanner": "~8.0.0",
-    "expo-camera": "^8.0.0",
-    "expo-image-picker": "^8.0.2",
-    "expo-secure-store": "^8.0.0",
-    "prop-types": "^15.7.2",
-    "react": "~16.9.0",
-    "react-dom": "~16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-app-intro-slider": "^3.0.0",
-    "react-native-elements": "^1.2.7",
-    "react-native-gesture-handler": "~1.5.0",
-    "react-native-paper": "^3.6.0",
-    "react-native-reanimated": "~1.4.0",
-    "react-native-safe-area-context": "0.6.0",
-    "react-native-screens": "2.0.0-alpha.12",
-    "react-native-swiper": "^1.6.0-nightly.5",
-    "react-native-web": "~0.11.7",
-    "react-number-format": "^4.4.1",
-    "rn-falcon-app-intro": "^1.2.9",
-    "lottie-react-native": "~2.6.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@types/react": "~16.9.0",
-    "@types/react-native": "~0.60.23",
-    "babel-preset-expo": "~8.0.0",
-    "typescript": "~3.6.3"
-  },
-  "private": true,
-  "proxy": "http://192.168.0.104:5000/"
+    "concurrently": "^5.1.0"
+  }
 }
