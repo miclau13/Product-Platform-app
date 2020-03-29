@@ -2,13 +2,14 @@
   "name": "ls",
   "version": "1.0.0",
   "description": "Crazyee",
-  "main": "index.js",
+  "main": "./backend/server.js",
   "scripts": {
     "build": "cd ./frontend && yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart:dev": "yarn install",
     "server": "cd ./backend && yarn server",
-    "start:dev": "concurrently \"cd ./frontend && yarn start\" \"cd ./backend && yarn server\""
+    "start:dev": "concurrently \"cd ./frontend && yarn start\" \"cd ./backend && yarn server\"",
+    "start": "cd ./backend && npm start"
   },
   "author": "",
   "license": "ISC",
