@@ -4,12 +4,12 @@
   "description": "Crazyee",
   "main": "./backend/server.js",
   "scripts": {
-    "build": "cd ./frontend && yarn build",
+    "build": "cd ./frontend && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart:dev": "yarn install",
-    "server": "cd ./backend && yarn server",
-    "start:dev": "concurrently \"cd ./frontend && yarn start\" \"cd ./backend && yarn server\"",
-    "start": "cd ./backend && yarn start"
+    "prestart:dev": "npm install",
+    "server": "cd ./backend && npm server",
+    "start:dev": "concurrently \"cd ./frontend && npm start\" \"cd ./backend && npm server\"",
+    "start": "cd ./backend && npm start"
   },
   "author": "",
   "license": "ISC",
