@@ -17,6 +17,7 @@
     "react-scripts": "3.4.0"
   },
   "scripts": {
+    "prebuild": "npm install",
     "prestart": "npm install",
     "start": "react-scripts start",
     "build": "react-scripts build",
