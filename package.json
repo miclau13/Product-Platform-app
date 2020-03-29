@@ -9,7 +9,7 @@
     "prestart:dev": "yarn install",
     "server": "cd ./backend && yarn server",
     "start:dev": "concurrently \"cd ./frontend && yarn start\" \"cd ./backend && yarn server\"",
-    "start": "cd ./backend && npm start"
+    "start": "cd ./backend && yarn start"
   },
   "author": "",
   "license": "ISC",
