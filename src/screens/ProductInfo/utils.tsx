@@ -48,7 +48,7 @@ export const getDefaultList = () => {
 export const convertToSimilarProductFormat = (list) => {
   const result = list.map(item => {
     return {
-      title: item.name,
+      title: item.productName,
       leftAvatar: { source: Mask1Image },
       subtitle: item.description
     }

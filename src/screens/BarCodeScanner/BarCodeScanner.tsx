@@ -53,11 +53,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     setScanned(true);
     console.log("type", type)
     console.log("data", data)
-    if (type && data) {
-      navigation.navigate('ProductInfo');
-      // setScanned(false);
-    } else
-     {
+    if (data.match(/0{13}/g)) {
       Alert.alert(
         'Help Us Out?',
   `The product was not found. Please help us out by sending us 4 photos: 
@@ -75,8 +71,10 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
           }},
         ],
       ); 
-    }
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    } else if (type && data) {
+      navigation.navigate('ProductInfo');
+      // setScanned(false);
+    };
   }, [scanned]);
   const handleScanAgainButtonOnPress = useCallback<BarCodeScannerViewProps['handleScanAgainButtonOnPress']>(() => {
     setScanned(false);

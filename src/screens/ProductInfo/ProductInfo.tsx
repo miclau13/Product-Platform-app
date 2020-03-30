@@ -70,14 +70,14 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   React.useEffect(() => {
     const getSimilarProducts = async (args: { category: string }) => {
       try {
-        const response = await fetch(`http://192.168.0.104:5000/products?category=${args.category}`, {
+        // const response = await fetch(`http://192.168.0.104:5000/products?category=${args.category}`, {
+          const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
           method: 'get',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
         });
-        console.log("try")
         const result = await response.json() || [];
         setSimilarProductList(convertToSimilarProductFormat(result));
       } catch (error) {
