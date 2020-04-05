@@ -6,6 +6,7 @@ import { Button, Icon } from 'react-native-elements';
 import styles, { absoluteFillObject } from './styles';
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
 import ProductSearch from '../../ProductSearch';
+import DropdownComponent from '../../../components/DropdownComponent';
 import SearchBarComponent from '../../../components/SearchComponent';
 
 export const NoAccessView: React.ComponentType = () => {
@@ -39,12 +40,20 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
   return (
     <View style={styles.container}>
       <View style={styles.topBarContainer}>
+        <DropdownComponent
+          items={[
+            { label: 'Mask', value: 'mask' },
+            { label: 'Sanitizer', value: 'sanitizer' },
+          ]}
+          onValueChange={(value) => console.log(value)}
+          value='sanitizer'
+        />
         <SearchBarComponent 
           onChangeText={updateSearch}
           onFocus={onFocus}
           value={search}
         />
-        {!isSearchViewVisible ? 
+        {/* {!isSearchViewVisible ? 
           <Icon
             containerStyle={styles.iconContainer}
             onPress={handleHistoryIconOnPress}
@@ -57,9 +66,9 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             title="Cancel"
             type="clear"
           />
-        }
+        } */}
       </View>
-      {!isSearchViewVisible ? 
+      {/* {!isSearchViewVisible ? 
         <View style={styles.container}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -68,7 +77,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
         </View> :
         <ProductSearch navigation={navigation}/>
-      }
+      } */}
     </View>
   );
 }

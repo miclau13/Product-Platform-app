@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
   },
   topBarContainer: {
+    alignItems: 'center',
     backgroundColor: 'white',
     flexDirection: 'row',
   },

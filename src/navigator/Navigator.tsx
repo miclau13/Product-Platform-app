@@ -63,8 +63,8 @@ const Navigator = () => {
     const bootstrapAsync = async () => {
       let displayIntro, selectCategory;
       try {
-        await SecureStore.setItemAsync("selectCategory", "YES");
-        await SecureStore.setItemAsync("displayIntro", "YES");
+        // await SecureStore.setItemAsync("selectCategory", "YES");
+        // await SecureStore.setItemAsync("displayIntro", "YES");
         displayIntro = await SecureStore.getItemAsync("displayIntro");
         selectCategory = await SecureStore.getItemAsync("selectCategory");
       } catch (e) {
