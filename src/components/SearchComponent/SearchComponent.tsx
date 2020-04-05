@@ -8,9 +8,9 @@ const SearchBarComponent: React.ComponentType<SearchBarProps> = (props) => {
     <SearchBar
       lightTheme
       round
-      searchIcon
       containerStyle={styles.container}
       placeholder="Search"
+      searchIcon={false}
       {...props}
     />
   )

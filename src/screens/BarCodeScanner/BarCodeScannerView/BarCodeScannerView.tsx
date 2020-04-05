@@ -1,10 +1,11 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 
 import styles, { absoluteFillObject } from './styles';
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
+import BarCodeScannerMarkerView from '../BarCodeScannerMarkerView';
 import ProductSearch from '../../ProductSearch';
 import DropdownComponent from '../../../components/DropdownComponent';
 import SearchBarComponent from '../../../components/SearchComponent';
@@ -59,7 +60,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           onFocus={onFocus}
           value={search}
         />
-        {/* {!isSearchViewVisible ? 
+        {!isSearchViewVisible ? 
           <Icon
             containerStyle={styles.iconContainer}
             onPress={handleHistoryIconOnPress}
@@ -72,18 +73,30 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             title="Cancel"
             type="clear"
           />
-        } */}
+        }
       </View>
-      {/* {!isSearchViewVisible ? 
+      {!isSearchViewVisible ? 
         <View style={styles.container}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={absoluteFillObject}
           />
           {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
+          {/* <Image
+            style={styles.qr}
+            source={require('../assets/img/QR.png')}
+          /> */}
+          {/* <View style={styles.layerTop} />
+          <View style={styles.layerCenter}>
+            <View style={styles.layerLeft} />
+            <View style={styles.focused} />
+            <View style={styles.layerRight} />
+          </View>
+          <View style={styles.layerBottom} /> */}
+          <BarCodeScannerMarkerView />
         </View> :
         <ProductSearch navigation={navigation}/>
-      } */}
+      }
     </View>
   );
 }
