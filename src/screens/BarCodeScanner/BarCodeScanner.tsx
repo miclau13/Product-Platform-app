@@ -1,10 +1,13 @@
+import * as SecureStore from 'expo-secure-store';
 import { BarCodeScanner as ExpoBarCodeScanner, BarCodeScannerProps as ExpoBarCodeScannerProps } from 'expo-barcode-scanner';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Keyboard } from 'react-native';
+import { Alert, Keyboard, Platform } from 'react-native';
 import { ButtonProps, SearchBarProps, IconProps } from 'react-native-elements';
+import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCodeScannerView';
+import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type BarCodeScannerScreenNavigationProp = StackNavigationProp<
@@ -29,16 +32,24 @@ export interface BarCodeScannerViewProps {
   search: string;
   updateSearch: SearchBarProps['onChangeText'];
 
+  // For Dropdown
+  handleDropdownOnValueDown: PickerProps['onValueChange'];
+  handleIOSDropdownOnDonePress: PickerProps['onDonePress'];
+  selectedCategory: string;
+
   // For ProductSearchView
   navigation: Props['navigation'];
 };
 
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
+  const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
   const [hasPermission, setHasPermission] = useState(null);
   const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [search, setSearch] = useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
+  console.log("BarCodeScanner, selectedCategory", selectedCategory)
 
   // For Search
   const updateSearch = React.useCallback(search => {
@@ -47,6 +58,21 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const onFocus = React.useCallback<BarCodeScannerViewProps['onFocus']>(() => {
     setIsSearchViewVisible(true);
   }, [isSearchViewVisible]);
+
+  // For Dropdown
+  const handleDropdownOnValueDown = React.useCallback<BarCodeScannerViewProps['handleDropdownOnValueDown']>(async (value) => {
+    if (Platform.OS === "ios") {
+      setSelectedCategory(value);
+      return;
+    };
+    await SecureStore.setItemAsync("selectedCategory", value);
+    updateCategoryList(value);
+  }, []);
+  // IOS
+  const handleIOSDropdownOnDonePress = React.useCallback<BarCodeScannerViewProps['handleIOSDropdownOnDonePress']>(async () => {
+    await SecureStore.setItemAsync("selectedCategory", selectedCategory);
+    updateCategoryList(selectedCategory);
+  }, [selectedCategory]);
 
   // For BarCodeScannerView
   const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(({ type, data }) => {
@@ -92,6 +118,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     (async () => {
       const { status } = await ExpoBarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
+      // const _selectCategory = await SecureStore.getItemAsync("selectedCategory");
     })();
   }, []);
 
@@ -110,11 +137,15 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       handleHistoryIconOnPress={handleHistoryIconOnPress}
       isSearchViewVisible={isSearchViewVisible}
       scanned={scanned}
-
+      // For Search
       onFocus={onFocus}
       search={search}
       updateSearch={updateSearch}
-
+      // For Dropdown
+      handleDropdownOnValueDown={handleDropdownOnValueDown}
+      handleIOSDropdownOnDonePress={handleIOSDropdownOnDonePress}
+      selectedCategory={selectedCategory}
+      // For ProductSearchView
       navigation={navigation}
     />
   )

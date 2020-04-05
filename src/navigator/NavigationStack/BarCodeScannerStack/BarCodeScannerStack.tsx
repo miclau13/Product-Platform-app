@@ -28,10 +28,10 @@ export type BarCodeScannerStackParamList = {
 const BarCodeScannerStack = createStackNavigator();
 
 const BarCodeScannerStackScreen = (props) => {
-  const { selectCategory } = useSelectCategoryContext();
+  const { selectedCategory } = useSelectCategoryContext();
   return (
     <BarCodeScannerStack.Navigator
-      initialRouteName={selectCategory ? "ProductCategories" : "BarCodeScanner"}
+      initialRouteName={!!selectedCategory ? "BarCodeScanner" : "ProductCategories"}
       // initialRouteName="ProductInfo"
       screenOptions={screenOptions}
     >

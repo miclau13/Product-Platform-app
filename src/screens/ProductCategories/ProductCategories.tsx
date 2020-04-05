@@ -25,22 +25,23 @@ export type Category = {
   image: CardProps['image'];
   imageProps: CardProps['imageProps'];
   imageStyle: CardProps['imageStyle'];
-  title: CardProps['title'];
+  title: string;
 }
 
 export interface ProductCategoriesViewProps {
   categoryList: Category[];
-  onPress: ButtonProps['onPress'];
+  onPress(category: string): ButtonProps['onPress'];
 };
 
 const ProductCategories: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-  const { removeCategoryList } = useSelectCategoryContext();
+  const { updateCategoryList } = useSelectCategoryContext();
   const [loading] = React.useState(false);
   const categoryList = getDefaultCategoryList();
-  const onPress: ButtonProps['onPress'] = async () => {
-    await SecureStore.setItemAsync("selectCategory", "NO");
-    removeCategoryList();
+
+  const onPress: ProductCategoriesViewProps['onPress'] = (category) => async () => {
+    await SecureStore.setItemAsync("selectedCategory", category);
+    updateCategoryList(category);
     navigation.navigate("BarCodeScanner");
   };
 

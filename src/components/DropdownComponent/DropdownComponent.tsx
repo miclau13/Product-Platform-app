@@ -6,7 +6,6 @@ import RNPickerSelect, { PickerProps } from 'react-native-picker-select';
 import styles, { pickerSelectStyles } from './styles';
 
 const DropdownComponent: React.ComponentType<PickerProps> = (props) => {
-  // const { items, value } = props;
   return (
     <View style={styles.container}>
       <RNPickerSelect

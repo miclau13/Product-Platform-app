@@ -30,10 +30,15 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     isSearchViewVisible,
     scanned,
 
+    // For Search
     onFocus,
     search,
     updateSearch,
-
+    // For Dropdown
+    handleDropdownOnValueDown,
+    handleIOSDropdownOnDonePress,
+    selectedCategory,
+    // For ProductSearchView
     navigation,
   } = props; 
   
@@ -45,8 +50,9 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             { label: 'Mask', value: 'mask' },
             { label: 'Sanitizer', value: 'sanitizer' },
           ]}
-          onValueChange={(value) => console.log(value)}
-          value='sanitizer'
+          onDonePress={handleIOSDropdownOnDonePress}
+          onValueChange={handleDropdownOnValueDown}
+          value={selectedCategory}
         />
         <SearchBarComponent 
           onChangeText={updateSearch}

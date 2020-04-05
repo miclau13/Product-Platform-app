@@ -24,7 +24,7 @@ const ProductCategoriesView: React.ComponentType<ProductCategoriesViewProps> = (
                 {description}
               </Text>
               <Button
-                onPress={onPress}
+                onPress={onPress(title)}
                 { ...buttonProps }
               />
             </Card>

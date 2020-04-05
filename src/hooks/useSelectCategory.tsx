@@ -1,25 +1,26 @@
 import React, { Dispatch, ReducerAction } from 'react';
 
 interface State {
-  selectCategory: boolean,
+  selectedCategory: boolean,
 };
 
 interface Action {
-  type: 'REMOVE_SELECT_CATEGORY';
+  type: 'UPDATE_SELECTED_CATEGORY';
+  value: string;
 };
 
 type Reducer = (prevState: State, action: Action) => State;
 
 const initialState = {
-  selectCategory: true,
+  selectedCategory: "",
 };
 
 const reducer = (prevState: State, action: Action) => {
   switch (action.type) {
-    case 'REMOVE_SELECT_CATEGORY':
+    case 'UPDATE_SELECTED_CATEGORY':
       return {
         ...prevState,
-        selectCategory: false,
+        selectedCategory: action.value,
       };
   }
 };

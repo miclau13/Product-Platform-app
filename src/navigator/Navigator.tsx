@@ -12,17 +12,18 @@ export type StackParamList = {};
 interface State {
   displayIntro: boolean,
   loading: boolean,
-  selectCategory: boolean,
+  selectedCategory: string,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'REMOVE_SELECT_CATEGORY' | 'DISABLE_LOADING';
+  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING';
+  value?: string;
 };
 
 const initialState = {
   displayIntro: true,
   loading: true,
-  selectCategory: true,
+  selectedCategory: "",
 };
 const reducer = (prevState: State, action: Action) => {
   switch (action.type) {
@@ -31,10 +32,10 @@ const reducer = (prevState: State, action: Action) => {
         ...prevState,
         displayIntro: false,
       };
-    case 'REMOVE_SELECT_CATEGORY':
+    case 'UPDATE_SELECTED_CATEGORY':
       return {
         ...prevState,
-        selectCategory: false,
+        selectedCategory: action.value.toLowerCase(),
       };
     case 'DISABLE_LOADING':
       return {
@@ -55,26 +56,27 @@ const Navigator = () => {
   }), []);
 
   const selectCategoryContext = React.useMemo(() => ({
-    removeCategoryList: () => dispatch({ type: 'REMOVE_SELECT_CATEGORY' }),
-    selectCategory: state.selectCategory
-  }), [state.selectCategory]);
+    updateCategoryList: (value: string) => dispatch({ type: 'UPDATE_SELECTED_CATEGORY', value }),
+    selectedCategory: state.selectedCategory
+  }), [state.selectedCategory]);
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      let displayIntro, selectCategory;
+      let displayIntro, selectedCategory;
       try {
-        // await SecureStore.setItemAsync("selectCategory", "YES");
-        // await SecureStore.setItemAsync("displayIntro", "YES");
+        // await SecureStore.setItemAsync("selectedCategory", "");
+        // await SecureStore.setItemAsync("displayIntro", true);
         displayIntro = await SecureStore.getItemAsync("displayIntro");
-        selectCategory = await SecureStore.getItemAsync("selectCategory");
+        selectedCategory = await SecureStore.getItemAsync("selectedCategory");
       } catch (e) {
         dispatch({ type: 'DISABLE_LOADING' });
       }
       if (displayIntro === "NO") {
         dispatch({ type: 'REMOVE_INTRO' });
       };
-      if (selectCategory === "NO") {
-        dispatch({ type: 'REMOVE_SELECT_CATEGORY' });
+      console.log("nav bootstrapAsync selectedCategory",selectedCategory)
+      if (selectedCategory) {
+        dispatch({ type: 'UPDATE_SELECTED_CATEGORY', value: selectedCategory });
       };
       dispatch({ type: 'DISABLE_LOADING' });
     };

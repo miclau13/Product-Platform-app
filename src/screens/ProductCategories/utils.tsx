@@ -28,7 +28,7 @@ const categoryList: Category[] = [
       height: 100,
       width: 100, 
     },
-    title: "Category 1", 
+    title: "Mask", 
   },
   { 
     buttonProps: { 
@@ -47,7 +47,7 @@ const categoryList: Category[] = [
       height: 100,
       width: 100, 
     },
-    title: "Category 2", 
+    title: "Sanitizer", 
   },
   { 
     buttonProps: { 
