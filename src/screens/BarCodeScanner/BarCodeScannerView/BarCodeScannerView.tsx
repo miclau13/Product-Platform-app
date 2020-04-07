@@ -1,9 +1,9 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, ButtonGroup, ButtonGroupProps, Icon } from 'react-native-elements';
 
-import styles, { absoluteFillObject } from './styles';
+import styles, { absoluteFillObject, buttonGroupStyles } from './styles';
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
 import BarCodeScannerMarkerView from '../BarCodeScannerMarkerView';
 import ProductSearch from '../../ProductSearch';
@@ -20,6 +20,17 @@ export const RequestingAccessView: React.ComponentType = () => {
   return (
     <Text>Requesting for camera permission</Text>
   )
+};
+
+const BarCodeScannerButtonGroupsView: React.ComponentType<ButtonGroupProps> = (props) => {
+  return (
+    <ButtonGroup
+      buttonStyle={buttonGroupStyles.buttonStyle}
+      containerStyle={buttonGroupStyles.containerStyle}
+      selectedButtonStyle={buttonGroupStyles.selectedButtonStyle}
+      { ...props }
+    />
+  );
 };
 
 const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props) => {
@@ -41,6 +52,9 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     selectedCategory,
     // For ProductSearchView
     navigation,
+    // For ButtonGroup
+    onButtonIndexPress,
+    selectedButtonIndex,
   } = props; 
   
   return (
@@ -76,27 +90,32 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
         }
       </View>
       {!isSearchViewVisible ? 
-        <View style={styles.container}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={absoluteFillObject}
-          />
-          {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
-          {/* <Image
-            style={styles.qr}
-            source={require('../assets/img/QR.png')}
-          /> */}
-          {/* <View style={styles.layerTop} />
-          <View style={styles.layerCenter}>
-            <View style={styles.layerLeft} />
-            <View style={styles.focused} />
-            <View style={styles.layerRight} />
-          </View>
-          <View style={styles.layerBottom} /> */}
-          <BarCodeScannerMarkerView />
-        </View> :
+        selectedButtonIndex === 0 ?
+          <View style={styles.container}>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              style={absoluteFillObject}
+            />
+            {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
+            <BarCodeScannerMarkerView />
+          </View> :
+          null :
         <ProductSearch navigation={navigation}/>
       }
+      <View style={{ alignItems: 'center', position: 'absolute', width: '100%', bottom: 8 }}>
+        <BarCodeScannerButtonGroupsView
+          buttons={
+            [ 
+              { element: () => <Icon name='barcode' size={40} type="material-community" />},
+              { element: () => <Icon name='photo-library' size={40} />},
+              // <Icon name={'barcode-scan'} size={32} type="material-community" />,
+              // <Icon name={'barcode-scan'} type="material-community" />,
+            ]
+          }
+          onPress={onButtonIndexPress}
+          selectedIndex={selectedButtonIndex}
+        />
+      </View>
     </View>
   );
 }

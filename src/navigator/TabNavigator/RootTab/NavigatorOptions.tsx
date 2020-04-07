@@ -32,7 +32,7 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
       }
       return <Icon color={color} name={iconName} size={size * 1.5} type="material-community" />
     },
-    // tabBarVisible: route.name !== "Intro",
+    // tabBarVisible: false,
     // tabBarLabel: false,
   })
 };

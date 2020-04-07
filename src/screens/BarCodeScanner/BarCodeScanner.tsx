@@ -1,8 +1,10 @@
 import * as SecureStore from 'expo-secure-store';
 import { BarCodeScanner as ExpoBarCodeScanner, BarCodeScannerProps as ExpoBarCodeScannerProps } from 'expo-barcode-scanner';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Keyboard, Platform } from 'react-native';
-import { ButtonProps, SearchBarProps, IconProps } from 'react-native-elements';
+import { ButtonProps, ButtonGroupProps, SearchBarProps, IconProps } from 'react-native-elements';
 import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -39,17 +41,23 @@ export interface BarCodeScannerViewProps {
 
   // For ProductSearchView
   navigation: Props['navigation'];
+
+  // For ButtonGroup
+  onButtonIndexPress: ButtonGroupProps['onPress'];
+  selectedButtonIndex: number;
 };
 
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
-  const [hasPermission, setHasPermission] = useState(null);
+  const [hasBarCodeScannerPermission, setHasBarCodeScannerPermission] = useState(null);
   const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
-  console.log("BarCodeScanner, selectedCategory", selectedCategory)
+  // For ButtonGroup
+  const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
+  const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
 
   // For Search
   const updateSearch = React.useCallback(search => {
@@ -114,18 +122,54 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     navigation.navigate('Records');
   }, [navigation]);
 
+  // For ButtonGroup
+  const onButtonIndexPress = React.useCallback<BarCodeScannerViewProps['onButtonIndexPress']>((index) => {
+    setSelectedButtonIndex(index);
+  }, [selectedButtonIndex]);
+
+  // For Photo Library
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    console.log(result);
+    if (result.cancelled) {
+      setSelectedButtonIndex(0);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       const { status } = await ExpoBarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-      // const _selectCategory = await SecureStore.getItemAsync("selectedCategory");
+      setHasBarCodeScannerPermission(status === 'granted');
     })();
-  }, []);
+  }, [hasBarCodeScannerPermission]);
 
-  if (hasPermission === null) {
+  useEffect(() => {
+    (async () => {
+      if (selectedButtonIndex === 1 && !hasPhotoLibraryPermission) {
+        if (!hasPhotoLibraryPermission) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status === 'granted') {
+            setHasPhotoLibraryPermission(true);
+          } else {
+            setSelectedButtonIndex(0);
+            return;
+          }
+        }
+        pickImage();
+      }
+    })();
+  }, [selectedButtonIndex, hasPhotoLibraryPermission]);
+
+  if (hasBarCodeScannerPermission === null) {
     return <RequestingAccessView />;
   }
-  if (hasPermission === false) {
+  if (hasBarCodeScannerPermission === false) {
     return <NoAccessView />
   }
 
@@ -147,6 +191,9 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       selectedCategory={selectedCategory}
       // For ProductSearchView
       navigation={navigation}
+      // For ButtonGroup
+      onButtonIndexPress={onButtonIndexPress}
+      selectedButtonIndex={selectedButtonIndex}
     />
   )
 };
