@@ -74,7 +74,6 @@ const Navigator = () => {
       if (displayIntro === "NO") {
         dispatch({ type: 'REMOVE_INTRO' });
       };
-      console.log("nav bootstrapAsync selectedCategory",selectedCategory)
       if (selectedCategory) {
         dispatch({ type: 'UPDATE_SELECTED_CATEGORY', value: selectedCategory });
       };

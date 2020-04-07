@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { ButtonGroup, ButtonGroupProps, ListItem } from 'react-native-elements';
+import { FlatList, SafeAreaView } from 'react-native';
+import { ButtonGroup, ButtonGroupProps, Icon, ListItem } from 'react-native-elements';
 
 import styles, { buttonGroupStyles } from './styles';
-import { RecordsViewProps } from '../Records';
+import { RecordsViewProps, RecordsListItemViewProps } from '../Records';
 
 const RecordsButtonsGroupView: React.ComponentType<ButtonGroupProps> = (props) => {
   return (
@@ -18,12 +18,38 @@ const RecordsButtonsGroupView: React.ComponentType<ButtonGroupProps> = (props) =
   );
 };
 
+export const RecordsListItemView: React.ComponentType<RecordsListItemViewProps> = (props) => {
+  const { favoriteIconOnPress, item } = props;
+  return (
+    <ListItem
+      bottomDivider
+      key={item.id}
+      leftAvatar={item.leftAvatar}
+      rightIcon={            
+        <Icon
+          color='#00aced'
+          name={item.favorite ? 'favorite' : 'favorite-border'}
+          onPress={favoriteIconOnPress(item.id)}
+        />
+      }
+      rightTitle={item.rightTitle}
+      subtitle={item.subtitle}
+      title={item.title}
+    />
+  );
+};
+
 const RecordsView: React.ComponentType<RecordsViewProps> = (props) => {
   const { 
     buttons, 
     onButtonIndexPress,
-    recordsItemsList,
     selectedButtonIndex,
+
+    // For recordsItem
+    isRefreshing,
+    onRefresh,
+    renderItem,
+    recordsItemsList,
   } = props;
   
   return (
@@ -33,18 +59,12 @@ const RecordsView: React.ComponentType<RecordsViewProps> = (props) => {
         onPress={onButtonIndexPress}
         selectedIndex={selectedButtonIndex}
       />
-      <ScrollView style={styles.container}>
-        {recordsItemsList.map((item, i) => (
-            <ListItem
-              key={i}
-              leftAvatar={item.leftAvatar}
-              title={item.title}
-              subtitle={item.subtitle}
-              bottomDivider
-            />
-          ))
-        }
-      </ScrollView>
+      <FlatList
+        data={recordsItemsList}
+        refreshing={isRefreshing}
+        onRefresh={onRefresh}
+        renderItem={renderItem}
+      />
     </SafeAreaView>
   );
 }

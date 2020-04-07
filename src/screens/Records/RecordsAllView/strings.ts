@@ -1,5 +1,5 @@
 const strings = {
-  title: "Records History View"
+  title: "Records All View"
 }
 
 export default strings;
