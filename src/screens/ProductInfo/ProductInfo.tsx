@@ -22,27 +22,22 @@ export interface ProductInfo {
   category: string;
   functions: string;
   origin: string;
-  price: number;
+  price: string;
   title: string;
 };
 
 type ProductInfoList = {
   key: string;
-  title: string | number;
-  value?: undefined;
-} | {
-  key: string;
-  value: string | number;
   title: string;
-}[]
+  value: string;
+}[];
 
 export interface ProductInfoGridViewProps {
   favorite: boolean;
   handleFavoriteIconOnPress: IconProps['onPress'];
-  imageProps: ImageProps;
   productInfoList: ProductInfoList;
-  shareIconOnPress: IconProps['onPress'];
-  showButtons: boolean;
+  handleShareIconOnPress: IconProps['onPress'];
+  showButtons?: boolean;
 }
 export interface ProductInfoViewProps extends ProductInfoGridViewProps {
   handleExpand: ListItemProps['onPress'];
@@ -59,32 +54,31 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   // const [similarProductList, setSimilarProductList] = React.useState(getDefaultList());
   const productInfo = React.useMemo(() => getDefaultProductInfo(), [getDefaultProductInfo]);
 
-  const productInfoList = React.useMemo(() => map(productInfo, (value, key) => {
+  const productInfoList = React.useMemo<ProductInfoList>(() => map(productInfo, (value, key) => {
+    let title = "";
     if (key === "title") {
-      return { key, title: value };
-    }
-    if (key === "price") {
-      return {
-        key, 
-        value,
-        title: `${key.toUpperCase()}:   `,
-      }
+      title = value.toString();
+    } else if (key === "price") {
+      title = `${key.toUpperCase()}:   `;
+    } else {
+      title = `${key.toUpperCase()}:   ${value}`;
     }
     return {
       key, 
-      title: `${key.toUpperCase()}:   ${value}`
+      title,
+      value
     }
   }), [productInfo]);
 
-
-  const favouriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(() => {
+  const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(() => {
     setFavorite((value)=> !value);
   }, []);
+
   const handleExpand = React.useCallback<ProductInfoViewProps['handleExpand']>(() => {
-    // navigation.navigate('ProductComparison');
     setIsExpanded(!isExpanded);
   }, [isExpanded]);
-  const shareIconOnPress = React.useCallback<ProductInfoViewProps['shareIconOnPress']>(async () => {
+  
+  const handleShareIconOnPress = React.useCallback<ProductInfoViewProps['handleShareIconOnPress']>(async () => {
     try {
       const result = await Share.share({
         message:
@@ -139,10 +133,10 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     <ProductInfoView 
       handleExpand={handleExpand}
       favorite={favorite}
-      handleFavoriteIconOnPress={favouriteIconOnPress}
+      handleFavoriteIconOnPress={handleFavoriteIconOnPress}
       isExpanded={isExpanded}
       productInfoList={productInfoList}
-      shareIconOnPress={shareIconOnPress}
+      handleShareIconOnPress={handleShareIconOnPress}
     />
   )
 };

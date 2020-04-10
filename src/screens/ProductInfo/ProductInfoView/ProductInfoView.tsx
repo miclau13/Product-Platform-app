@@ -15,7 +15,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
     favorite, 
     handleFavoriteIconOnPress, 
     productInfoList,
-    shareIconOnPress, 
+    handleShareIconOnPress, 
     showButtons = true,
   } = props;
 
@@ -33,7 +33,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
           <Icon
             color='#00aced'
             name='share'
-            onPress={shareIconOnPress}
+            onPress={handleShareIconOnPress}
             size={40}
           />
           <Icon
@@ -76,9 +76,10 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
             const isInNumberFormat = item.key === 'price';
             return (
               <ListItem
-                containerStyle={{ backgroundColor: 'transparent', padding: 10 }}
+                containerStyle={styles.listItemContentContainer}
                 key={key}
-                title={!isInNumberFormat ? item.title :         
+                title={
+                  !isInNumberFormat ? item.title :         
                   <NumberFormat 
                     decimalScale={0}
                     displayType={'text'} 

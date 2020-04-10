@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   container: {
-    
+
   },
   gridContainer: {
     flexDirection: 'row', 
@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingLeft: 14,
-
-    // backgroundColor: 'green'
   },
   leftContainer: {
     alignItems: 'center',
@@ -45,6 +43,10 @@ const styles = StyleSheet.create({
     height: 150,
     width: '90%', 
     backgroundColor: 'pink'
+  },
+  listItemContentContainer: {
+    backgroundColor: 'transparent', 
+    padding: 10,
   },
   rightContainer: {
     flex: 1,
