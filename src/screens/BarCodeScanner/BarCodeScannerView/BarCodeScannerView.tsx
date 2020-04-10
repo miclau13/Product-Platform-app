@@ -1,6 +1,6 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button, ButtonGroup, ButtonGroupProps, Icon } from 'react-native-elements';
 
 import styles, { absoluteFillObject, buttonGroupStyles } from './styles';

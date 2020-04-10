@@ -4,6 +4,7 @@ import { Button, Input, Tile } from 'react-native-elements';
 
 import styles from './styles';
 import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
+import DropdownComponent from '../../../components/DropdownComponent';
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
   const { imageSrc } = props;
@@ -19,23 +20,35 @@ const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props)
 };
 
 const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
-  const { imageTileList, onImagePress, onSubmitButtonPress } = props;
+  const { 
+    imageTileList, 
+    onImagePress, 
+    onSubmitButtonPress,
+
+    // For Dropdown
+    handleDropdownOnValueDown,
+    handleIOSDropdownOnDonePress,
+    selectedCategory,
+  } = props;
 
   return (
     <SafeAreaView>
       <ScrollView>
       <View style={{ margin: 8 }}></View>
       <Input
-        keyboardType='number-pad'
-        label="Barcode Number"
+        inputComponent={() =>
+          <DropdownComponent
+            items={[
+              { label: 'Mask', value: 'mask' },
+              { label: 'Sanitizer', value: 'sanitizer' },
+            ]}
+            onDonePress={handleIOSDropdownOnDonePress}
+            onValueChange={handleDropdownOnValueDown}
+            value={selectedCategory}
+          />
+        }
+        label="Product Type"
         labelStyle={styles.label}
-        placeholder='99520008302578'
-      />
-      <View style={{ margin: 8 }}></View>
-      <Input
-        label="Brand Name"
-        labelStyle={styles.label}
-        placeholder='Lotte'
       />
       <View style={{ margin: 8 }}></View>
       <Input
@@ -45,32 +58,64 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
       />
       <View style={{ margin: 8 }}></View>
       <Input
-        keyboardType='numeric'
-        label="Weight(g)/Volume(ml)"
+        inputComponent={() =>
+          <DropdownComponent
+            items={[
+              { label: 'Mask', value: 'mask' },
+              { label: 'Sanitizer', value: 'sanitizer' },
+            ]}
+            onDonePress={handleIOSDropdownOnDonePress}
+            onValueChange={handleDropdownOnValueDown}
+            value={selectedCategory}
+          />
+        }
+        label="Reference Price"
         labelStyle={styles.label}
-        placeholder='100.00'
       />
       <View style={{ margin: 8 }}></View>
-      <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-        {imageTileList.map(imageTile => {
-          const { index, imageSrc } = imageTile;
-          return (
-            <AddProductTileView 
-              key={index}
-              imageSrc={imageSrc}
-              onPress={onImagePress(index)}
-            /> 
-          )
-        })}
-      </View>
+      <Input
+        inputComponent={() =>
+          <DropdownComponent
+            items={[
+              { label: 'Mask', value: 'mask' },
+              { label: 'Sanitizer', value: 'sanitizer' },
+            ]}
+            onDonePress={handleIOSDropdownOnDonePress}
+            onValueChange={handleDropdownOnValueDown}
+            value={selectedCategory}
+          />
+        }
+        label="Origin"
+        labelStyle={styles.label}
+      />
+      <View style={{ margin: 8 }}></View>
+      <Input
+        inputComponent={() =>
+          <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+            {imageTileList.map(imageTile => {
+              const { index, imageSrc } = imageTile;
+              return (
+                <AddProductTileView 
+                  key={index}
+                  imageSrc={imageSrc}
+                  onPress={onImagePress(index)}
+                /> 
+              )
+            })}
+        </View>
+        }
+        label="Product Images"
+        labelStyle={styles.label}
+      />
+      <View style={{ margin: 8 }}></View>
       <Input
         multiline
         inputContainerStyle={styles.textAreaContainer}
         inputStyle={styles.textArea}
-        label="Ingredients"
+        label="Keyword Tag"
         labelStyle={styles.label}
         numberOfLines={3}
-        placeholder='Add Ingredients Here...'
+        placeholder='Add Keyword Tag Here...'
       />
       <View style={{ margin: 8 }}></View>
       <Input

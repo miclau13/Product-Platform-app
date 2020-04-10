@@ -2,11 +2,13 @@ import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import React from 'react';
-import { ActionSheetIOS } from 'react-native';
+import { ActionSheetIOS, Platform } from 'react-native';
 import { ButtonProps, TileProps } from 'react-native-elements'; 
+import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import AddProductView from './AddProductView';
+import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
@@ -24,7 +26,12 @@ export interface AddProductViewProps {
   imageTileList: Array<imageTile>;
   onImagePress(index: number): TileProps['onPress'];
   onSubmitButtonPress: ButtonProps['onPress'];
+  // For Dropdown
+  handleDropdownOnValueDown: PickerProps['onValueChange'];
+  handleIOSDropdownOnDonePress: PickerProps['onDonePress'];
+  selectedCategory: string;
 };
+
 export type imageTile = {
   index: number;
   imageSrc: TileProps['imageSrc'];
@@ -33,12 +40,25 @@ export type imageTile = {
 const AddProduct: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const [loading] = React.useState(false);
-  const [imageTileList, setImageTileList] = React.useState(Array.from(Array(4)).map((item, index) => {
+  const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
     return {
       index,
       imageSrc: null,
     }
   }));
+
+  // For Dropdown
+  const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
+  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
+  const handleDropdownOnValueDown = React.useCallback<AddProductViewProps['handleDropdownOnValueDown']>((value) => {
+    if (Platform.OS === "ios") {
+      setSelectedCategory(value);
+      return;
+    };
+  }, []);
+  // IOS
+  const handleIOSDropdownOnDonePress = React.useCallback<AddProductViewProps['handleIOSDropdownOnDonePress']>(() => {
+  }, [selectedCategory]);
 
   const getPermissionAsync = async () => {
     if (Constants.platform.ios) {
@@ -145,6 +165,10 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       imageTileList={imageTileList}
       onImagePress={onImagePress}
       onSubmitButtonPress={onSubmitButtonPress}
+      // For Dropdown
+      handleDropdownOnValueDown={handleDropdownOnValueDown}
+      handleIOSDropdownOnDonePress={handleIOSDropdownOnDonePress}
+      selectedCategory={selectedCategory}
     />
   )
 };

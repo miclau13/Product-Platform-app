@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   tileContainerStyle: {
-    flex: 0.25,
+    flex: 0.2,
     flexGrow: 1,
     margin: 0, 
-    padding: 8,
+    padding: 4,
     shadowOpacity: 0,
   },
   tileContentContainerStyle: {
