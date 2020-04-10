@@ -7,13 +7,47 @@ const styles = StyleSheet.create({
     marginLeft: 0, 
     marginRight: 0, 
   },
-  similarProductTitle: {
-    textAlign: 'center',
+  buttonContainer: {
+    backgroundColor: '#00aced', 
+    width: '100%',
+  },
+  buttonTitle: {
+    color: 'white', 
+    fontSize: 16,
+  },
+  chip: {
     marginBottom: 8,
   },
-  title: {
-    marginBottom: 10,
-    textAlign: 'center',
+  container: {
+    
+  },
+  gridContainer: {
+    flexDirection: 'row', 
+    paddingLeft: 16,
+    paddingTop: 32, 
+  },
+  iconBarContainer: {
+    flexDirection: "row", 
+  },
+  labelContainer: {
+    alignItems: 'center',
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingLeft: 14,
+
+    // backgroundColor: 'green'
+  },
+  leftContainer: {
+    alignItems: 'center',
+  },
+  leftImageContainer: {
+    height: 150,
+    width: '90%', 
+    backgroundColor: 'pink'
+  },
+  rightContainer: {
+    flex: 1,
   },
 });
 
