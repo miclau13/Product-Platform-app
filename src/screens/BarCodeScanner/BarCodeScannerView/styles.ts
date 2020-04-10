@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e1e1e1',
     justifyContent: 'center', 
   },
+  buttonGroupContainer: {
+    alignItems: 'center', 
+    bottom: 48,
+    position: 'absolute', 
+    width: '100%', 
+  },
   container: {
     flex: 1,
   },

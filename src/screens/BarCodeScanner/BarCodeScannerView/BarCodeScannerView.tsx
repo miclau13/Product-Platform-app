@@ -102,14 +102,12 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           null :
         <ProductSearch navigation={navigation}/>
       }
-      <View style={{ alignItems: 'center', position: 'absolute', width: '100%', bottom: 8 }}>
+      <View style={styles.buttonGroupContainer}>
         <BarCodeScannerButtonGroupsView
           buttons={
             [ 
               { element: () => <Icon name='barcode' size={40} type="material-community" />},
               { element: () => <Icon name='photo-library' size={40} />},
-              // <Icon name={'barcode-scan'} size={32} type="material-community" />,
-              // <Icon name={'barcode-scan'} type="material-community" />,
             ]
           }
           onPress={onButtonIndexPress}
