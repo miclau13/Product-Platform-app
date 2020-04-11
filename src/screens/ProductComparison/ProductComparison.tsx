@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableWithoutFeedbackProps } from 'react-native';
 import { TileProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -19,12 +20,17 @@ type Props = {
 export type ProductComparison = TileProps;
 
 export interface ProductComparisonViewProps {
+  handlePlusIconOnPress: TouchableWithoutFeedbackProps['onPress'];
 };
 
 const ProductComparison: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
 
   const [loading] = React.useState(false);
+
+  const handlePlusIconOnPress = React.useCallback(() => {
+    navigation.navigate("ProductSearch");
+  }, [navigation]);
 
   if (loading) {
     return (
@@ -33,7 +39,7 @@ const ProductComparison: React.ComponentType<Props> = (props) => {
   };
 
   return (
-    <ProductComparisonView />
+    <ProductComparisonView handlePlusIconOnPress={handlePlusIconOnPress}/>
   )
 };
 

@@ -32,7 +32,7 @@ const BarCodeScannerStackScreen = (props) => {
   return (
     <BarCodeScannerStack.Navigator
       // initialRouteName={!!selectedCategory ? "BarCodeScanner" : "ProductCategories"}
-      initialRouteName="AddProduct"
+      initialRouteName="ProductComparison"
       screenOptions={screenOptions}
     >
       <BarCodeScannerStack.Screen name="BarCodeScanner" component={BarCodeScannerScreen} options={BarCodeScannerScreenOptions}/>

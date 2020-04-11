@@ -4,20 +4,36 @@ const styles = StyleSheet.create({
   cellContainter: {
     alignItems: 'center',
     flex: 1, 
-    flexDirection: 'row', 
-    paddingVertical: 16,
+    paddingVertical: 8,
   },
   celltext: {
-    marginLeft: 16
+    // marginLeft: 16
+  },
+  center: {
+    justifyContent: 'center',
   },
   chip: {
-    marginBottom: 8,
+    margin: 2,
+  },  
+  fab: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    // margin: 16,
+    right: 25,
+    bottom: 4,
+    
   },
   labelContainer: {
+    flex: 1, 
+    flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-end',
+    paddingVertical: 8,
   },
-  left: {
+  plusIconContainer:{
+    alignItems: 'center',
+    flex: 1, 
+  },
+  right: {
     justifyContent: 'flex-end',
   },
 });

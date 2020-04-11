@@ -12,16 +12,16 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
     navigation.navigate("ProductSearch");
   };
   return {
-    headerRight: (props) => {
-      return (
-        <Icon
-          onPress={handleHeaderRightOnPress}
-          name='add'
-          size={32}
-          underlayColor={headerPrimaryColor}
-        />
-      )
-    },
+    // headerRight: (props) => {
+    //   return (
+    //     <Icon
+    //       onPress={handleHeaderRightOnPress}
+    //       name='add'
+    //       size={32}
+    //       underlayColor={headerPrimaryColor}
+    //     />
+    //   )
+    // },
     title: strings.title,
   };
 };
