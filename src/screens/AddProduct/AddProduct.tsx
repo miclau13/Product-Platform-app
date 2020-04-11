@@ -8,6 +8,7 @@ import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import AddProductView from './AddProductView';
+import { titleMap } from './utils';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
@@ -23,9 +24,11 @@ type Props = {
 
 export type AddProductTileViewProps = TileProps;
 export interface AddProductViewProps {
+  handleOnFinishRating: any;
   imageTileList: Array<imageTile>;
   onImagePress(index: number): TileProps['onPress'];
   onSubmitButtonPress: ButtonProps['onPress'];
+  rating: number;
   // For Dropdown
   handleDropdownOnValueDown: PickerProps['onValueChange'];
   handleIOSDropdownOnDonePress: PickerProps['onDonePress'];
@@ -35,17 +38,25 @@ export interface AddProductViewProps {
 export type imageTile = {
   index: number;
   imageSrc: TileProps['imageSrc'];
-}
+  title: string;
+};
 
 const AddProduct: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const [loading] = React.useState(false);
+  const [rating, setRating] = React.useState(0);
   const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
     return {
       index,
       imageSrc: null,
+      title: titleMap[index],
     }
   }));
+
+  const handleOnFinishRating = (rating) => {
+    console.log("rating", rating)
+    setRating(rating);
+  }
 
   // For Dropdown
   const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
@@ -162,9 +173,11 @@ const AddProduct: React.ComponentType<Props> = (props) => {
 
   return (
     <AddProductView 
+      handleOnFinishRating={handleOnFinishRating}
       imageTileList={imageTileList}
       onImagePress={onImagePress}
       onSubmitButtonPress={onSubmitButtonPress}
+      rating={rating}
       // For Dropdown
       handleDropdownOnValueDown={handleDropdownOnValueDown}
       handleIOSDropdownOnDonePress={handleIOSDropdownOnDonePress}

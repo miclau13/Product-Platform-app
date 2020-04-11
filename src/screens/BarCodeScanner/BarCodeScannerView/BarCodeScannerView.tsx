@@ -60,15 +60,17 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
   return (
     <View style={styles.container}>
       <View style={styles.topBarContainer}>
-        <DropdownComponent
-          items={[
-            { label: 'Mask', value: 'mask' },
-            { label: 'Sanitizer', value: 'sanitizer' },
-          ]}
-          onDonePress={handleIOSDropdownOnDonePress}
-          onValueChange={handleDropdownOnValueDown}
-          value={selectedCategory}
-        />
+        <View style={styles.dropDownContainer}>
+          <DropdownComponent
+            items={[
+              { label: 'Mask', value: 'mask' },
+              { label: 'Sanitizer', value: 'sanitizer' },
+            ]}
+            onDonePress={handleIOSDropdownOnDonePress}
+            onValueChange={handleDropdownOnValueDown}
+            value={selectedCategory}
+          />
+        </View>
         <SearchBarComponent 
           onChangeText={updateSearch}
           onFocus={onFocus}

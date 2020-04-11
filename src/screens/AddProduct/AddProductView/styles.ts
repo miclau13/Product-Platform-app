@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 import { headerPrimaryColor } from '../../../styles';
 
 const styles = StyleSheet.create({
+  dropDownContainer: {
+    paddingVertical: 8,
+    paddingRight: 8,
+  },
   label: {
     color: headerPrimaryColor
   },
@@ -24,7 +28,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
   },
   tileContentContainerStyle: {
-    height: 0,
+    // height: 70,
+    // paddingTop: 0,
   }
 });
 

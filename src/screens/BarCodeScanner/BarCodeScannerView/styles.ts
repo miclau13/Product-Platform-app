@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  dropDownContainer: {
+    padding: 8,
+  },
   iconContainer: {
     backgroundColor: 'white',
     borderBottomWidth: 1,

@@ -1,15 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 8
-  },
   iconContainer: {
     top: 8,
     right: 2,
   },
   viewContainer: {
-    backgroundColor: '#bdc6cf',
+    // backgroundColor: '#bdc6cf',
     borderColor: '#86939e',
     borderRadius: 15,
     borderWidth: 0.5,
