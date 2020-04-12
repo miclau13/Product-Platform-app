@@ -43,6 +43,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     scanned,
 
     // For Search
+    handleSearchIconOnPress,
     onFocus,
     search,
     updateSearch,
@@ -52,6 +53,8 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     selectedCategory,
     // For ProductSearchView
     navigation,
+    productList,
+    setProductList,
     // For ButtonGroup
     onButtonIndexPress,
     selectedButtonIndex,
@@ -72,6 +75,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           />
         </View>
         <SearchBarComponent 
+          // clearIcon={<Icon name='search' onPress={handleSearchIconOnPress} underlayColor='transparent' />}
           onChangeText={updateSearch}
           onFocus={onFocus}
           value={search}
@@ -79,8 +83,8 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
         {!isSearchViewVisible 
           ? <Icon
               containerStyle={styles.iconContainer}
-              onPress={handleHistoryIconOnPress}
-              name="history"
+              // onPress={handleHistoryIconOnPress}
+              name="warning"
               size={36}
             /> 
           : <Button
@@ -116,7 +120,11 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             </View>
             </>
           : null 
-        : <ProductSearch navigation={navigation}/>
+        : <ProductSearch 
+            navigation={navigation} 
+            productList={productList} 
+            setProductList={setProductList}
+          />
       }
     </View>
   );

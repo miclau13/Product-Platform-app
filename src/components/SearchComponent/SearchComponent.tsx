@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchBar, SearchBarProps } from 'react-native-elements';
+import { Icon, SearchBar, SearchBarProps } from 'react-native-elements';
 
 import styles from './styles';
 
@@ -11,6 +11,7 @@ const SearchBarComponent: React.ComponentType<SearchBarProps> = (props) => {
       containerStyle={styles.container}
       placeholder="Search"
       searchIcon={false}
+      inputStyle={styles.inputStyle}
       {...props}
     />
   )

@@ -11,6 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCodeScannerView';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import { getDefaultProductList, Product } from '../ProductSearch';
 
 type BarCodeScannerScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -30,6 +31,7 @@ export interface BarCodeScannerViewProps {
   scanned: boolean;
 
   // For Search
+  handleSearchIconOnPress: IconProps['onPress'];
   onFocus: SearchBarProps['onFocus'];
   search: string;
   updateSearch: SearchBarProps['onChangeText'];
@@ -41,6 +43,8 @@ export interface BarCodeScannerViewProps {
 
   // For ProductSearchView
   navigation: Props['navigation'];
+  productList: Product[];
+  setProductList: React.Dispatch<React.SetStateAction<Product[]>>;
 
   // For ButtonGroup
   onButtonIndexPress: ButtonGroupProps['onPress'];
@@ -59,10 +63,26 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
   const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
 
+  // For ProductSearchView
+  const [productList, setProductList] = React.useState(getDefaultProductList());
+
   // For Search
+  const handleSearchIconOnPress = React.useCallback<BarCodeScannerViewProps['handleSearchIconOnPress']>(() => {
+    // const filteredResult = productList.filter(product => 
+    //   (product.description.startsWith(search))
+    // );
+    // setProductList(filteredResult);
+  }, [productList, search]);
   const updateSearch = React.useCallback(search => {
-    setSearch(search);
-  }, [search]);
+    if (!search) {
+      setSearch(search);
+      setProductList(getDefaultProductList());
+    } else {
+      setSearch(search);
+      const filteredResult = productList.filter(product => product.description.toLowerCase().startsWith(search.toLowerCase()));
+      setProductList(filteredResult);
+    }
+  }, [productList, search]);
   const onFocus = React.useCallback<BarCodeScannerViewProps['onFocus']>(() => {
     setIsSearchViewVisible(true);
   }, [isSearchViewVisible]);
@@ -190,7 +210,10 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       handleIOSDropdownOnDonePress={handleIOSDropdownOnDonePress}
       selectedCategory={selectedCategory}
       // For ProductSearchView
+      handleSearchIconOnPress={handleSearchIconOnPress}
       navigation={navigation}
+      productList={productList}
+      setProductList={setProductList}
       // For ButtonGroup
       onButtonIndexPress={onButtonIndexPress}
       selectedButtonIndex={selectedButtonIndex}

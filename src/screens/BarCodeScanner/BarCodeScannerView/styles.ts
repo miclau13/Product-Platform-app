@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { headerPrimaryColor, screenWidth } from '../../../styles';
+import { screenWidth } from '../../../styles';
 
 const qrSize = screenWidth * 0.7;
 const opacity = 'rgba(0, 0, 0, .6)';
@@ -8,8 +8,6 @@ const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e1e1e1',
     justifyContent: 'center', 
   },
   buttonGroupContainer: {
@@ -26,8 +24,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e1e1e1',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#e1e1e1',
     justifyContent: 'center', 
   },
   qr: {

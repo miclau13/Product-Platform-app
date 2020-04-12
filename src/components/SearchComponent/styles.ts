@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderTopWidth: 0,
   },
+  inputStyle: {
+    color: 'black',
+  },
 });
 
 export default styles;

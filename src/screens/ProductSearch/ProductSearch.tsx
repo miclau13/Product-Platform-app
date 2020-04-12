@@ -3,6 +3,7 @@ import { ButtonProps, CardProps, IconProps, SearchBarProps } from 'react-native-
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultProductList } from './utils';
+import { BarCodeScannerViewProps } from '../BarCodeScanner';
 import ProductSearchView from './ProductSearchView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
@@ -19,6 +20,8 @@ type ProductSearchScreenNavigationProp = StackNavigationProp<
 
 type Props = {
   navigation: ProductSearchScreenNavigationProp;
+  productList: BarCodeScannerViewProps['productList'];
+  setProductList: BarCodeScannerViewProps['setProductList']; 
 };
 
 export type Product = {
@@ -47,11 +50,14 @@ export interface ProductSearchItemCardProps extends Product {
 };
 
 const ProductSearch: React.ComponentType<Props> = (props) => {
-  const { navigation } = props;
+  const { 
+    navigation,
+    productList, 
+    setProductList
+  } = props;
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
-  const [productList, setProductList] = React.useState(getDefaultProductList());
 
   // For ProductSearchView
   const handleHistoryIconOnPress = React.useCallback<ProductSearchViewProps['handleHistoryIconOnPress']>(() => {
