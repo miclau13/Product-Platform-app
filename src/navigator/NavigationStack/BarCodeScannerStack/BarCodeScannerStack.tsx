@@ -12,6 +12,7 @@ import ProductSearchScreen, { options as ProductSearchScreenOptions } from "../.
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
 import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
+import MoreScreen, { options as MoreScreenOptions } from "../../../screens/More";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: undefined;
@@ -23,6 +24,7 @@ export type BarCodeScannerStackParamList = {
   Records: undefined;
   RecordsHistory: undefined;
   RecordsSaved: undefined;
+  More: undefined;
 };
 
 const BarCodeScannerStack = createStackNavigator();
@@ -31,8 +33,8 @@ const BarCodeScannerStackScreen = (props) => {
   const { selectedCategory } = useSelectCategoryContext();
   return (
     <BarCodeScannerStack.Navigator
-      initialRouteName={!!selectedCategory ? "BarCodeScanner" : "ProductCategories"}
-      // initialRouteName="ProductComparison"
+      // initialRouteName={!!selectedCategory ? "BarCodeScanner" : "ProductCategories"}
+      initialRouteName="More"
       screenOptions={screenOptions}
     >
       <BarCodeScannerStack.Screen name="BarCodeScanner" component={BarCodeScannerScreen} options={BarCodeScannerScreenOptions}/>
@@ -44,6 +46,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="Records" component={RecordsScreen} options={RecordsScreenOptions}/>
       <BarCodeScannerStack.Screen name="RecordsHistory" component={RecordsHistoryScreen} options={RecordsHistoryScreenOptions}/>
       <BarCodeScannerStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>
+      <BarCodeScannerStack.Screen name="More" component={MoreScreen} options={MoreScreenOptions}/>
     </BarCodeScannerStack.Navigator>
   );
 };
