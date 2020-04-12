@@ -7,6 +7,7 @@ import NumberFormat from 'react-number-format';
 
 import styles from './styles';
 import { ProductInfoViewProps, ProductInfoGridViewProps } from '../ProductInfo';
+import { iconPrimaryColor } from '../../../styles';
 
 const Mask1Image: ImageRequireSource = require('../assets/mask1.jpeg');
 
@@ -31,20 +32,20 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
         <View style={{ marginVertical: 8 }} />
         <View style={styles.iconBarContainer}>
           <Icon
-            color='#00aced'
+            color={iconPrimaryColor}
             name='share'
             onPress={handleShareIconOnPress}
             size={40}
           />
           <Icon
-            color='#00aced'
+            color={iconPrimaryColor}
             name={favorite ? 'favorite' : 'favorite-border'}
             onPress={handleFavoriteIconOnPress}
             size={40}
             underlayColor="transparent"
           />
           <Icon
-            color='#00aced'
+            color={iconPrimaryColor}
             name={'info-outline'}
             size={40}
           />

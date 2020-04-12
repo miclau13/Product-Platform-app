@@ -24,16 +24,18 @@ type Props = {
 export type Product = {
   buttonProps: ButtonProps;
   description: string;
+  id: string;
   image: CardProps['image'];
   imageProps: CardProps['imageProps'];
   imageStyle: CardProps['imageStyle'];
+  selected: boolean;
   title: CardProps['title'];
 };
 
 export interface ProductSearchViewProps {
   handleHistoryIconOnPress: IconProps['onPress'];
   productList: Product[];
-  onPress: ButtonProps['onPress'];
+  handleSelectButtonOnPress(id: Product['id']): ButtonProps['onPress'];
 
   // For Search
   search: string;
@@ -41,7 +43,7 @@ export interface ProductSearchViewProps {
 };
 
 export interface ProductSearchItemCardProps extends Product {
-  onPress: ProductSearchViewProps['onPress'];
+  handleSelectButtonOnPress: ProductSearchViewProps['handleSelectButtonOnPress'];
 };
 
 const ProductSearch: React.ComponentType<Props> = (props) => {
@@ -49,17 +51,23 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
-
-  const productList = getDefaultProductList();
+  const [productList, setProductList] = React.useState(getDefaultProductList());
 
   // For ProductSearchView
   const handleHistoryIconOnPress = React.useCallback<ProductSearchViewProps['handleHistoryIconOnPress']>(() => {
     navigation.navigate('Records');
   }, [navigation]);
 
-  const onPress = React.useCallback<ProductSearchItemCardProps['onPress']>(() => {
-    navigation.navigate('ProductComparison');
-  }, [navigation]);
+  const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
+    // navigation.navigate('ProductComparison');
+    const result = productList.map(product => {
+      if (product.id === id) {
+        return { ...product, selected: true }
+      }
+      return { ...product, selected: false }
+    });
+    setProductList(result);
+  }, [navigation, productList]);
 
   // For Search
   const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {
@@ -76,7 +84,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     <ProductSearchView 
       handleHistoryIconOnPress={handleHistoryIconOnPress}
       productList={productList} 
-      onPress={onPress}
+      handleSelectButtonOnPress={handleSelectButtonOnPress}
 
       search={search}
       updateSearch={updateSearch}

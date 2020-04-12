@@ -20,11 +20,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
+  cardBadgeStyle: {
+    height: 30,
+    width: 60,
+  },
+  cardBadgeContainerStyle: {
+    position: 'absolute',
+    right: 4,
+    top: -34,
+  },
   cardContainerStyle: {
     borderWidth: 0,
     flexGrow: 1,
     margin: 0, 
-    shadowOpacity: 0 
+    padding: 8,
+    shadowOpacity: 0,
+    width: '50%',
+  },
+  cardImageStyle: {
+    borderWidth: 1, 
+    borderRadius: 4,
+    borderColor: '#B5B5B5',
   },
   title: {
     marginBottom: 10,
