@@ -1,6 +1,4 @@
-import { Option } from './More';
-
-const optionList: Option[] = [
+const optionList = [
   { 
     id: 0,
     screen: "Comments",

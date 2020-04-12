@@ -16,15 +16,15 @@ type Props = {
   navigation: MoreScreenNavigationProp;
 };
 
-type Options = {
+export type Option = {
   id: number;
-  screen: string;
+  screen: keyof BarCodeScannerStackParamList;
   title: string;
 }
 
 export interface MoreViewProps {
-  handleListItemOnPress(id: Options['id']): ListItemProps['onPress'];
-  optionList: Options[];
+  handleListItemOnPress(id: Option['id']): ListItemProps['onPress'];
+  optionList: Option[];
 };
 
 
@@ -35,7 +35,8 @@ const More: React.ComponentType<Props> = (props) => {
   const optionList = React.useMemo(() => getDefaultOptionList(),[]);
 
   const handleListItemOnPress = React.useCallback(id => () => {
-    console.log(optionList[id].screen);
+    // console.log(optionList[id].screen);
+    navigation.navigate(optionList[id].screen);
   }, [optionList])
   
   if (loading) {

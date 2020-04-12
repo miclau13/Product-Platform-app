@@ -13,10 +13,12 @@ import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens
 import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
 import MoreScreen, { options as MoreScreenOptions } from "../../../screens/More";
+import CommentsScreen, { options as CommentsScreenOptions } from "../../../screens/Comments";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: undefined;
   BarCodeScanner: undefined;
+  Comments: undefined;
   ProductCategories: undefined;
   ProductComparison: undefined;
   ProductInfo: undefined;
@@ -40,6 +42,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="BarCodeScanner" component={BarCodeScannerScreen} options={BarCodeScannerScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductCategories" component={ProductCategoriesScreen} options={ProductCategoriesScreenOptions}/>
       <BarCodeScannerStack.Screen name="AddProduct" component={AddProductScreen} options={AddProductScreenOptions}/>
+      <BarCodeScannerStack.Screen name="Comments" component={CommentsScreen} options={CommentsScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductComparison" component={ProductComparisonScreen} options={ProductComparisonScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductInfo" component={ProductInfoScreen} options={ProductInfoScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductSearch" component={ProductSearchScreen} options={ProductSearchScreenOptions}/>

@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import React from 'react';
 import { ActionSheetIOS, Platform } from 'react-native';
-import { ButtonProps, TileProps } from 'react-native-elements'; 
+import { AirbnbRatingProps, ButtonProps, TileProps } from 'react-native-elements'; 
 import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -24,7 +24,7 @@ type Props = {
 
 export type AddProductTileViewProps = TileProps;
 export interface AddProductViewProps {
-  handleOnFinishRating: any;
+  handleOnFinishRating: AirbnbRatingProps['onFinishRating'];
   imageTileList: Array<imageTile>;
   onImagePress(index: number): TileProps['onPress'];
   onSubmitButtonPress: ButtonProps['onPress'];
@@ -53,10 +53,9 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     }
   }));
 
-  const handleOnFinishRating = (rating) => {
-    console.log("rating", rating)
+  const handleOnFinishRating = React.useCallback<AddProductViewProps['handleOnFinishRating']>((rating) => {
     setRating(rating);
-  }
+  }, [rating]);
 
   // For Dropdown
   const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
