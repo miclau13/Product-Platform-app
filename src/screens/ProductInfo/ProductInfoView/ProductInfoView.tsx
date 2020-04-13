@@ -14,9 +14,10 @@ const Mask1Image: ImageRequireSource = require('../assets/mask1.jpeg');
 const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (props) => {
   const { 
     favorite, 
+    handleCompareMoreButtonOnPress,
     handleFavoriteIconOnPress, 
-    productInfoList,
     handleShareIconOnPress, 
+    productInfoList,
     showButtons = true,
   } = props;
 
@@ -63,6 +64,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
             <View style={{ marginVertical: 4 }} />
             <Button
               containerStyle={styles.buttonContainer}
+              onPress={handleCompareMoreButtonOnPress}
               titleStyle={styles.buttonTitle}
               title="Compare More"
               type="outline"

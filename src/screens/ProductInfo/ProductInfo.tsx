@@ -1,16 +1,16 @@
 import { map } from 'lodash';
 import React from 'react';
 import { Share } from 'react-native';
-import { IconProps, ImageProps, ListItemProps } from 'react-native-elements';
+import { ButtonProps, IconProps, ImageProps, ListItemProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { convertToSimilarProductFormat, getDefaultProductInfo } from './utils';
 import ProductInfoView from './ProductInfoView';
 import LoadingComponent from '../../components/LoadingComponent';
-import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type ProductInfoScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
+  BarCodeScannerStackParamList,
   'ProductInfo'
 >;
 
@@ -34,6 +34,7 @@ type ProductInfoList = {
 
 export interface ProductInfoGridViewProps {
   favorite: boolean;
+  handleCompareMoreButtonOnPress: ButtonProps['onPress'];
   handleFavoriteIconOnPress: IconProps['onPress'];
   productInfoList: ProductInfoList;
   handleShareIconOnPress: IconProps['onPress'];
@@ -70,6 +71,10 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     }
   }), [productInfo]);
 
+  const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
+    navigation.navigate("ProductComparison");
+  }, [navigation]);
+
   const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(() => {
     setFavorite((value)=> !value);
   }, []);
@@ -102,27 +107,6 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     }
   },[]);
 
-  // React.useEffect(() => {
-  //   const getSimilarProducts = async (args: { category: string }) => {
-  //     try {
-  //       // const response = await fetch(`http://192.168.0.104:5000/products?category=${args.category}`, {
-  //         const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
-  //         method: 'get',
-  //         headers: {
-  //           Accept: 'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //       });
-  //       const result = await response.json() || [];
-  //       setSimilarProductList(convertToSimilarProductFormat(result));
-  //     } catch (error) {
-  //       console.log(" getSimilarProducts error:", error);
-  //     };
-  //     setLoading(false);
-  //   };
-  //   getSimilarProducts({ category: 'mask' });
-  // }, [])
-
   if (loading) {
     return (
       <LoadingComponent />
@@ -131,12 +115,13 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
 
   return (
     <ProductInfoView 
-      handleExpand={handleExpand}
       favorite={favorite}
-      handleFavoriteIconOnPress={handleFavoriteIconOnPress}
       isExpanded={isExpanded}
-      productInfoList={productInfoList}
+      handleCompareMoreButtonOnPress={handleCompareMoreButtonOnPress}
+      handleExpand={handleExpand}
+      handleFavoriteIconOnPress={handleFavoriteIconOnPress}
       handleShareIconOnPress={handleShareIconOnPress}
+      productInfoList={productInfoList}
     />
   )
 };
