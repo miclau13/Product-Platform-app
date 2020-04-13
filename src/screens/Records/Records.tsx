@@ -7,6 +7,7 @@ import { getDefaultButtons, getDefaultAllList } from './utils';
 import RecordsView, { RecordsListItemView } from './RecordsView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import { useProductListContext } from '../../context/ProductListContext';
 
 type RecordsScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -43,10 +44,10 @@ export interface RecordsListItemViewProps {
 
 const Records: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-
+  const { productList } = useProductListContext();
   const [loading] = React.useState(false);
   const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
-  const [recordsItemsList, setRecordsItemsList] = React.useState(getDefaultAllList());
+  const [recordsItemsList, setRecordsItemsList] = React.useState(getDefaultAllList(productList));
   const [isRefreshing, setIsRefreshing] = React.useState(false);
   const recordsItemsSavedList = recordsItemsList.filter(recordItem => recordItem.favorite);
   const buttons = getDefaultButtons();

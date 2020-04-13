@@ -1,30 +1,36 @@
 import * as SecureStore from 'expo-secure-store';
+import { omit } from 'lodash';
 import React from 'react';
 
 import RootTab from './TabNavigator/RootTab';
 import RootStack from './NavigationStack/RootStack';
 import LoadingComponent from '../components/LoadingComponent';
 import { DisplayIntroContextProvider } from '../context/DisplayIntroContext';
+import { Product, ProductListContextProvider } from '../context/ProductListContext';
 import { SelectCategoryContextProvider } from '../context/SelectCategoryContext';
 
 export type StackParamList = {};
 
 interface State {
-  displayIntro: boolean,
-  loading: boolean,
-  selectedCategory: string,
+  displayIntro: boolean;
+  loading: boolean;
+  selectedCategory: string;
+  productList: Array<Product> | [] ,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING';
+  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST';
   value?: string;
+  productList?: State['productList'];
 };
 
 const initialState = {
   displayIntro: true,
   loading: true,
   selectedCategory: "",
+  productList: [],
 };
+
 const reducer = (prevState: State, action: Action) => {
   switch (action.type) {
     case 'REMOVE_INTRO':
@@ -41,6 +47,11 @@ const reducer = (prevState: State, action: Action) => {
       return {
         ...prevState,
         loading: false,
+      };
+    case 'UPDATE_PRODUCT_LIST':
+      return {
+        ...prevState,
+        productList: action.productList,
       };
   }
 };
@@ -60,6 +71,10 @@ const Navigator = () => {
     selectedCategory: state.selectedCategory
   }), [state.selectedCategory]);
 
+  const productListContext = React.useMemo(() => ({
+    productList: state.productList,
+  }), [state.productList]);
+
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let displayIntro, selectedCategory;
@@ -77,9 +92,33 @@ const Navigator = () => {
       if (selectedCategory) {
         dispatch({ type: 'UPDATE_SELECTED_CATEGORY', value: selectedCategory });
       };
-      dispatch({ type: 'DISABLE_LOADING' });
     };
+
+    const fetchProductList = async () => {
+      try {
+        const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+          method: 'get',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });``
+        const result = await response.json() || [];
+        const productList = result.map(product => {
+          return omit({
+            id: product._id,
+            ...product,
+          },['__v', '_id', 'updatedAt'])
+        })
+        dispatch({ type: 'UPDATE_PRODUCT_LIST', productList });
+      } catch (error) {
+        console.log(" fetchProductList error:", error);
+      } finally {
+        dispatch({ type: 'DISABLE_LOADING' });
+      }
+    }
     bootstrapAsync();
+    fetchProductList();
     return () => {}
   }, []);
 
@@ -94,7 +133,9 @@ const Navigator = () => {
       {state.displayIntro ?
         <RootStack />: 
         <SelectCategoryContextProvider value={selectCategoryContext}>
-          <RootTab />
+          <ProductListContextProvider value={productListContext}>
+            <RootTab />
+          </ProductListContextProvider>
         </SelectCategoryContextProvider>
       }
       
