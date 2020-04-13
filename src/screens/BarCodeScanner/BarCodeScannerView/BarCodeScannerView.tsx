@@ -8,6 +8,7 @@ import { BarCodeScannerViewProps } from '../BarCodeScanner';
 import BarCodeScannerMarkerView from '../BarCodeScannerMarkerView';
 import ProductSearch from '../../ProductSearch';
 import DropdownComponent from '../../../components/DropdownComponent';
+import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import SearchBarComponent from '../../../components/SearchComponent';
 
 export const NoAccessView: React.ComponentType = () => {
@@ -126,6 +127,10 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             setProductList={setProductList}
           />
       }
+      <FloatingMenuComponent 
+        currenScreen="BarCodeScanner"
+        navigation={navigation}
+      />
     </View>
   );
 }

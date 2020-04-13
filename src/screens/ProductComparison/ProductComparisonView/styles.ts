@@ -18,10 +18,8 @@ const styles = StyleSheet.create({
   fab: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    // margin: 16,
     right: 25,
     bottom: 4,
-    
   },
   labelContainer: {
     flex: 1, 
