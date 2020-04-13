@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
   buttonGroupContainer: {
     alignItems: 'center', 
-    bottom: 48,
+    bottom: 56,
     position: 'absolute', 
     width: '100%', 
   },

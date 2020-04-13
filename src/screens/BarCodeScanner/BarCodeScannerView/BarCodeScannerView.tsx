@@ -100,12 +100,12 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
         ? selectedButtonIndex === 0 
           ? <>
             <View style={styles.container}>
-              {/* <BarCodeScanner
+              <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={absoluteFillObject}
               />
               {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
-              <BarCodeScannerMarkerView /> */}
+              <BarCodeScannerMarkerView />
             </View> 
             <View style={styles.buttonGroupContainer}>
               <BarCodeScannerButtonGroupsView
@@ -129,9 +129,9 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
       }
       {!isSearchViewVisible 
         ? <FloatingMenuComponent 
-          currenScreen="BarCodeScanner"
-          navigation={navigation}
-        /> 
+            currenScreen="BarCodeScanner"
+            navigation={navigation}
+          /> 
         : null
       }
     </View>

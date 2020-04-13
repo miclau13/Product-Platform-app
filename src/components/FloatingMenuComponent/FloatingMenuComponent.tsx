@@ -1,5 +1,5 @@
 import React from 'react';
-import { FAB, Portal, Provider } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
@@ -41,22 +41,18 @@ const FloatingMenuComponent: React.ComponentType<FloatingMenuProps> = (props) =>
   }, [open]);
 
   return (
-    <Provider>
-      <Portal>
-        <FAB.Group
-          open={open}
-          icon={open ? 'menu-open' : 'menu'}
-          actions={[
-            { icon: 'history', label: 'History', onPress: handleHistoryIconOnPress},
-            { icon: 'more', label: 'More', onPress: handleMoreIconOnPress},
-            { icon: 'barcode-scan', label: 'Scan', onPress: handleScanIconOnPress},
-          ]}
-          onStateChange={_onStateChange}
-          onPress={handleOnPress}
-          visible={true}
-        />
-      </Portal>
-  </Provider>
+    <FAB.Group
+      open={open}
+      icon={open ? 'menu-open' : 'menu'}
+      actions={[
+        { icon: 'history', label: 'History', onPress: handleHistoryIconOnPress},
+        { icon: 'more', label: 'More', onPress: handleMoreIconOnPress},
+        { icon: 'barcode-scan', label: 'Scan', onPress: handleScanIconOnPress},
+      ]}
+      onStateChange={_onStateChange}
+      onPress={handleOnPress}
+      visible={true}
+    />
   )
 }; 
 
