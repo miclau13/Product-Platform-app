@@ -18,7 +18,7 @@ const ProductSchema = new Schema({
   rating: { type: Number },
   // photos: { type: Array },
   // brandName: { type: String },
-  Remarks: { type: String },
+  remarks: { type: String },
 }, {
   timestamps: true,
 });
