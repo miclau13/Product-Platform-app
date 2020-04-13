@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   cardContainerStyle: {
     borderWidth: 0,
     flexGrow: 1,
-    // flex: 1,
     margin: 0, 
     padding: 8,
     shadowOpacity: 0,
@@ -42,6 +41,10 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     borderRadius: 4,
     borderColor: '#B5B5B5',
+  },
+  priceContainer: {
+    alignItems: 'center', 
+    justifyContent: 'flex-end',
   },
   title: {
     marginBottom: 10,

@@ -37,37 +37,42 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
       {...cardProps}
       imageStyle={styles.cardImageStyle}
       containerStyle={styles.cardContainerStyle}
+      wrapperStyle={styles.container}
+      imageWrapperStyle={styles.container}
     >
       {cardBadge && cardBadge}
-      <View>
+      <View style={{ flexGrow: 1 }}>
         <Text style={styles.title}>
           {description}
         </Text>
-        <Rating
-          imageSize={20}
-          readonly
-          startingValue={rating}
-        />
-        <View style={{ margin: 4 }}></View>
-        <View style={{ alignItems: 'center'}}>
-          <NumberFormat 
-            decimalScale={0}
-            displayType={'text'} 
-            prefix={'$'}
-            renderText={value => <Text>{`${value}`}</Text>}
-            thousandSeparator={true} 
-            value={price}
+        <View style={{ flexGrow: 1, justifyContent: 'flex-end' }}>
+          <Rating
+            imageSize={20}
+            readonly
+            startingValue={rating}
+          />
+          <View style={{ margin: 4 }}></View>
+          <View style={styles.priceContainer}>
+            <NumberFormat 
+              decimalScale={0}
+              displayType={'text'} 
+              prefix={'$'}
+              renderText={value => <Text>{`${value}`}</Text>}
+              thousandSeparator={true} 
+              value={price}
+            />
+          </View>
+          <View style={{ margin: 4 }}></View>
+          <Button
+            iconRight
+            containerStyle={{ justifyContent: 'flex-end' }}
+            icon={buttonIcon}
+            onPress={handleSelectButtonOnPress(id)}
+            titleStyle={{ marginRight: 8 }}
+            title={buttonTitle}
+            type={buttonType}
           />
         </View>
-        <View style={{ margin: 4 }}></View>
-        <Button
-          iconRight
-          icon={buttonIcon}
-          onPress={handleSelectButtonOnPress(id)}
-          titleStyle={{ marginRight: 8 }}
-          title={buttonTitle}
-          type={buttonType}
-        />
       </View>
     </Card>
   )
