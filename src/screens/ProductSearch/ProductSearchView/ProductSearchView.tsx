@@ -10,10 +10,11 @@ import SearchBarComponent from '../../../components/SearchComponent';
 
 const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (props) => {
   const { 
-    buttonProps, 
     description, 
     handleSelectButtonOnPress, 
     id, 
+    price,
+    rating,
     selected,
     ...cardProps 
   } = props;
@@ -38,34 +39,36 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
       containerStyle={styles.cardContainerStyle}
     >
       {cardBadge && cardBadge}
-      <Text style={styles.title}>
-        {description}
-      </Text>
-      <Rating
-        imageSize={20}
-        readonly
-        startingValue={5}
-      />
-      <View style={{ margin: 4 }}></View>
-      <View style={{ alignItems: 'center'}}>
-        <NumberFormat 
-          decimalScale={0}
-          displayType={'text'} 
-          prefix={'$'}
-          renderText={value => <Text>{`${value}`}</Text>}
-          thousandSeparator={true} 
-          value={1000}
+      <View>
+        <Text style={styles.title}>
+          {description}
+        </Text>
+        <Rating
+          imageSize={20}
+          readonly
+          startingValue={rating}
+        />
+        <View style={{ margin: 4 }}></View>
+        <View style={{ alignItems: 'center'}}>
+          <NumberFormat 
+            decimalScale={0}
+            displayType={'text'} 
+            prefix={'$'}
+            renderText={value => <Text>{`${value}`}</Text>}
+            thousandSeparator={true} 
+            value={price}
+          />
+        </View>
+        <View style={{ margin: 4 }}></View>
+        <Button
+          iconRight
+          icon={buttonIcon}
+          onPress={handleSelectButtonOnPress(id)}
+          titleStyle={{ marginRight: 8 }}
+          title={buttonTitle}
+          type={buttonType}
         />
       </View>
-      <View style={{ margin: 4 }}></View>
-      <Button
-        iconRight
-        icon={buttonIcon}
-        onPress={handleSelectButtonOnPress(id)}
-        titleStyle={{marginRight: 8 }}
-        title={buttonTitle}
-        type={buttonType}
-      />
     </Card>
   )
 };
@@ -79,7 +82,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
     search,
     updateSearch,
   } = props;
-  
+  // console.log(productList)
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>

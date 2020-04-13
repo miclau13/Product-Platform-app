@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   cardContainerStyle: {
     borderWidth: 0,
     flexGrow: 1,
+    // flex: 1,
     margin: 0, 
     padding: 8,
     shadowOpacity: 0,

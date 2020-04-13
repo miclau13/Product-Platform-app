@@ -55,7 +55,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     // For ProductSearchView
     navigation,
     productList,
-    setProductList,
+    // setProductList,
     // For ButtonGroup
     onButtonIndexPress,
     selectedButtonIndex,
@@ -124,13 +124,16 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
         : <ProductSearch 
             navigation={navigation} 
             productList={productList} 
-            setProductList={setProductList}
+            // setProductList={setProductList}
           />
       }
-      <FloatingMenuComponent 
-        currenScreen="BarCodeScanner"
-        navigation={navigation}
-      />
+      {!isSearchViewVisible 
+        ? <FloatingMenuComponent 
+          currenScreen="BarCodeScanner"
+          navigation={navigation}
+        /> 
+        : null
+      }
     </View>
   );
 }

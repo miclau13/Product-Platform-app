@@ -21,16 +21,18 @@ type ProductSearchScreenNavigationProp = StackNavigationProp<
 type Props = {
   navigation: ProductSearchScreenNavigationProp;
   productList: BarCodeScannerViewProps['productList'];
-  setProductList: BarCodeScannerViewProps['setProductList']; 
+  // setProductList: BarCodeScannerViewProps['setProductList']; 
 };
 
 export type Product = {
-  buttonProps: ButtonProps;
+  category: string;
   description: string;
   id: string;
   image: CardProps['image'];
   imageProps: CardProps['imageProps'];
   imageStyle: CardProps['imageStyle'];
+  price: number;
+  rating: number;
   selected: boolean;
   title: CardProps['title'];
 };
@@ -53,11 +55,24 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   const { 
     navigation,
     productList, 
-    setProductList
+    // setProductList
   } = props;
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
+  const [selectedProductId, setSelectedProductId] = React.useState("");
+  const _productList = React.useMemo(() => {
+    if (selectedProductId) {
+      const result = productList.map(product => {
+        if (product.id === selectedProductId) {
+          return { ...product, selected: true }
+        }
+        return { ...product, selected: false }
+      });
+      return result;
+    }
+    return productList
+  }, [productList, selectedProductId])
 
   // For ProductSearchView
   const handleHistoryIconOnPress = React.useCallback<ProductSearchViewProps['handleHistoryIconOnPress']>(() => {
@@ -65,15 +80,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   }, [navigation]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
-    // navigation.navigate('ProductComparison');
-    const result = productList.map(product => {
-      if (product.id === id) {
-        return { ...product, selected: true }
-      }
-      return { ...product, selected: false }
-    });
-    setProductList(result);
-  }, [navigation, productList]);
+    setSelectedProductId(id)
+  }, [setSelectedProductId]);
 
   // For Search
   const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {
@@ -89,7 +97,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   return (
     <ProductSearchView 
       handleHistoryIconOnPress={handleHistoryIconOnPress}
-      productList={productList} 
+      productList={_productList} 
       handleSelectButtonOnPress={handleSelectButtonOnPress}
 
       search={search}
