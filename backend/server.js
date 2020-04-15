@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const csvtojson = require("csvtojson");
-const db = require('./queries');
+// const db = require('./queries');
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');

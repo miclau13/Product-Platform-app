@@ -31,8 +31,8 @@ export default function Search(props) {
         autoFocus
         onChange={onChange}
         className={classes.input}
-        placeholder="First name"
-        inputProps={{ 'aria-label': 'first-name' }}
+        placeholder="Search By Name"
+        inputProps={{ 'aria-label': 'name' }}
       />
       <IconButton 
         className={classes.iconButton} 

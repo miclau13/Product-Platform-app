@@ -6,10 +6,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import {  } from './utils';
 import ProductComparisonView from './ProductComparisonView';
 import LoadingComponent from '../../components/LoadingComponent';
-import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type ProductComparisonScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
+BarCodeScannerStackParamList,
   'ProductComparison'
 >;
 
@@ -29,7 +29,7 @@ const ProductComparison: React.ComponentType<Props> = (props) => {
   const [loading] = React.useState(false);
 
   const handlePlusIconOnPress = React.useCallback(() => {
-    navigation.navigate("ProductSearch");
+    navigation.navigate("BarCodeScanner");
   }, [navigation]);
 
   if (loading) {

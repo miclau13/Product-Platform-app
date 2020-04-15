@@ -1,95 +1,100 @@
 import axios from 'axios';
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import pink from '@material-ui/core/colors/pink';
-import blue from '@material-ui/core/colors/blue';
 
 import Search from './Search';
+import UpdateCard from './UpdateCard';
+import LoadingComponent from "./LoadingComponent";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '70vw',
+    width: '80vw',
   },
   table: {
-    maxHeight: '50vh'
+    maxHeight: '60vh'
+  },
+  hover: {
+		cursor: 'pointer',
   }
 }));
 
-const dataTypeMap = new Map([
-  [1, "masculine"],
-  [2, "feminine"],
-  [0, "ambiguous"]
-])
-const dataGenderMap = new Map([
-  [1, "male"],
-  [2, "female"]
-])
-const dataColorMap = new Map([
-  [1, blue[500]],
-  [2, pink[200]]
-])
-
-export default function SearchCard() {
+export default function SearchCard(props) {
+  const { data = [] } = props;
   const classes = useStyles();
-  const [data, setData] = React.useState([]);
+  const history = useHistory();
+  // const [data, setData] = React.useState([]);
   const [input, setInput] = React.useState();
   const [loading, setLoading] = React.useState(false);
-  const onChange = (e) => {
+  
+  const onChange = React.useCallback((e) => {
     setInput(e.target.value);
-  }
-  const onSubmit = async (e) => {
+  }, [setInput]);
+
+  const onSubmit = React.useCallback(async (e) => {
     e.preventDefault();
     setLoading(true);
-    const result = await axios.get(`/users?firstname=${input}`);
+    await axios.get(`/products?name=${input}`);
     setLoading(false);
-    setData(result.data) 
+  }, [input]);
+
+  const handleTableRowOnClick = React.useCallback((id) =>(e) => {
+    history.push(`/product/${id}`);
+  }, []);
+
+  if (loading) {
+    return (
+      <LoadingComponent />
+    )
   };
+
   return (
     <Card className={classes.root}>
       <CardContent>
         <Search onSubmit={onSubmit} onChange={onChange} />
-        {loading ?  
-          <CircularProgress height={300}/> :
           <TableContainer className={classes.table}>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
-                  <TableCell align="right">Type</TableCell>
-                  <TableCell align="right">Priority gender</TableCell>
+                  <TableCell align="right">Category</TableCell>
+                  <TableCell align="right">Price</TableCell>
                   <TableCell align="right">Origin</TableCell>
+                  <TableCell align="right">Labels</TableCell>
+                  <TableCell align="right">Rating</TableCell>
+                  {/* <TableCell align="right">Saved</TableCell> */}
+                  <TableCell align="right">Production Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {data.map(row => {
-                  const { type, gender, origin } = row;
-                  const _type = dataTypeMap.get(type);
-                  const _gender = dataGenderMap.get(gender);
-                  const _color = dataColorMap.get(type);
-                  return(
-                    <TableRow key={row.id} style={{ backgroundColor: _color }}>
+                  const { id, category, labels, origin, price, productName, productionDate, rating } = row;
+                  return (
+                    <TableRow hover key={id} className={classes.hover} onClick={handleTableRowOnClick(row.id)} >
                       <TableCell component="th" scope="row">
-                        {row.label}
+                        {productName}
                       </TableCell>
-                      <TableCell align="right">{_type}</TableCell>
-                      <TableCell align="right">{_gender}</TableCell>
+                      <TableCell align="right">{category}</TableCell>
+                      <TableCell align="right">{price}</TableCell>
                       <TableCell align="right">{origin}</TableCell>
+                      <TableCell align="right">{labels}</TableCell>
+                      <TableCell align="right">{rating}</TableCell>
+                      {/* <TableCell align="right">{saved}</TableCell> */}
+                      <TableCell align="right">{productionDate}</TableCell>
                     </TableRow>
                   )
                 })}
               </TableBody>
             </Table>
-          </TableContainer>    
-        }
+          </TableContainer> 
       </CardContent>
     </Card>
   );
