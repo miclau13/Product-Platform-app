@@ -1,10 +1,11 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { AirbnbRating, Button, Input, Tile } from 'react-native-elements';
+import { Button, Input, Tile } from 'react-native-elements';
 
 import styles from './styles';
 import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
 import DropdownComponent from '../../../components/DropdownComponent';
+import RatingComponent from '../../../components/RatingComponent';
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
   const { title, ...tileProps } = props;
@@ -142,19 +143,10 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
         placeholder='Add Remarks (Optional)'
       />
       <View style={{ margin: 8 }}></View>
-      <Input
-        inputComponent={() =>
-          <View style={styles.dropDownContainer}>
-            <AirbnbRating
-              showRating={false}
-              count={5}
-              defaultRating={rating}
-              onFinishRating={handleOnFinishRating}
-            />
-          </View>
-        }
-        label="Rating"
-        labelStyle={styles.label}
+      <RatingComponent 
+        defaultRating={rating}
+        onFinishRating={handleOnFinishRating}
+        showRating={false}
       />
       <View style={{ margin: 8 }}></View>
       <Button

@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import { omit } from 'lodash';
 import React from 'react';
@@ -77,8 +78,13 @@ const Navigator = () => {
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      let displayIntro, selectedCategory;
+      let displayIntro, selectedCategory, deviceID;
       try {
+        deviceID = await SecureStore.getItemAsync("deviceId");
+        if (!deviceID) {
+          const sessionId = Constants.sessionId;
+          await SecureStore.setItemAsync("deviceId", sessionId);
+        }
         // await SecureStore.setItemAsync("selectedCategory", "");
         // await SecureStore.setItemAsync("displayIntro", true);
         displayIntro = await SecureStore.getItemAsync("displayIntro");
@@ -102,7 +108,7 @@ const Navigator = () => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-        });``
+        });
         const result = await response.json() || [];
         const productList = result.map(product => {
           return omit({
