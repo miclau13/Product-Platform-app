@@ -30,6 +30,8 @@ const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
+const profilesRouter = require('./routes/profiles');
+app.use('/profiles', profilesRouter);
 
 // app.use('/', productsRouter);
 
