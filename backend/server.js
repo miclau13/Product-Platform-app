@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const csvtojson = require("csvtojson");
-const db = require('./queries');
+// const db = require('./queries');
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -26,8 +26,13 @@ connection.once('open', () => {
   console.log("MongoDb Connected")
 });
 
+const adminRouter = require('./routes/admin');
+app.use('/admin', adminRouter);
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
+const profilesRouter = require('./routes/profiles');
+app.use('/profiles', profilesRouter);
+
 // app.use('/', productsRouter);
 
 // csvtojson()
