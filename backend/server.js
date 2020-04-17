@@ -26,8 +26,11 @@ connection.once('open', () => {
   console.log("MongoDb Connected")
 });
 
+const adminRouter = require('./routes/admin');
+app.use('/admin', adminRouter);
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
+
 // app.use('/', productsRouter);
 
 // csvtojson()

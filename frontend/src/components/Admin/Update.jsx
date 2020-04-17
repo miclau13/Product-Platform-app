@@ -27,105 +27,75 @@ const Update = (props) => {
       onSubmit={handleOnSubmit}
     >
       <TextField
-        id="productName"
-        label="Product Name"
+        id="aboutUs"
+        label="About Us"
         variant="outlined"
-        name="productName"
+        name="aboutUs"
         margin="normal"
         inputProps={{
           onBlur: handleBlur,
           onChange: handleChange,
-          value: values['productName'],
+          value: values['aboutUs'],
         }}
-        defaultValue={initialValues['productName']}
+        defaultValue={initialValues['aboutUs']}
       />
       <TextField
-        id="category"
-        label="Category"
+        id="privacy"
+        label="Privacy"
         variant="outlined"
-        name="category"
+        name="privacy"
         margin="normal"
         inputProps={{
           onBlur: handleBlur,
           onChange: handleChange,
-          value: values['category'],
+          value: values['privacy'],
         }}
-        defaultValue={initialValues['category']}
+        defaultValue={initialValues['privacy']}
       />
       <TextField
-        id="price"
-        label="Price"
+        id="terms"
+        label="Terms"
         variant="outlined"
-        name="price"
+        name="terms"
         margin="normal"
         inputProps={{
           onBlur: handleBlur,
           onChange: handleChange,
-          value: values['price'],
+          value: values['terms'],
         }}
-        defaultValue={initialValues['price']}
+        defaultValue={initialValues['terms']}
       />
       <TextField
-        id="origin"
-        label="Origin"
+        id="version"
+        label="Version"
         variant="outlined"
-        name="origin"
+        name="version"
         margin="normal"
         inputProps={{
           onBlur: handleBlur,
           onChange: handleChange,
-          value: values['origin'],
+          value: values['version'],
         }}
-        defaultValue={initialValues['origin']}
+        defaultValue={initialValues['version']}
       />
       <TextField
-        id="labels"
-        label="Labels"
+        id="questions"
+        label="FAQ"
         variant="outlined"
-        name="labels"
+        name="questions"
         margin="normal"
         inputProps={{
           onBlur: handleBlur,
           onChange: handleChange,
-          value: values['labels'],
+          value: values['questions'],
         }}
-        defaultValue={initialValues['labels']}
-      />
-      <TextField
-        id="rating"
-        label="Rating"
-        variant="outlined"
-        name="rating"
-        margin="normal"
-        inputProps={{
-          onBlur: handleBlur,
-          onChange: handleChange,
-          value: values['rating'],
-        }}
-        defaultValue={initialValues['rating']}
-      />
-      <TextField
-        disabled
-        id="productionDate"
-        label="Production Date"
-        variant="outlined"
-        name="productionDate"
-        margin="normal"
-        inputProps={{
-          onBlur: handleBlur,
-          onChange: handleChange,
-          value: values['productionDate'],
-        }}
-        defaultValue={initialValues['productionDate']}
+        defaultValue={initialValues['questions']}
       />
       <Button 
-        // className={classes.button} 
-        value={formik.values['productName']}
         color="primary"
         variant="contained" 
         aria-label="update"
         type="submit"
-        // onClick={formik.onSubmit}
       >
         Update
       </Button>

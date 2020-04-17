@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import Update from './Update';
-import LoadingComponent from "./LoadingComponent";
+import LoadingComponent from "../common/LoadingComponent";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,25 +18,34 @@ const useStyles = makeStyles(theme => ({
 export default function UpdateCard(props) {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
-  const { id } = useParams();
-  const { data = [] } = props;
-  const product = data.filter(item => item.id === id)[0] || {};
-  const { productName, category, price, origin, labels, rating, productionDate } = product;
+  // const { id } = useParams();
+  const { data } = props;
+  const adminFields = (data && data[0]) || {};
+  const {    
+    id="",   
+    aboutUs="",
+    questions="[]",
+    privacy="",
+    terms="",
+    version="", 
+  } = adminFields;
 
   const formik = useFormik({
     initialValues: {
-      productName,
-      category,
-      price,
-      origin,
-      labels,
-      rating,
-      productionDate,
+      aboutUs,
+      questions,
+      privacy,
+      terms,
+      version,
     },
     onSubmit: async values => {
       console.log("values", values)
       setLoading(true);
-      await axios.post(`/products/update/`+ id, values);
+      if (id) {
+        await axios.post(`/admin/update/` + id, values);
+      } else {
+        await axios.post(`/admin/add/`, values);
+      }
       setLoading(false);
     },
   });

@@ -6,18 +6,43 @@ import {
 } from "react-router-dom";
 import { omit } from 'lodash';
 
-import ImportDataCard from './components/ImportDataCard';
-import SearchCard from './components/SearchCard';
-import UpdateCard from './components/UpdateCard';
+import AdminUpdateCard from './components/Admin/UpdateCard';
+import ProductsImportDataCard from './components/Products/ImportDataCard';
+import ProductsSearchCard from './components/Products/SearchCard';
+import ProductsUpdateCard from './components/Products/UpdateCard';
 import './App.css';
-import LoadingComponent from "./components/LoadingComponent";
+import LoadingComponent from "./components/common/LoadingComponent";
 
 function App() {
-
-  const [data, setData] = React.useState([]);
+  const [adminData, setAdminData] = React.useState([]);
+  const [productsData, setProductsData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
+    const fetchAdminData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`http://localhost:5000/admin`, {
+          method: 'get',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        const result = await response.json() || [];
+        const adminDataList = result.map(admin => {
+          return omit({
+            id: admin._id,
+            ...admin,
+          },['__v', '_id', 'updatedAt'])
+        });
+        setAdminData(adminDataList)
+      } catch (error) {
+        console.log(" fetchAdminData error:", error);
+      } finally { 
+        setLoading(false);
+      }
+    };
     const fetchProductList = async () => {
       try {
         setLoading(true);
@@ -36,13 +61,14 @@ function App() {
           },['__v', '_id', 'updatedAt'])
         });
         // console.log("productList",productList);
-        setData(productList)
+        setProductsData(productList)
       } catch (error) {
         console.log(" fetchProductList error:", error);
       } finally { 
         setLoading(false);
       }
     };
+    fetchAdminData();
     fetchProductList();
   }, []);
 
@@ -56,17 +82,20 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-        <Route path="/product/:id">
-            <UpdateCard data={data} /> 
+          <Route path="/admin">
+            <AdminUpdateCard data={adminData} /> 
+          </Route>
+          <Route path="/product/:id">
+            <ProductsUpdateCard productsData={productsData} /> 
           </Route>
           <Route path="/product">
-            <SearchCard data={data} />
+            <ProductsSearchCard productsData={productsData} />
           </Route>
-          <Route path="/data-import">
-            <ImportDataCard />
+          <Route path="/productsData-import">
+            <ProductsImportDataCard />
           </Route>
           <Route path="/">
-            <SearchCard data={data} />
+            <ProductsSearchCard productsData={productsData} />
           </Route>
         </Switch>
       </div>

@@ -1,5 +1,3 @@
-// import mongooese, { Schema } from 'mongoose';
-
 const mongooese = require('mongoose');
 const Schema = mongooese.Schema;
 

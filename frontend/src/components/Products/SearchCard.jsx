@@ -13,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import Search from './Search';
 import UpdateCard from './UpdateCard';
-import LoadingComponent from "./LoadingComponent";
+import LoadingComponent from "../common/LoadingComponent";
 
 const useStyles = makeStyles(theme => ({
   root: {
