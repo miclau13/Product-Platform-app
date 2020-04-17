@@ -7,15 +7,18 @@ import {
 import { omit } from 'lodash';
 
 import AdminUpdateCard from './components/Admin/UpdateCard';
-import ProductsImportDataCard from './components/Products/ImportDataCard';
-import ProductsSearchCard from './components/Products/SearchCard';
-import ProductsUpdateCard from './components/Products/UpdateCard';
+import ProductImportDataCard from './components/Products/ImportDataCard';
+import ProductSearchCard from './components/Products/SearchCard';
+import ProductUpdateCard from './components/Products/UpdateCard';
+import ProfileSearchCard from './components/Profiles/SearchCard';
+import ProfileUpdateCard from './components/Profiles/UpdateCard';
 import './App.css';
 import LoadingComponent from "./components/common/LoadingComponent";
 
 function App() {
   const [adminData, setAdminData] = React.useState([]);
   const [productsData, setProductsData] = React.useState([]);
+  const [profilesData, setProfilesData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -68,8 +71,33 @@ function App() {
         setLoading(false);
       }
     };
+    const fetchProfileData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`http://localhost:5000/profiles`, {
+          method: 'get',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        const result = await response.json() || [];
+        const profileDataList = result.map(profile => {
+          return omit({
+            id: profile._id,
+            ...profile,
+          },['__v', '_id', 'updatedAt'])
+        });
+        setProfilesData(profileDataList)
+      } catch (error) {
+        console.log(" fetchProfileData error:", error);
+      } finally { 
+        setLoading(false);
+      }
+    };
     fetchAdminData();
     fetchProductList();
+    fetchProfileData();
   }, []);
 
   if (loading) {
@@ -86,16 +114,22 @@ function App() {
             <AdminUpdateCard data={adminData} /> 
           </Route>
           <Route path="/product/:id">
-            <ProductsUpdateCard productsData={productsData} /> 
+            <ProductUpdateCard data={productsData} /> 
           </Route>
           <Route path="/product">
-            <ProductsSearchCard productsData={productsData} />
+            <ProductSearchCard data={productsData} />
           </Route>
           <Route path="/productsData-import">
-            <ProductsImportDataCard />
+            <ProductImportDataCard />
+          </Route>
+          <Route path="/profile/:id">
+            <ProfileUpdateCard data={profilesData} /> 
+          </Route>
+          <Route path="/profile">
+            <ProfileSearchCard data={profilesData} />
           </Route>
           <Route path="/">
-            <ProductsSearchCard productsData={productsData} />
+            <ProductSearchCard data={productsData} />
           </Route>
         </Switch>
       </div>
