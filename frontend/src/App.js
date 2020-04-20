@@ -25,7 +25,7 @@ function App() {
     const fetchAdminData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/admin`, {
+        const response = await fetch(`/admin`, {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -49,7 +49,7 @@ function App() {
     const fetchProductList = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/products`, {
+        const response = await fetch(`/products`, {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -74,7 +74,7 @@ function App() {
     const fetchProfileData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/profiles`, {
+        const response = await fetch(`/profiles`, {
           method: 'get',
           headers: {
             Accept: 'application/json',
