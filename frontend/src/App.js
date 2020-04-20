@@ -110,7 +110,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/admin">
+          <Route path="/admin-panel">
             <AdminUpdateCard data={adminData} /> 
           </Route>
           <Route path="/product/:id">
@@ -119,7 +119,7 @@ function App() {
           <Route path="/product">
             <ProductSearchCard data={productsData} />
           </Route>
-          <Route path="/productsData-import">
+          <Route path="/products-import">
             <ProductImportDataCard />
           </Route>
           <Route path="/profile/:id">
