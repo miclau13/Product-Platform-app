@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import { omit } from 'lodash';
 
@@ -13,7 +14,8 @@ import ProductUpdateCard from './components/Products/UpdateCard';
 import ProfileSearchCard from './components/Profiles/SearchCard';
 import ProfileUpdateCard from './components/Profiles/UpdateCard';
 import './App.css';
-import LoadingComponent from "./components/common/LoadingComponent";
+import LoadingComponent from './components/common/LoadingComponent';
+import Header from './components/common/Header';
 
 function App() {
   const [adminData, setAdminData] = React.useState([]);
@@ -109,6 +111,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Header />
         <Switch>
           <Route path="/admin-panel">
             <AdminUpdateCard data={adminData} /> 
@@ -129,7 +132,7 @@ function App() {
             <ProfileSearchCard data={profilesData} />
           </Route>
           <Route path="/">
-            <ProductSearchCard data={productsData} />
+            <Redirect to="/product"/>
           </Route>
         </Switch>
       </div>

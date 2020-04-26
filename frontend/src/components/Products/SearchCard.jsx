@@ -17,10 +17,10 @@ import LoadingComponent from "../common/LoadingComponent";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '80vw',
+    width: '100vw',
   },
   table: {
-    maxHeight: '60vh'
+    maxHeight: '100vh'
   },
   hover: {
 		cursor: 'pointer',

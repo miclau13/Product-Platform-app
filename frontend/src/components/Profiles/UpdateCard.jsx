@@ -11,7 +11,7 @@ import LoadingComponent from "../common/LoadingComponent";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '50vw',
+    width: '100vw',
   },
 }));
 

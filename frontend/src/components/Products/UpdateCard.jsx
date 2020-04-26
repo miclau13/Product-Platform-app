@@ -11,7 +11,7 @@ import LoadingComponent from "../common/LoadingComponent";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '50vw',
+    width: '100vw',
   },
 }));
 
@@ -34,7 +34,6 @@ export default function UpdateCard(props) {
       productionDate,
     },
     onSubmit: async values => {
-      console.log("values", values)
       setLoading(true);
       await axios.post(`/products/update/`+ id, values);
       setLoading(false);
