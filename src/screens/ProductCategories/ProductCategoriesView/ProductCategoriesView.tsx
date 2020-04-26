@@ -26,8 +26,8 @@ const ProductCategoriesView: React.ComponentType<ProductCategoriesViewProps> = (
         })}
       </ScrollView>
       </SafeAreaView>
-        <FloatingMenuComponent 
-        currenScreen="BarCodeScanner"
+      <FloatingMenuComponent 
+        currenScreen="ProductCategories"
         navigation={navigation}
       /> 
     </View>

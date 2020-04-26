@@ -32,6 +32,11 @@ const FloatingMenuComponent: React.ComponentType<FloatingMenuProps> = (props) =>
     navigation.navigate("More");
   }, [currenScreen, navigation]);
 
+  const handlePlusIconOnPress = React.useCallback(() => {
+    if (currenScreen === "AddProduct") return;
+    navigation.navigate("AddProduct");
+  }, [currenScreen, navigation]);
+
   const handleScanIconOnPress = React.useCallback(() => {
     if (currenScreen === "BarCodeScanner") return;
     navigation.navigate("BarCodeScanner");
@@ -45,9 +50,10 @@ const FloatingMenuComponent: React.ComponentType<FloatingMenuProps> = (props) =>
       open={open}
       icon={open ? 'menu-open' : 'menu'}
       actions={[
-        { icon: 'history', label: 'History', onPress: handleHistoryIconOnPress},
-        { icon: 'more', label: 'More', onPress: handleMoreIconOnPress},
         { icon: 'barcode-scan', label: 'Scan', onPress: handleScanIconOnPress},
+        { icon: 'history', label: 'History', onPress: handleHistoryIconOnPress},
+        { icon: 'plus', label: 'Add', onPress: handlePlusIconOnPress},
+        { icon: 'more', label: 'More', onPress: handleMoreIconOnPress},
       ]}
       onStateChange={_onStateChange}
       onPress={handleOnPress}
