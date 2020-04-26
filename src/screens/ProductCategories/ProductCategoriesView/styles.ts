@@ -7,9 +7,12 @@ const styles = StyleSheet.create({
     marginLeft: 0, 
     marginRight: 0, 
   },
-  title: {
-    marginBottom: 10,
-    textAlign: 'center',
+  container: {
+    flex: 1,
+  },
+  headerTitle: {
+    alignSelf: 'center', 
+    marginVertical: 16,
   },
 });
 

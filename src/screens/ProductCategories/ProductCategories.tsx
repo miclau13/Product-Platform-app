@@ -31,6 +31,7 @@ export type Category = {
 export interface ProductCategoriesViewProps {
   categoryList: Category[];
   onPress(category: string): ButtonProps['onPress'];
+  navigation: Props['navigation'];
 };
 
 const ProductCategories: React.ComponentType<Props> = (props) => {
@@ -44,17 +45,6 @@ const ProductCategories: React.ComponentType<Props> = (props) => {
     updateCategoryList(category);
     navigation.navigate("BarCodeScanner");
   };
-
-  React.useEffect(() => {
-    Alert.alert(
-      'Choose Category',
-      'Please choose the category of the product you are going to scan',
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-    );
-    return () => {}
-  }, []);
   
   if (loading) {
     return (
@@ -63,7 +53,11 @@ const ProductCategories: React.ComponentType<Props> = (props) => {
   };
 
   return (
-    <ProductCategoriesView categoryList={categoryList} onPress={onPress}/>
+    <ProductCategoriesView 
+      categoryList={categoryList} 
+      onPress={onPress}
+      navigation={navigation}
+    />
   )
 };
 

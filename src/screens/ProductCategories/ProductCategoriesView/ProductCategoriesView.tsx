@@ -1,37 +1,36 @@
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { Button, Card, Text } from 'react-native-elements';
+import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 
 import styles from './styles';
 import { ProductCategoriesViewProps } from '../ProductCategories';
+import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 
 const ProductCategoriesView: React.ComponentType<ProductCategoriesViewProps> = (props) => {
-  const { categoryList, onPress } = props;
+  const { categoryList, onPress, navigation } = props;
   
   return (
+    <View style={styles.container}>
     <SafeAreaView>
+      <Text h3 style={styles.headerTitle}>You want to find?</Text>
       <ScrollView>
         {categoryList.map((category, index) => {
-          const { buttonProps, description, image, imageProps, title } = category;
+          const { buttonProps, title } = category;
           return (
-            <Card
+            <Button
               key={index}
-              image={image}
-              imageProps={imageProps}
-              title={title}
-            >
-              <Text style={styles.title}>
-                {description}
-              </Text>
-              <Button
-                onPress={onPress(title)}
-                { ...buttonProps }
-              />
-            </Card>
+              onPress={onPress(title)}
+              { ...buttonProps }
+            />
           )
         })}
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+        <FloatingMenuComponent 
+        currenScreen="BarCodeScanner"
+        navigation={navigation}
+      /> 
+    </View>
   );
 }
 export default React.memo(ProductCategoriesView);
