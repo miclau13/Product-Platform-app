@@ -85,7 +85,7 @@ const Navigator = () => {
           const sessionId = Constants.sessionId;
           await SecureStore.setItemAsync("deviceId", sessionId);
         }
-        // await SecureStore.setItemAsync("selectedCategory", "");
+        await SecureStore.setItemAsync("selectedCategory", "");
         // await SecureStore.setItemAsync("displayIntro", true);
         displayIntro = await SecureStore.getItemAsync("displayIntro");
         selectedCategory = await SecureStore.getItemAsync("selectedCategory");
