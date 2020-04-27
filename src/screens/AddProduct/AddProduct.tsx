@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import React from 'react';
 import { ActionSheetIOS, Platform } from 'react-native';
-import { AirbnbRatingProps, ButtonProps, TileProps } from 'react-native-elements'; 
+import { AirbnbRatingProps, ButtonProps, IconProps, InputProps, TileProps } from 'react-native-elements'; 
 import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -24,8 +24,14 @@ type Props = {
 
 export type AddProductTileViewProps = TileProps;
 export interface AddProductViewProps {
+  handleKeywordTagAddIconOnPress: IconProps['onPress'];
+  handleKeywordTagInputOnChangeText: InputProps['onChangeText'];
+  handleKeywordTagLabelOnClose(name: string): () => void;
+  keywordTagLabels: string[];
+  keywordTagInput: string;
   handleOnFinishRating: AirbnbRatingProps['onFinishRating'];
   imageTileList: Array<imageTile>;
+  navigation: AddProductScreenNavigationProp;
   onImagePress(index: number): TileProps['onPress'];
   onSubmitButtonPress: ButtonProps['onPress'];
   rating: number;
@@ -52,7 +58,25 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       title: titleMap[index],
     }
   }));
+  const [keywordTagInput, setKeywordTagInput] = React.useState("");
+  const [keywordTagLabels, setKeywordTagLabels] = React.useState([]);
+  
+  const handleKeywordTagAddIconOnPress = React.useCallback<AddProductViewProps['handleKeywordTagAddIconOnPress']>(() => {
+    if (keywordTagLabels.map(label => label.toUpperCase()).includes(keywordTagInput.toUpperCase())) {
+      return;
+    }
+    setKeywordTagLabels(value => ([...value, keywordTagInput]));
+    setKeywordTagInput("");
+  }, [keywordTagInput, keywordTagLabels, setKeywordTagLabels, setKeywordTagInput]);
 
+  const handleKeywordTagInputOnChangeText = React.useCallback<AddProductViewProps['handleKeywordTagInputOnChangeText']>((value) => {
+    setKeywordTagInput(value);
+  }, [setKeywordTagInput]);
+
+  const handleKeywordTagLabelOnClose = React.useCallback<AddProductViewProps['handleKeywordTagLabelOnClose']>((name) => () => {
+    setKeywordTagLabels(value => (value.filter(v => v !== name)));
+  }, [setKeywordTagLabels]);
+  
   const handleOnFinishRating = React.useCallback<AddProductViewProps['handleOnFinishRating']>((rating) => {
     setRating(rating);
   }, [rating]);
@@ -172,8 +196,14 @@ const AddProduct: React.ComponentType<Props> = (props) => {
 
   return (
     <AddProductView 
+      handleKeywordTagAddIconOnPress={handleKeywordTagAddIconOnPress}
+      handleKeywordTagInputOnChangeText={handleKeywordTagInputOnChangeText}
+      handleKeywordTagLabelOnClose={handleKeywordTagLabelOnClose}
+      keywordTagLabels={keywordTagLabels}
+      keywordTagInput={keywordTagInput}
       handleOnFinishRating={handleOnFinishRating}
       imageTileList={imageTileList}
+      navigation={navigation}
       onImagePress={onImagePress}
       onSubmitButtonPress={onSubmitButtonPress}
       rating={rating}

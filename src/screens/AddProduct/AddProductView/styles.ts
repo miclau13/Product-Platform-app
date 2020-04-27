@@ -3,12 +3,21 @@ import { StyleSheet } from 'react-native';
 import { headerPrimaryColor } from '../../../styles';
 
 const styles = StyleSheet.create({
+  chip: {
+    margin: 4,
+  },
   dropDownContainer: {
     paddingVertical: 8,
     paddingRight: 8,
   },
   label: {
     color: headerPrimaryColor
+  },
+  labelContainer: {
+    flex: 1, 
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingVertical: 8,
   },
   textAreaContainer: {
     borderColor: 'grey',
