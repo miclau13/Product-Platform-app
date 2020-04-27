@@ -22,11 +22,18 @@ const styles = StyleSheet.create({
   dropDownContainer: {
     padding: 8,
   },
+  headerBarContainer: {
+    flexDirection: 'row',
+    justifyContent:'center',
+  },
+  headerTitle: {
+    alignSelf: 'center', 
+    marginVertical: 16,
+  },
   iconContainer: {
-    backgroundColor: 'white',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#e1e1e1',
-    justifyContent: 'center', 
+    alignSelf: 'center',
+    position: 'absolute',
+    right: 16,
   },
   qr: {
     marginTop: '20%',

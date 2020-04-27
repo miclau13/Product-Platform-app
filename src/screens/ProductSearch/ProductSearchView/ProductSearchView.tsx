@@ -1,18 +1,21 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { Badge, Button, Card, Icon, Rating, Text } from 'react-native-elements';
+import { Button, Card, Icon, Rating, Text } from 'react-native-elements';
+import { Chip } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
 
 import styles from './styles';
 import { ProductSearchViewProps, ProductSearchItemCardProps } from '../ProductSearch';
 import { buttonPrimaryColor } from '../../../styles';
-import SearchBarComponent from '../../../components/SearchComponent';
 
 const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (props) => {
   const { 
     description, 
+    handleFavoriteIconOnPress,
     handleSelectButtonOnPress, 
+    favorite,
     id, 
+    origin,
     price,
     rating,
     selected,
@@ -24,13 +27,14 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
     : null
   const buttonTitle = selected ? 'Selected' : 'Select';
   const buttonType = selected ? 'outline' : 'solid';
-  const cardBadge = selected
-    ? <Badge 
-        value='Default' 
-        badgeStyle={styles.cardBadgeStyle}
-        containerStyle={styles.cardBadgeContainerStyle}
-      /> 
-    : null;
+  const cardBadge = 
+          <Icon
+            color='#00aced'
+            name={favorite ? 'favorite' : 'favorite-border'}
+            containerStyle={styles.cardIconContainerStyle}
+            size={32}
+            onPress={handleFavoriteIconOnPress(id)}
+          />
 
   return (
     <Card
@@ -45,12 +49,15 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
         <Text style={styles.title}>
           {description}
         </Text>
+        <Text style={styles.title}>
+          {origin}
+        </Text>
         <View style={{ flexGrow: 1, justifyContent: 'flex-end' }}>
-          <Rating
+          {/* <Rating
             imageSize={20}
             readonly
             startingValue={rating}
-          />
+          /> */}
           <View style={{ margin: 4 }}></View>
           <View style={styles.priceContainer}>
             <NumberFormat 
@@ -80,23 +87,54 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
 
 const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) => {
   const { 
-    handleHistoryIconOnPress,
-    productList, 
+    chipList,
+    handleAddButtonOnPress,
+    handleChipOnPress,
+    handleFavoriteIconOnPress,
     handleSelectButtonOnPress,
+    productList, 
 
     search,
     updateSearch,
   } = props;
-  // console.log(productList)
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
+        <View style={styles.labelContainer}>
+          {chipList.map(chip => {
+            return (
+              <Chip 
+                key={chip.name}
+                onPress={handleChipOnPress(chip.name)}
+                selected={chip.selected}
+                style={styles.chip}
+              >
+                {chip.name}
+              </Chip>
+            )
+          })}
+        </View>
         <View style={styles.productListContainer}>
+          {productList.length <= 0
+            ? <Card title='Results Not Found' titleStyle={{ fontSize: 28 }}>
+                <Text style={{ marginBottom: 10, fontSize: 24 }}>
+                  Please share the information you have to us!
+                </Text>
+                <View style={{ marginVertical: 16 }}/>
+                <Button
+                  onPress={handleAddButtonOnPress}
+                  titleStyle={{ fontSize: 24 }}
+                  title='Add Product'
+                />
+              </Card>
+            : null
+          }
           {productList.map(product => {
             return (
               <ProductSearchItemCard 
                 key={product.id}
                 {...product} 
+                handleFavoriteIconOnPress={handleFavoriteIconOnPress}
                 handleSelectButtonOnPress={handleSelectButtonOnPress} 
               />
             )

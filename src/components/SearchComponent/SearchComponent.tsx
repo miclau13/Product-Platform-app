@@ -10,7 +10,7 @@ const SearchBarComponent: React.ComponentType<SearchBarProps> = (props) => {
       round
       containerStyle={styles.container}
       placeholder="Search"
-      searchIcon={false}
+      // searchIcon={false}
       inputStyle={styles.inputStyle}
       {...props}
     />

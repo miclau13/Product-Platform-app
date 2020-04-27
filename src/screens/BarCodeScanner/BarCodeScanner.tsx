@@ -2,6 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import { BarCodeScanner as ExpoBarCodeScanner, BarCodeScannerProps as ExpoBarCodeScannerProps } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import { difference } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Keyboard, Platform } from 'react-native';
 import { ButtonProps, ButtonGroupProps, SearchBarProps, IconProps } from 'react-native-elements';
@@ -21,18 +22,16 @@ type BarCodeScannerScreenNavigationProp = StackNavigationProp<
 
 type Props = {
   navigation: BarCodeScannerScreenNavigationProp;
+  headerTitle?: string;
 };
 
 export interface BarCodeScannerViewProps {
   handleBarCodeScanned: ExpoBarCodeScannerProps['onBarCodeScanned'];
-  handleScanAgainButtonOnPress: ButtonProps['onPress'];
   handleCancelButtonOnPress: ButtonProps['onPress'];
-  handleHistoryIconOnPress: IconProps['onPress'];
+  handleInfoIconOnPress: IconProps['onPress'];
   isSearchViewVisible: boolean;
-  scanned: boolean;
 
   // For Search
-  handleSearchIconOnPress: IconProps['onPress'];
   onFocus: SearchBarProps['onFocus'];
   search: string;
   updateSearch: SearchBarProps['onChangeText'];
@@ -43,9 +42,11 @@ export interface BarCodeScannerViewProps {
   selectedCategory: string;
 
   // For ProductSearchView
+  chipList: { name: string, selected: boolean }[];
+  handleChipOnPress(name: string): () => void;
   navigation: Props['navigation'];
   productList: Product[];
-  // setProductList: React.Dispatch<React.SetStateAction<Product[]>>;
+  setFavoritedProductIdList: React.Dispatch<React.SetStateAction<string[]>>
 
   // For ButtonGroup
   onButtonIndexPress: ButtonGroupProps['onPress'];
@@ -58,45 +59,78 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
   const [hasBarCodeScannerPermission, setHasBarCodeScannerPermission] = useState(null);
   const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);
-  const [scanned, setScanned] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
   // For ButtonGroup
   const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
   const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
-
   // For ProductSearchView
-  // const [productList, setProductList] = React.useState(getDefaultProductList(productDataList.filter(product => product.category === selectedCategory)));
+  const [chipList, setChipList] = React.useState(
+    [
+      { name: "PM2.5", selected: false }, 
+      { name: "BFE-95%", selected: false },
+      { name: "PFE-95%", selected: false },
+      { name: "VFE-95%", selected: false }
+    ]
+  );
+  const handleChipOnPress = React.useCallback(name => () => {
+    const result = chipList.map(chip => {
+      if (name === chip.name) {
+        return { ...chip, selected: !chip.selected };
+      }
+      return chip
+    });
+    setChipList(result);
+  }, [chipList]);
+  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
+  // Get the result filtered by category
+  const [_productList] = React.useState(getDefaultProductList(productDataList.filter(product => product.category === selectedCategory)));
   const productList = React.useMemo(() => {
-    let result = getDefaultProductList(productDataList.filter(product => product.category === selectedCategory));
+    // Get the result filtered by category
+    let result = _productList.filter(product => product.category === selectedCategory)
+    // Update the result with description
+    result = result.filter(product => product.description.toLowerCase().includes(search.toLowerCase()));
+    // Filter the result with selected labels
+    const selectedLabels = chipList.filter(chip => chip.selected);
+    if (selectedLabels.length > 0) {
+      result = result.filter(product => { 
+        const diff = difference(selectedLabels.map(label => label.name), product.labels.map(label => label.trim()));
+        if (diff.length > 0) return false;
+        return true
+        // let _selected = true;
+        // selectedLabels.forEach(label => {
+        //   console.log("label",label)
+        //   console.log("product.labels",product.labels)
+        //   console.log("product.labels.includes(label.name)",product.labels.includes(label.name))
+        //   if (!product.labels.includes(label.name)) {
+        //     _selected = false;
+        //   }
+        // })
+        // return _selected;
+      });
+    }
+    // Update the result with favorited product
+    result = result.map(product => {
+      if (favoritedProductIdList.includes(product.id)) {
+        return { ...product, favorite: true }
+      }
+      return { ...product, favorite: false }
+    });
     if (!search) {
       return result;
     };
-    result = result.filter(product => product.description.toLowerCase().includes(search.toLowerCase()));
+
     return result;
     
-  }, [productDataList, search, selectedCategory])
+  }, [chipList, favoritedProductIdList, search, selectedCategory, _productList])
 
   // For Search
-  const handleSearchIconOnPress = React.useCallback<BarCodeScannerViewProps['handleSearchIconOnPress']>(() => {
-    // const filteredResult = productList.filter(product => 
-    //   (product.description.startsWith(search))
-    // );
-    // setProductList(filteredResult);
-  }, [productList, search]);
   const updateSearch = React.useCallback(search => {
-    // if (!search) {
-    //   setSearch(search);
-    //   // setProductList(getDefaultProductList(productDataList));
-    // } else {
-    //   setSearch(search);
-    //   // const filteredResult = productList.filter(product => product.description.toLowerCase().includes(search.toLowerCase()));
-    //   // setProductList(filteredResult);
-    // }
     setSearch(search);
   }, [productList, search]);
   const onFocus = React.useCallback<BarCodeScannerViewProps['onFocus']>(() => {
     setIsSearchViewVisible(true);
+    navigation.setParams({ headerTitle: "Search" });
   }, [isSearchViewVisible]);
 
   // For Dropdown
@@ -116,7 +150,6 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
 
   // For BarCodeScannerView
   const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(({ type, data }) => {
-    setScanned(true);
     console.log("type", type)
     console.log("data", data)
     if (data.match(/0{13}/g)) {
@@ -133,25 +166,24 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
           {text: 'Cancel', onPress: () => null},
           {text: 'OK', onPress: () =>{ 
             navigation.navigate('AddProduct');
-            // setScanned(false);
           }},
         ],
       ); 
     } else if (type && data) {
-      navigation.navigate('ProductInfo');
-      // setScanned(false);
+      navigation.navigate('ProductCategories');
+      // navigation.navigate('ProductInfo');
     };
-  }, [scanned]);
-  const handleScanAgainButtonOnPress = useCallback<BarCodeScannerViewProps['handleScanAgainButtonOnPress']>(() => {
-    setScanned(false);
-  }, [scanned]);
+  }, [navigation]);
+
   const handleCancelButtonOnPress = useCallback<BarCodeScannerViewProps['handleCancelButtonOnPress']>(() => {
     setIsSearchViewVisible(false);
     setSearch('');
     Keyboard.dismiss();
-  }, [scanned]);
-  const handleHistoryIconOnPress = useCallback<BarCodeScannerViewProps['handleHistoryIconOnPress']>(() => {
-    navigation.navigate('Records');
+    navigation.setParams({ headerTitle: "Scanner" });
+  }, [isSearchViewVisible, search]);
+
+  const handleInfoIconOnPress = useCallback<BarCodeScannerViewProps['handleInfoIconOnPress']>(() => {
+    navigation.navigate('Intro');
   }, [navigation]);
 
   // For ButtonGroup
@@ -209,10 +241,8 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     <BarCodeScannerView 
       handleBarCodeScanned={handleBarCodeScanned}
       handleCancelButtonOnPress={handleCancelButtonOnPress}
-      handleScanAgainButtonOnPress={handleScanAgainButtonOnPress}
-      handleHistoryIconOnPress={handleHistoryIconOnPress}
+      handleInfoIconOnPress={handleInfoIconOnPress}
       isSearchViewVisible={isSearchViewVisible}
-      scanned={scanned}
       // For Search
       onFocus={onFocus}
       search={search}
@@ -222,10 +252,11 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       handleIOSDropdownOnDonePress={handleIOSDropdownOnDonePress}
       selectedCategory={selectedCategory}
       // For ProductSearchView
-      handleSearchIconOnPress={handleSearchIconOnPress}
+      chipList={chipList}
+      handleChipOnPress={handleChipOnPress}
       navigation={navigation}
       productList={productList}
-      // setProductList={setProductList}
+      setFavoritedProductIdList={setFavoritedProductIdList}
       // For ButtonGroup
       onButtonIndexPress={onButtonIndexPress}
       selectedButtonIndex={selectedButtonIndex}

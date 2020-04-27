@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DisplayIntroContext = React.createContext({ removeIntro: () => null });
+const DisplayIntroContext = React.createContext({ displayIntro: "", removeIntro: () => null });
 
 export const DisplayIntroContextConsumer = DisplayIntroContext.Consumer;
 

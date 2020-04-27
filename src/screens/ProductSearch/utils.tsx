@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { Icon } from 'react-native-elements';
 
 import { Product } from './ProductSearch';
 import { Product as ProductData } from '../../context/ProductListContext';
@@ -15,6 +14,7 @@ const productList: Product[] = [
   {
     category: 'mask',
     description: 'Mask',
+    favorite: false,
     id: '100',
     image: MaskCoverImage,
     imageProps: {
@@ -25,6 +25,8 @@ const productList: Product[] = [
       height: 150,
       width: 150, 
     },
+    labels: [],
+    origin: 'USA',
     rating: 5,
     price: 1000,
     selected: true,
@@ -33,6 +35,7 @@ const productList: Product[] = [
   { 
     category: 'sanitizer',
     description: 'Sanitizer',
+    favorite: false,
     id: '101',
     image: SanitizerCoverImage,
     imageProps: {
@@ -43,6 +46,8 @@ const productList: Product[] = [
       height: 150,
       width: 150, 
     },
+    labels: [],
+    origin: 'USA',
     rating: 5,
     price: 1000,
     selected: false,
@@ -51,6 +56,7 @@ const productList: Product[] = [
   { 
     category: 'mask',
     description: 'Paper Roll',
+    favorite: false,
     id: '102',
     image: PaperRollCoverImage,
     imageProps: {
@@ -61,6 +67,8 @@ const productList: Product[] = [
       height: 150,
       width: 150, 
     },
+    labels: [],
+    origin: 'USA',
     rating: 5,
     price: 1000,
     selected: false,
@@ -69,6 +77,7 @@ const productList: Product[] = [
   { 
     category: 'mask',
     description: 'Rice',
+    favorite: false,
     id: '103',
     image: RiceCoverImage,
     imageProps: {
@@ -79,6 +88,8 @@ const productList: Product[] = [
       height: 150,
       width: 150, 
     },    
+    labels: [],
+    origin: 'USA',
     rating: 5,
     price: 1000,
     selected: false,
@@ -87,6 +98,7 @@ const productList: Product[] = [
   { 
     category: 'mask',
     description: '(Description 5)',
+    favorite: false,
     id: '104',
     image: RiceCoverImage,
     imageProps: {
@@ -97,6 +109,8 @@ const productList: Product[] = [
       height: 150,
       width: 150, 
     },
+    labels: [],
+    origin: 'USA',
     rating: 5,
     price: 1000,
     selected: false,
@@ -105,6 +119,7 @@ const productList: Product[] = [
   { 
     category: 'mask',
     description: '(Description 6)',
+    favorite: false,
     id: '105',
     image: RiceCoverImage,
     imageProps: {
@@ -115,6 +130,8 @@ const productList: Product[] = [
       height: 150,
       width: 150, 
     },
+    labels: [],
+    origin: 'USA',
     rating: 5,
     price: 1000,
     selected: false,
@@ -125,7 +142,7 @@ const productList: Product[] = [
 export const getDefaultProductList = (productDataList: ProductData[]) => {
   if (productDataList.length > 0) {
     const list: Product[] = productDataList.map(product => {
-      const { id, saved, price, origin, productName, category, rating } = product;
+      const { id, saved, price, origin, productName, category, rating, labels } = product;
       const image = 
         category === "mask" 
           ? MaskCoverImage
@@ -134,9 +151,11 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
         category,
         id,
         image,
+        labels,
+        origin,
         price,
         rating,
-        description: `${productName} (${origin})`,
+        description: `${productName}`,
         favorite: saved,
         imageProps: {
           resizeMode: 'contain',

@@ -34,6 +34,7 @@ export const screenOptions: BottomTabNavigationOptions | ((props: {
     },
     tabBarVisible: false,
     // tabBarLabel: false,
+    // header: null,
   })
 };
 

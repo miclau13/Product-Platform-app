@@ -9,7 +9,7 @@ export function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Home':
-      return 'Crazyee';
+      return 'Home';
     case 'Intro1':
       return 'Intro1';
     case 'Intro2':

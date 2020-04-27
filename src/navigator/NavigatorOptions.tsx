@@ -11,7 +11,7 @@ export const screenOptions: StackNavigationOptions | ((props: {
 }) => StackNavigationOptions) = (props) => {
   const { route } = props;
   return ({
-    title: 'Crazyee'
+    // title: 'Crazyee'
   })
 };
 

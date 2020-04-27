@@ -64,8 +64,9 @@ const Navigator = () => {
   );
 
   const displayIntroContext = React.useMemo(() => ({
-    removeIntro: () => dispatch({ type: 'REMOVE_INTRO' })
-  }), []);
+    removeIntro: () => dispatch({ type: 'REMOVE_INTRO' }),
+    displayIntro: state.displayIntro
+  }), [state.displayIntro]);
 
   const selectCategoryContext = React.useMemo(() => ({
     updateCategoryList: (value: string) => dispatch({ type: 'UPDATE_SELECTED_CATEGORY', value }),
@@ -85,8 +86,8 @@ const Navigator = () => {
           const sessionId = Constants.sessionId;
           await SecureStore.setItemAsync("deviceId", sessionId);
         }
-        await SecureStore.setItemAsync("selectedCategory", "");
-        // await SecureStore.setItemAsync("displayIntro", true);
+        // await SecureStore.setItemAsync("selectedCategory", "");
+        // await SecureStore.setItemAsync("displayIntro", "YES");
         displayIntro = await SecureStore.getItemAsync("displayIntro");
         selectedCategory = await SecureStore.getItemAsync("selectedCategory");
       } catch (e) {
@@ -136,15 +137,11 @@ const Navigator = () => {
 
   return (
     <DisplayIntroContextProvider value={displayIntroContext}>
-      {state.displayIntro ?
-        <RootStack />: 
-        <SelectCategoryContextProvider value={selectCategoryContext}>
-          <ProductListContextProvider value={productListContext}>
-            <RootTab />
-          </ProductListContextProvider>
-        </SelectCategoryContextProvider>
-      }
-      
+    <SelectCategoryContextProvider value={selectCategoryContext}>
+      <ProductListContextProvider value={productListContext}>
+        <RootTab />
+      </ProductListContextProvider>
+    </SelectCategoryContextProvider>
     </DisplayIntroContextProvider>
   )
 };

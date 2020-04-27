@@ -13,7 +13,11 @@ export const screenOptions: StackNavigationOptions | ((props: {
   return ({
     headerBackTitleVisible: false,
     headerStyle: { backgroundColor: headerPrimaryColor },
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 24,
+    },
     headerTintColor: 'black',
-    title: 'Crazyee',
+    // headerShown: false,
   })
 };

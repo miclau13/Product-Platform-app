@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { screenOptions } from './NavigatorOptions';
 import { useSelectCategoryContext } from '../../../context/SelectCategoryContext';
+import { useDisplayIntroContext } from '../../../context/DisplayIntroContext';
 import BarCodeScannerScreen, { options as BarCodeScannerScreenOptions } from '../../../screens/BarCodeScanner';
 import ProductCategoriesScreen, { options as ProductCategoriesScreenOptions } from '../../../screens/ProductCategories';
 import AddProductScreen, { options as AddProductScreenOptions } from "../../../screens/AddProduct";
@@ -14,10 +15,13 @@ import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "..
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
 import MoreScreen, { options as MoreScreenOptions } from "../../../screens/More";
 import CommentsScreen, { options as CommentsScreenOptions } from "../../../screens/Comments";
+import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Intro";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: undefined;
-  BarCodeScanner: undefined;
+  BarCodeScanner: {
+    headerTitle?: string
+  };
   Comments: undefined;
   ProductCategories: undefined;
   ProductComparison: undefined;
@@ -27,15 +31,21 @@ export type BarCodeScannerStackParamList = {
   RecordsHistory: undefined;
   RecordsSaved: undefined;
   More: undefined;
+  Intro: undefined;
 };
 
 const BarCodeScannerStack = createStackNavigator();
 
 const BarCodeScannerStackScreen = (props) => {
   const { selectedCategory } = useSelectCategoryContext();
+  const { displayIntro } = useDisplayIntroContext();
+  const initialRouteName = 
+    !! displayIntro ? "Intro" :
+    !! selectedCategory ? "BarCodeScanner" : "ProductCategories"
   return (
     <BarCodeScannerStack.Navigator
-      initialRouteName={!!selectedCategory ? "BarCodeScanner" : "ProductCategories"}
+      // headerMode="none"
+      initialRouteName={initialRouteName}
       // initialRouteName="More"
       screenOptions={screenOptions}
     >
@@ -50,6 +60,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="RecordsHistory" component={RecordsHistoryScreen} options={RecordsHistoryScreenOptions}/>
       <BarCodeScannerStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>
       <BarCodeScannerStack.Screen name="More" component={MoreScreen} options={MoreScreenOptions}/>
+      <BarCodeScannerStack.Screen name="Intro" component={IntroScreen} options={IntroScreenOptions}/>
     </BarCodeScannerStack.Navigator>
   );
 };

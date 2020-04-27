@@ -1,7 +1,7 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button, ButtonGroup, ButtonGroupProps, Icon } from 'react-native-elements';
+import { SafeAreaView, View } from 'react-native';
+import { Button, ButtonGroup, ButtonGroupProps, Icon, Text } from 'react-native-elements';
 
 import styles, { absoluteFillObject, buttonGroupStyles } from './styles';
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
@@ -38,13 +38,10 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
   const { 
     handleBarCodeScanned,
     handleCancelButtonOnPress,
-    handleScanAgainButtonOnPress,
-    handleHistoryIconOnPress,
+    handleInfoIconOnPress,
     isSearchViewVisible,
-    scanned,
 
     // For Search
-    handleSearchIconOnPress,
     onFocus,
     search,
     updateSearch,
@@ -53,9 +50,11 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     handleIOSDropdownOnDonePress,
     selectedCategory,
     // For ProductSearchView
+    chipList,
+    handleChipOnPress,
     navigation,
     productList,
-    // setProductList,
+    setFavoritedProductIdList,
     // For ButtonGroup
     onButtonIndexPress,
     selectedButtonIndex,
@@ -63,6 +62,16 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
   
   return (
     <View style={styles.container}>
+      <SafeAreaView>
+        {/* <View style={styles.headerBarContainer}>
+          <Text h3 style={styles.headerTitle}>Scanner</Text>
+          <Icon
+            containerStyle={styles.iconContainer}
+            onPress={handleInfoIconOnPress}
+            name="info-outline"
+            size={36}
+          /> 
+        </View> */}
       <View style={styles.topBarContainer}>
         <View style={styles.dropDownContainer}>
           <DropdownComponent
@@ -76,18 +85,12 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           />
         </View>
         <SearchBarComponent 
-          // clearIcon={<Icon name='search' onPress={handleSearchIconOnPress} underlayColor='transparent' />}
           onChangeText={updateSearch}
           onFocus={onFocus}
           value={search}
         />
         {!isSearchViewVisible 
-          ? <Icon
-              containerStyle={styles.iconContainer}
-              // onPress={handleHistoryIconOnPress}
-              name="warning"
-              size={36}
-            /> 
+          ? null
           : <Button
               containerStyle={styles.buttonContainer}
               onPress={handleCancelButtonOnPress}
@@ -95,16 +98,16 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
               type="clear"
             />
         }
-      </View>
+        </View>
+      </SafeAreaView>
       {!isSearchViewVisible 
         ? selectedButtonIndex === 0 
           ? <>
             <View style={styles.container}>
               <BarCodeScanner
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                onBarCodeScanned={handleBarCodeScanned}
                 style={absoluteFillObject}
               />
-              {scanned && <Button title={'Tap to Scan Again'} onPress={handleScanAgainButtonOnPress} />}
               <BarCodeScannerMarkerView />
             </View> 
             <View style={styles.buttonGroupContainer}>
@@ -122,18 +125,17 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             </>
           : null 
         : <ProductSearch 
+            chipList={chipList}
+            handleChipOnPress={handleChipOnPress}
             navigation={navigation} 
             productList={productList} 
-            // setProductList={setProductList}
+            setFavoritedProductIdList={setFavoritedProductIdList}
           />
       }
-      {!isSearchViewVisible 
-        ? <FloatingMenuComponent 
-            currenScreen="BarCodeScanner"
-            navigation={navigation}
-          /> 
-        : null
-      }
+      <FloatingMenuComponent 
+        currenScreen="BarCodeScanner"
+        navigation={navigation}
+      /> 
     </View>
   );
 }

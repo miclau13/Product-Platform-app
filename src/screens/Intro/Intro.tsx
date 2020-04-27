@@ -5,11 +5,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultPageList } from './utils';
 import IntroView from './IntroView';
-import { HomeStackParamList } from '../../navigator/NavigationStack/HomeStack';
+import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { useDisplayIntroContext } from '../../context/DisplayIntroContext';
+import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 
 type IntroScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
+BarCodeScannerStackParamList,
   'Intro'
 >;
 
@@ -40,6 +41,7 @@ const pageList = getDefaultPageList();
 const Intro: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const { removeIntro } = useDisplayIntroContext();
+  const { selectedCategory } = useSelectCategoryContext();
   const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = async () => {
     // navigation.navigate("HomeStack");
     await SecureStore.setItemAsync("displayIntro", "NO");
@@ -50,9 +52,9 @@ const Intro: React.ComponentType<Props> = (props) => {
   const _onSlideChangeHandle: IntroViewProps['_onSlideChangeHandle'] = (index, total) => {
   };
   const _onSkipBtnHandle: IntroViewProps['_onSkipBtnHandle'] = async (index) => {
-    // navigation.navigate("HomeStack");
     await SecureStore.setItemAsync("displayIntro", "NO");
     removeIntro();
+    navigation.navigate(!selectedCategory ? "ProductCategories" :"BarCodeScanner");
   };
 
   return (

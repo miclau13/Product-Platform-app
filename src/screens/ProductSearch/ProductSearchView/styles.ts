@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  chip: {
+    margin: 4,
+  },  
   container: {
     flex: 1,
   },
@@ -10,7 +13,14 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e1e1e1',
     justifyContent: 'center', 
   },
+  labelContainer: {
+    flex: 1, 
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingVertical: 8,
+  },
   productListContainer: {
+    justifyContent: 'center',
     flex: 1, 
     flexDirection: 'row', 
     flexWrap: 'wrap',
@@ -21,10 +31,10 @@ const styles = StyleSheet.create({
   },
 
   cardBadgeStyle: {
-    height: 30,
-    width: 60,
+    height: 45,
+    // width: 60,
   },
-  cardBadgeContainerStyle: {
+  cardIconContainerStyle: {
     position: 'absolute',
     right: 4,
     top: -34,
