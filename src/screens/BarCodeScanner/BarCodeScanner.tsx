@@ -83,11 +83,12 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     setChipList(result);
   }, [chipList]);
   const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
-  // Get the result filtered by category
-  const [_productList] = React.useState(getDefaultProductList(productDataList.filter(product => product.category === selectedCategory)));
+
   const productList = React.useMemo(() => {
+    // Get the result if caegory changed
+    let result = getDefaultProductList(productDataList.filter(product => product.category === selectedCategory));
     // Get the result filtered by category
-    let result = _productList.filter(product => product.category === selectedCategory)
+    result.filter(product => product.category === selectedCategory)
     // Update the result with description
     result = result.filter(product => product.description.toLowerCase().includes(search.toLowerCase()));
     // Filter the result with selected labels
@@ -122,7 +123,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
 
     return result;
     
-  }, [chipList, favoritedProductIdList, search, selectedCategory, _productList])
+  }, [chipList, favoritedProductIdList, search, selectedCategory]);
 
   // For Search
   const updateSearch = React.useCallback(search => {

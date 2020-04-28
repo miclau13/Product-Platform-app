@@ -38,6 +38,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 4,
     top: -34,
+    zIndex: 2,
+  },
+  cardClickAreaStyle: {
+    position: 'absolute',
+    // backgroundColor: "#DDDDDD",
+    height: 150,
+    width: 191,
+    top: -150,
+    // ...StyleSheet.absoluteFillObject,
   },
   cardContainerStyle: {
     borderWidth: 0,

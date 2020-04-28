@@ -7,10 +7,10 @@ import { ProductInfo } from './ProductInfo';
 const Mask1Image: ImageRequireSource = require('./assets/mask1.jpeg');
 const productInfo: ProductInfo = {
   title: "Kowa", 
-  category: "Mask",
+  // category: "Mask",
   origin: "Japan",
   price: "180",
-  functions: " ",
+  // functions: " ",
 };
 
 export const getDefaultProductInfo = () => {

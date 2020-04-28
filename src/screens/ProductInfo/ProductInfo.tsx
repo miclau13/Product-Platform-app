@@ -1,10 +1,10 @@
 import { map } from 'lodash';
 import React from 'react';
 import { Share } from 'react-native';
-import { ButtonProps, IconProps, ImageProps, ListItemProps } from 'react-native-elements';
+import { AirbnbRatingProps, ButtonProps, IconProps, ListItemProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { convertToSimilarProductFormat, getDefaultProductInfo } from './utils';
+import { getDefaultProductInfo } from './utils';
 import ProductInfoView from './ProductInfoView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
@@ -19,8 +19,8 @@ type Props = {
 };
 
 export interface ProductInfo {
-  category: string;
-  functions: string;
+  // category: string;
+  // functions: string;
   origin: string;
   price: string;
   title: string;
@@ -34,25 +34,34 @@ type ProductInfoList = {
 
 export interface ProductInfoGridViewProps {
   favorite: boolean;
-  handleCompareMoreButtonOnPress: ButtonProps['onPress'];
+  handleCompareMoreButtonOnPress: IconProps['onPress'];
+  handleEditIconOnPress: IconProps['onPress'];
   handleFavoriteIconOnPress: IconProps['onPress'];
-  productInfoList: ProductInfoList;
+  handleOnFinishRating: AirbnbRatingProps['onFinishRating'];
   handleShareIconOnPress: IconProps['onPress'];
-  showButtons?: boolean;
+  productInfoList: ProductInfoList;
+  rating: number;
+  compare?: boolean;
+  isExpanded?: boolean;
 }
 export interface ProductInfoViewProps extends ProductInfoGridViewProps {
   handleExpand: ListItemProps['onPress'];
   isExpanded: boolean;
+  navigation: ProductInfoScreenNavigationProp;
 };
 
 const ProductInfo: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading] = React.useState(false);
   const [favorite, setFavorite] = React.useState(false);
   const [isExpanded, setIsExpanded] = React.useState(true);
 
-  // const [similarProductList, setSimilarProductList] = React.useState(getDefaultList());
+  const [rating, setRating] = React.useState(0);
+  const handleOnFinishRating = React.useCallback<ProductInfoViewProps['handleOnFinishRating']>((rating) => {
+    setRating(rating);
+  }, [rating]);
+
   const productInfo = React.useMemo(() => getDefaultProductInfo(), [getDefaultProductInfo]);
 
   const productInfoList = React.useMemo<ProductInfoList>(() => map(productInfo, (value, key) => {
@@ -73,6 +82,10 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
 
   const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
     navigation.navigate("ProductComparison");
+  }, [navigation]);
+
+  const handleEditIconOnPress = React.useCallback<ProductInfoViewProps['handleEditIconOnPress']>(() => {
+    navigation.navigate("AddProduct");
   }, [navigation]);
 
   const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(() => {
@@ -118,10 +131,14 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       favorite={favorite}
       isExpanded={isExpanded}
       handleCompareMoreButtonOnPress={handleCompareMoreButtonOnPress}
+      handleEditIconOnPress={handleEditIconOnPress}
       handleExpand={handleExpand}
       handleFavoriteIconOnPress={handleFavoriteIconOnPress}
+      handleOnFinishRating={handleOnFinishRating}
       handleShareIconOnPress={handleShareIconOnPress}
+      navigation={navigation}
       productInfoList={productInfoList}
+      rating={rating}
     />
   )
 };

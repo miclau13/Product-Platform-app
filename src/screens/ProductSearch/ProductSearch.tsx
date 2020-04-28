@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacityProps } from 'react-native';
 import { ButtonProps, CardProps, IconProps, SearchBarProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -40,9 +41,10 @@ export interface ProductSearchViewProps {
   chipList:  BarCodeScannerViewProps['chipList'];
   handleAddButtonOnPress: ButtonProps['onPress'];
   handleChipOnPress: BarCodeScannerViewProps['handleChipOnPress'];
-  handleHistoryIconOnPress: IconProps['onPress'];
-  handleSelectButtonOnPress(id: Product['id']): ButtonProps['onPress'];
   handleFavoriteIconOnPress(id: Product['id']): IconProps['onPress'];
+  handleHistoryIconOnPress: IconProps['onPress'];
+  handleImageAreaOnPress(id: Product['id']): TouchableOpacityProps['onPress'];
+  handleSelectButtonOnPress(id: Product['id']): ButtonProps['onPress'];
   productList: Product[];
 
   // For Search
@@ -52,6 +54,7 @@ export interface ProductSearchViewProps {
 
 export interface ProductSearchItemCardProps extends Product {
   handleSelectButtonOnPress: ProductSearchViewProps['handleSelectButtonOnPress'];
+  handleImageAreaOnPress: ProductSearchViewProps['handleImageAreaOnPress'];
   handleFavoriteIconOnPress: ProductSearchViewProps['handleFavoriteIconOnPress'];
 };
 
@@ -90,10 +93,6 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     navigation.navigate('Records');
   }, [navigation]);
 
-  const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
-    setSelectedProductId(id);
-  }, [setSelectedProductId]);
-
   const handleFavoriteIconOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
     setFavoritedProductIdList((list => {
       if (list.includes(id)) {
@@ -102,6 +101,15 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       return [...list, id];
     }))
   }, [setFavoritedProductIdList]);
+
+  const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => () => {
+    navigation.navigate("ProductInfo");
+  }, [navigation]);
+
+  const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
+    setSelectedProductId(id);
+  }, [setSelectedProductId]);
+
 
   // For Search
   const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {
@@ -121,6 +129,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       handleChipOnPress={handleChipOnPress}
       handleFavoriteIconOnPress={handleFavoriteIconOnPress}
       handleHistoryIconOnPress={handleHistoryIconOnPress}
+      handleImageAreaOnPress={handleImageAreaOnPress}
       handleSelectButtonOnPress={handleSelectButtonOnPress}
       productList={productList} 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Button, Card, Icon, Rating, Text } from 'react-native-elements';
 import { Chip } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
@@ -12,6 +12,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
   const { 
     description, 
     handleFavoriteIconOnPress,
+    handleImageAreaOnPress,
     handleSelectButtonOnPress, 
     favorite,
     id, 
@@ -35,6 +36,13 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
             size={32}
             onPress={handleFavoriteIconOnPress(id)}
           />
+  const cardClickArea = 
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={handleImageAreaOnPress(id)}
+            style={styles.cardClickAreaStyle}
+          >
+          </TouchableOpacity>
 
   return (
     <Card
@@ -44,7 +52,8 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
       wrapperStyle={styles.container}
       imageWrapperStyle={styles.container}
     >
-      {cardBadge && cardBadge}
+      {cardBadge}
+      {cardClickArea}
       <View style={{ flexGrow: 1 }}>
         <Text style={styles.title}>
           {description}
@@ -91,6 +100,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
     handleAddButtonOnPress,
     handleChipOnPress,
     handleFavoriteIconOnPress,
+    handleImageAreaOnPress,
     handleSelectButtonOnPress,
     productList, 
 
@@ -135,6 +145,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
                 key={product.id}
                 {...product} 
                 handleFavoriteIconOnPress={handleFavoriteIconOnPress}
+                handleImageAreaOnPress={handleImageAreaOnPress}
                 handleSelectButtonOnPress={handleSelectButtonOnPress} 
               />
             )
