@@ -10,10 +10,10 @@ const SanitizerCoverImage: Category['image'] = require('./assets/sanitizer_cover
 const categoryList: Category[] = [
   { 
     buttonProps: { 
-      buttonStyle: { padding: 32 },
+      buttonStyle: { backgroundColor: '#FFFFFF', borderRadius: 16, padding: 32 },
       containerStyle: { paddingHorizontal: 32, paddingVertical: 16 },
       title: 'Mask', 
-      titleStyle: { fontSize: 24 }
+      titleStyle: { color: '#7F7F7F', fontSize: 24 },
     },
     description: '(Description 1)',
     image: MaskCoverImage,
@@ -29,10 +29,10 @@ const categoryList: Category[] = [
   },
   { 
     buttonProps: { 
-      buttonStyle: { padding: 32 },
+      buttonStyle: { backgroundColor: '#FFFFFF', borderRadius: 16, padding: 32 },
       containerStyle: { padding: 32 },
       title: 'Sanitizer',  
-      titleStyle: { fontSize: 24 }
+      titleStyle: { color: '#7F7F7F', fontSize: 24 },
     },
     description: '(Description 2)',
     image: SanitizerCoverImage,

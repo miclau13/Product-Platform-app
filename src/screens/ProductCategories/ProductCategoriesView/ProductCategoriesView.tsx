@@ -11,20 +11,20 @@ const ProductCategoriesView: React.ComponentType<ProductCategoriesViewProps> = (
   
   return (
     <View style={styles.container}>
-    <SafeAreaView>
-      <Text h3 style={styles.headerTitle}>You want to find?</Text>
-      <ScrollView>
-        {categoryList.map((category, index) => {
-          const { buttonProps, title } = category;
-          return (
-            <Button
-              key={index}
-              onPress={onPress(title)}
-              { ...buttonProps }
-            />
-          )
-        })}
-      </ScrollView>
+      <SafeAreaView>
+        <Text h3 style={styles.headerTitle}>You want to find?</Text>
+        <ScrollView>
+          {categoryList.map((category, index) => {
+            const { buttonProps, title } = category;
+            return (
+              <Button
+                key={index}
+                onPress={onPress(title)}
+                { ...buttonProps }
+              />
+            )
+          })}
+        </ScrollView>
       </SafeAreaView>
       <FloatingMenuComponent 
         currenScreen="ProductCategories"
