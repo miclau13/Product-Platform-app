@@ -142,7 +142,7 @@ const productList: Product[] = [
 export const getDefaultProductList = (productDataList: ProductData[]) => {
   if (productDataList.length > 0) {
     const list: Product[] = productDataList.map(product => {
-      const { id, saved, price, origin, productName, category, rating, labels } = product;
+      const { id, saved, price, origin, name, category, rating, labels } = product;
       const image = 
         category === "mask" 
           ? MaskCoverImage
@@ -155,7 +155,7 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
         origin,
         price,
         rating,
-        description: `${productName}`,
+        description: `${name}`,
         favorite: saved,
         imageProps: {
           resizeMode: 'contain',

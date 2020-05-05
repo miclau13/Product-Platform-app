@@ -54,7 +54,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
     >
       {cardBadge}
       {cardClickArea}
-      <View style={{ flexGrow: 1 }}>
+      <View>
         <Text style={styles.title}>
           {description}
         </Text>
