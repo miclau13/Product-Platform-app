@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     margin: 4,
   },  
   container: {
+    backgroundColor: 'white',
     flex: 1,
   },
   labelContainer: {

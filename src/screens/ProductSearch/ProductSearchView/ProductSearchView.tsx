@@ -126,7 +126,11 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
         </View>
         <View style={styles.productListContainer}>
           {productList.length <= 0
-            ? <Card title='Results Not Found' titleStyle={{ color: '#7F7F7F', fontSize: 28 }}>
+            ? <Card 
+                containerStyle={{ backgroundColor: '#E2F5FA', borderRadius: 24, borderColor: 'transparent', borderWidth: 0 }}
+                title='Results Not Found' 
+                titleStyle={{ color: '#7F7F7F', fontSize: 28 }}
+              >
                 <Text style={{ color: '#7F7F7F', marginBottom: 10, fontSize: 24 }}>
                   Please share the information you have to us!
                 </Text>
