@@ -12,12 +12,12 @@ export const screenOptions: StackNavigationOptions | ((props: {
   const { route } = props;
   return ({
     headerBackTitleVisible: false,
-    headerStyle: { backgroundColor: headerPrimaryColor },
+    headerStyle: { backgroundColor: 'white' },
     headerTitleStyle: {
       fontWeight: 'bold',
       fontSize: 24,
     },
-    headerTintColor: 'black',
+    headerTintColor: '#4472C4',
     // headerShown: false,
   })
 };

@@ -7,13 +7,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  iconContainer: {
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e1e1e1',
-    justifyContent: 'center', 
-  },
   labelContainer: {
+    backgroundColor: 'white',
     flex: 1, 
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -66,6 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   title: {
+    color: '#7F7F7F',
     marginBottom: 10,
     textAlign: 'center',
   },

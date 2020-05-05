@@ -73,7 +73,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
               decimalScale={0}
               displayType={'text'} 
               prefix={'$'}
-              renderText={value => <Text>{`${value}`}</Text>}
+              renderText={value => <Text style={{ color: '#7F7F7F' }}>{`${value}`}</Text>}
               thousandSeparator={true} 
               value={price}
             />
@@ -126,8 +126,8 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
         </View>
         <View style={styles.productListContainer}>
           {productList.length <= 0
-            ? <Card title='Results Not Found' titleStyle={{ fontSize: 28 }}>
-                <Text style={{ marginBottom: 10, fontSize: 24 }}>
+            ? <Card title='Results Not Found' titleStyle={{ color: '#7F7F7F', fontSize: 28 }}>
+                <Text style={{ color: '#7F7F7F', marginBottom: 10, fontSize: 24 }}>
                   Please share the information you have to us!
                 </Text>
                 <View style={{ marginVertical: 16 }}/>
