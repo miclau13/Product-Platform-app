@@ -3,6 +3,7 @@ import { FAB } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import mapping from '../../languages/CN/mapping';
 
 type ScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -50,10 +51,10 @@ const FloatingMenuComponent: React.ComponentType<FloatingMenuProps> = (props) =>
       open={open}
       icon={open ? 'menu-open' : 'menu'}
       actions={[
-        { icon: 'barcode-scan', label: 'Scan', onPress: handleScanIconOnPress},
-        { icon: 'history', label: 'History', onPress: handleHistoryIconOnPress},
-        { icon: 'plus', label: 'Add', onPress: handlePlusIconOnPress},
-        { icon: 'more', label: 'More', onPress: handleMoreIconOnPress},
+        { icon: 'barcode-scan', label: mapping['Scan'], onPress: handleScanIconOnPress},
+        { icon: 'history', label: mapping['History'], onPress: handleHistoryIconOnPress},
+        { icon: 'plus', label: mapping['Add'], onPress: handlePlusIconOnPress},
+        { icon: 'more', label: mapping['More'], onPress: handleMoreIconOnPress},
       ]}
       onStateChange={_onStateChange}
       onPress={handleOnPress}
