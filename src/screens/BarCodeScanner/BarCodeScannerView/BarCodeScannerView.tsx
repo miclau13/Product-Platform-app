@@ -10,6 +10,7 @@ import ProductSearch from '../../ProductSearch';
 import DropdownComponent from '../../../components/DropdownComponent';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import SearchBarComponent from '../../../components/SearchComponent';
+import mapping from '../../../languages/CN/mapping';
 
 export const NoAccessView: React.ComponentType = () => {
   return (
@@ -63,21 +64,12 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        {/* <View style={styles.headerBarContainer}>
-          <Text h3 style={styles.headerTitle}>Scanner</Text>
-          <Icon
-            containerStyle={styles.iconContainer}
-            onPress={handleInfoIconOnPress}
-            name="info-outline"
-            size={36}
-          /> 
-        </View> */}
       <View style={styles.topBarContainer}>
         <View style={styles.dropDownContainer}>
           <DropdownComponent
             items={[
-              { label: 'Mask', value: 'mask' },
-              { label: 'Sanitizer', value: 'sanitizer' },
+              { label: mapping['Mask'], value: 'mask' },
+              { label: mapping['Sanitizer'], value: 'sanitizer' },
             ]}
             onDonePress={handleIOSDropdownOnDonePress}
             onValueChange={handleDropdownOnValueDown}
@@ -94,7 +86,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           : <Button
               containerStyle={styles.buttonContainer}
               onPress={handleCancelButtonOnPress}
-              title="Cancel"
+              title={mapping["Cancel"]}
               type="clear"
             />
         }

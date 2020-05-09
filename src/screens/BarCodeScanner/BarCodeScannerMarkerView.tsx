@@ -3,6 +3,8 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+import mapping from '../../languages/CN/mapping';
+
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const overlayColor = "rgba(0,0,0,0.5)";  // this gives us a black color with a 50% transparency
@@ -56,7 +58,7 @@ const BarCodeScannerMarkerView: React.ComponentType = (props) => {
   return (
     <View style={styles.rectangleContainer}>
       <View style={styles.topOverlay}>
-        <Text style={styles.scannerTitle}>Please scan the Barcode on the product </Text>
+        <Text style={styles.scannerTitle}>{mapping["Please scan the Barcode on the product"]}</Text>
       </View>
       <View style={styles.scannerContatiner}>
         <View style={styles.rectangle}>

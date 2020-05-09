@@ -3,6 +3,7 @@ import { Icon, IconProps } from 'react-native-elements';
 import { EventMapBase, NavigationState, RouteConfig } from '@react-navigation/native';
 import { headerPrimaryColor } from '../../styles';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import mapping from '../../languages/CN/mapping';
 
 const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
   const { navigation, route } = props;
@@ -25,7 +26,7 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
     },
     // title: "Scanner",
     headerShown: true,
-    headerTitle: headerTitle,
+    headerTitle: mapping["Scanner"],
   }
 };
 

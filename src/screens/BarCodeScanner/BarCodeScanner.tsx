@@ -155,17 +155,14 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     console.log("data", data)
     if (data.match(/0{13}/g)) {
       Alert.alert(
-        'Help Us Out?',
-  `The product was not found. Please help us out by sending us 4 photos: 
-  
-        1. Barcode
-        2. Product Front of Package
-        3. Nutrition Panel
-        4. Ingredients
+        '搵唔到',
+  `不如分享你手上
+  既資料，下次其他
+  用家都搵到啦！
   `,
         [
-          {text: 'Cancel', onPress: () => null},
-          {text: 'OK', onPress: () =>{ 
+          {text: '不用，謝謝', onPress: () => null},
+          {text: '立即報料', onPress: () =>{ 
             navigation.navigate('AddProduct');
           }},
         ],
