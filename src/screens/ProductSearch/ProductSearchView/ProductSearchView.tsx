@@ -49,10 +49,8 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
       {...cardProps}
       imageStyle={styles.cardImageStyle}
       containerStyle={styles.cardContainerStyle}
-      wrapperStyle={styles.container}
-      imageWrapperStyle={styles.container}
     >
-      {cardBadge}
+      {/* {cardBadge} */}
       {cardClickArea}
       <View>
         <Text style={styles.title}>
@@ -61,33 +59,29 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
         <Text style={styles.title}>
           {origin}
         </Text>
-        <View style={{ flexGrow: 1, justifyContent: 'flex-end' }}>
-          {/* <Rating
-            imageSize={20}
-            readonly
-            startingValue={rating}
-          /> */}
-          <View style={{ margin: 4 }}></View>
-          <View style={styles.priceContainer}>
-            <NumberFormat 
-              decimalScale={0}
-              displayType={'text'} 
-              prefix={'$'}
-              renderText={value => <Text style={{ color: '#7F7F7F' }}>{`${value}`}</Text>}
-              thousandSeparator={true} 
-              value={price}
-            />
-          </View>
-          <View style={{ margin: 4 }}></View>
+        <View style={styles.priceContainer}>
+          <NumberFormat 
+            decimalScale={0}
+            displayType={'text'} 
+            prefix={'$'}
+            renderText={value => <Text style={{ color: '#7F7F7F' }}>{`${value}`}</Text>}
+            thousandSeparator={true} 
+            value={price}
+          />
+        </View>
+        <View style={{ marginVertical: 4 }}></View>
+        <View style={styles.cardBottomContainerStyle}>
           <Button
             iconRight
-            containerStyle={{ justifyContent: 'flex-end' }}
+            buttonStyle={styles.cardSelectButtonStyle}
+            containerStyle={styles.cardSelectButtonContainerStyle}
             icon={buttonIcon}
             onPress={handleSelectButtonOnPress(id)}
-            titleStyle={{ marginRight: 8 }}
+            titleStyle={styles.cardSelectButtonTitleStyle}
             title={buttonTitle}
             type={buttonType}
           />
+          {cardBadge}
         </View>
       </View>
     </Card>
@@ -145,13 +139,14 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
           }
           {productList.map(product => {
             return (
-              <ProductSearchItemCard 
-                key={product.id}
-                {...product} 
-                handleFavoriteIconOnPress={handleFavoriteIconOnPress}
-                handleImageAreaOnPress={handleImageAreaOnPress}
-                handleSelectButtonOnPress={handleSelectButtonOnPress} 
-              />
+              <View key={product.id} style={styles.cardOuterContainerStyle}>
+                <ProductSearchItemCard 
+                  {...product} 
+                  handleFavoriteIconOnPress={handleFavoriteIconOnPress}
+                  handleImageAreaOnPress={handleImageAreaOnPress}
+                  handleSelectButtonOnPress={handleSelectButtonOnPress} 
+                />
+              </View>
             )
           })}
         </View>
