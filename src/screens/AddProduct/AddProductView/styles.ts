@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { headerPrimaryColor } from '../../../styles';
+import { buttonTextWithWhiteBackgroudColor, pageBackgroundColor } from '../../../styles';
 
 const styles = StyleSheet.create({
   chip: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   label: {
-    color: headerPrimaryColor
+    color: buttonTextWithWhiteBackgroudColor,
   },
   labelContainer: {
     flex: 1, 
@@ -39,7 +39,33 @@ const styles = StyleSheet.create({
   tileContentContainerStyle: {
     // height: 70,
     // paddingTop: 0,
-  }
+  },
+
+  cameraInputContainerStyle: {
+    paddingHorizontal: 10,
+    width: '100%', 
+  },
+  cameraInputLabelStyle: {
+    color: buttonTextWithWhiteBackgroudColor,
+    fontSize: 16, 
+    fontWeight: 'bold',
+  },
+  imageTileListContainerStyle: {
+    alignItems: 'center',
+    flex: 1, 
+    flexDirection: 'row',
+  },
+  submitButtonContainerStyle: {
+    alignSelf: 'center',
+    margin: 8, 
+    width: '50%', 
+  },
+  submitButtonTitleStyle: {
+    color: buttonTextWithWhiteBackgroudColor,
+  },
+  submitButtonStyle: {
+    backgroundColor: pageBackgroundColor,
+  },
 });
 
 export default styles;

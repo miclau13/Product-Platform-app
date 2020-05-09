@@ -1,5 +1,6 @@
+import mapping from '../../languages/CN/mapping';
 const strings = {
-  title: "Add Product"
+  title: mapping["Add Product Page"]
 }
 
 export default strings;

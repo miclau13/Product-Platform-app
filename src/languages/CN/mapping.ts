@@ -28,6 +28,19 @@ const mapping = {
   "Add Product": "立即報料",
   "Search": "揀下先",
 
+  // Add Product
+  "Add Product Page": "報料",
+  "Product Type": "產品種類",
+  "Product Brand": "品牌名稱",
+  "Product Name": "產品名稱",
+  "Reference Price": "參考零售價",
+  "Origin": "來源地",
+  "Keyword Tag": "#hashtag",
+  "Product Images": "相",
+  "Remarks": "備註",
+  "Add Remarks (Optional)": `比多啲資料，可以俾其他平台用家對產品更了解！`,
+  "Rating": "評分",
+  "Submit": "送出",
 };
 
 export default mapping

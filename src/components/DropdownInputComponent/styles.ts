@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { buttonTextWithWhiteBackgroudColor } from '../../styles';
 
 const styles = StyleSheet.create({
   dropDownContainer: {
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#3CB371'
+    color: buttonTextWithWhiteBackgroudColor,
   },
 });
 

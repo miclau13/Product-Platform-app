@@ -14,6 +14,7 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
   return {
     headerLeft: () => null,
     headerRight: (props) => {
+      if (headerTitle !== mapping["Scanner"]) return;
       return (
         <Icon
           containerStyle={{ marginRight: 16 }}
