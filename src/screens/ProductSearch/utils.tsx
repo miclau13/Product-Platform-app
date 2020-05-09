@@ -161,12 +161,12 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
           resizeMode: 'contain',
           PlaceholderContent: <ActivityIndicator />
         },
-        imageStyle: {
-          height: 150,
-          width: 150, 
-        },
+        // imageStyle: {
+        //   height: 150,
+        //   width: 150, 
+        // },
         selected: false,
-        title: " ",
+        // title: " ",
       });
     });
     return list;

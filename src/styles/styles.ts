@@ -6,3 +6,6 @@ export const iconPrimaryColor = '#00aced';
 export const screenWidth = Dimensions.get('window').width;
 export const screenHeight = Dimensions.get('window').height;
 
+export const headerColor = '#4472C4';
+export const pageBackgroundColor = '#E2F5FA';
+export const buttonTextWithWhiteBackgroudColor = '#7F7F7F';
