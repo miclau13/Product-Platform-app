@@ -22,15 +22,31 @@ type Props = {
   navigation: AddProductScreenNavigationProp;
 };
 
+type InputValues = {
+  name: string;
+  brandName: string;
+  price: number;
+  origin: string;
+  remarks: string;
+};
+
 export type AddProductTileViewProps = TileProps;
 export interface AddProductViewProps {
   handleKeywordTagAddIconOnPress: IconProps['onPress'];
   handleKeywordTagInputOnChangeText: InputProps['onChangeText'];
   handleKeywordTagLabelOnClose(name: string): () => void;
+  handleInputOnChange(field: keyof InputValues): InputProps['onChangeText']
   keywordTagLabels: string[];
   keywordTagInput: string;
   handleOnFinishRating: AirbnbRatingProps['onFinishRating'];
   imageTileList: Array<imageTile>;
+  inputValues: {
+    name: string;
+    brandName: string;
+    price: number;
+    origin: string;
+    remarks: string;
+  };
   navigation: AddProductScreenNavigationProp;
   onImagePress(index: number): TileProps['onPress'];
   onSubmitButtonPress: ButtonProps['onPress'];
@@ -49,8 +65,7 @@ export type imageTile = {
 
 const AddProduct: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-  const [loading] = React.useState(false);
-  const [rating, setRating] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
   const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
     return {
       index,
@@ -58,8 +73,25 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       title: titleMap[index],
     }
   }));
+  const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
+  // Form values
+  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
+  const [inputValues, setInputValues] = React.useState({
+    name: "",
+    brandName: "",
+    price: 0,
+    origin: "",
+    remarks: "",
+  });
   const [keywordTagInput, setKeywordTagInput] = React.useState("");
   const [keywordTagLabels, setKeywordTagLabels] = React.useState([]);
+  const [rating, setRating] = React.useState(0);
+
+  const handleInputOnChange = React.useCallback<AddProductViewProps['handleInputOnChange']>(field => value => {
+    setInputValues(values => {
+      return ({ ...values, [field]: value });
+    })
+  }, []);
   
   const handleKeywordTagAddIconOnPress = React.useCallback<AddProductViewProps['handleKeywordTagAddIconOnPress']>(() => {
     if (keywordTagLabels.map(label => label.toUpperCase()).includes(keywordTagInput.toUpperCase())) {
@@ -82,8 +114,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   }, [rating]);
 
   // For Dropdown
-  const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
-  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
+
   const handleDropdownOnValueDown = React.useCallback<AddProductViewProps['handleDropdownOnValueDown']>((value) => {
     if (Platform.OS === "ios") {
       setSelectedCategory(value);
@@ -181,12 +212,35 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     );
   };
 
-  const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Records' }],
-    });
-  }, [navigation])
+  const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(async () => {
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: 'Records' }],
+    // });
+    try {
+      setLoading(true);
+      const uri = `https://miclo1.azurewebsites.net/products/add`;
+      const response = await fetch(uri, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...inputValues,
+          category: selectedCategory,
+          labels: keywordTagLabels,
+          rating,
+        }),
+      });
+      const result = await response.json() || [];
+      // console.log("result", result)
+    } catch (error) {
+      console.log(" handleSubmitButtonOnPress error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [inputValues, keywordTagLabels, rating, selectedCategory]);
 
   if (loading) {
     return (
@@ -199,10 +253,12 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       handleKeywordTagAddIconOnPress={handleKeywordTagAddIconOnPress}
       handleKeywordTagInputOnChangeText={handleKeywordTagInputOnChangeText}
       handleKeywordTagLabelOnClose={handleKeywordTagLabelOnClose}
+      handleInputOnChange={handleInputOnChange}
       keywordTagLabels={keywordTagLabels}
       keywordTagInput={keywordTagInput}
       handleOnFinishRating={handleOnFinishRating}
       imageTileList={imageTileList}
+      inputValues={inputValues}
       navigation={navigation}
       onImagePress={onImagePress}
       onSubmitButtonPress={onSubmitButtonPress}

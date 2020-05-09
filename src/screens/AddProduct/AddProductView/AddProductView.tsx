@@ -35,6 +35,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
     handleKeywordTagAddIconOnPress,
     handleKeywordTagInputOnChangeText,
     handleKeywordTagLabelOnClose,
+    handleInputOnChange,
     keywordTagLabels,
     keywordTagInput,
     handleOnFinishRating,
@@ -69,6 +70,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           inputContainerStyle={styles.textAreaContainer}
           label={mapping["Product Brand"]}
           labelStyle={styles.label}
+          onChangeText={handleInputOnChange("brandName")}
           placeholder='e.g. H&M'
         />
         <View style={{ margin: 8 }}></View>
@@ -76,6 +78,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           inputContainerStyle={styles.textAreaContainer}
           label={mapping["Product Name"]}
           labelStyle={styles.label}
+          onChangeText={handleInputOnChange("name")}
           placeholder='Koala'
         />
         <View style={{ margin: 8 }}></View>
@@ -86,12 +89,14 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           labelStyle={styles.label}
           leftIcon={{ type: 'font-awesome', name: 'dollar' }}
           leftIconContainerStyle={{ marginRight: 8 }}
+          onChangeText={handleInputOnChange("price")}
         />
         <View style={{ margin: 8 }}></View>
         <Input
           inputContainerStyle={styles.textAreaContainer}
           label={mapping["Origin"]}
           labelStyle={styles.label}
+          onChangeText={handleInputOnChange("origin")}
           placeholder='e.g. Japan'
         />
         <View style={{ margin: 8 }}></View>
@@ -146,15 +151,16 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           label={mapping["Remarks"]}
           labelStyle={styles.label}
           numberOfLines={3}
+          onChangeText={handleInputOnChange("remarks")}
           placeholder={mapping['Add Remarks (Optional)']}
         />
         <View style={{ margin: 8 }}></View>
-        <RatingComponent 
-          defaultRating={rating}
-          label={mapping["Rating"]}
-          onFinishRating={handleOnFinishRating}
-          showRating={false}
-        />
+          <RatingComponent 
+            defaultRating={rating}
+            label={mapping["Rating"]}
+            onFinishRating={handleOnFinishRating}
+            showRating={false}
+          />
         <View style={{ margin: 8 }}></View>
         <Button
           buttonStyle={styles.submitButtonStyle}
@@ -164,6 +170,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           titleStyle={styles.submitButtonTitleStyle}
         >
         </Button>
+        <View style={{ height: 180 }}></View>
       </ScrollView>
       <FloatingMenuComponent 
         currenScreen="BarCodeScanner"
