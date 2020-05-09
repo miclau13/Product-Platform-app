@@ -43,6 +43,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     isSearchViewVisible,
 
     // For Search
+    handleClearSearch,
     onFocus,
     search,
     updateSearch,
@@ -119,6 +120,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
         : <ProductSearch 
             chipList={chipList}
             handleChipOnPress={handleChipOnPress}
+            handleClearSearch={handleClearSearch}
             navigation={navigation} 
             productList={productList} 
             setFavoritedProductIdList={setFavoritedProductIdList}

@@ -16,6 +16,17 @@ const mapping = {
   Scanner: "掃一下",
   // BarCodeScannerMarker
   "Please scan the Barcode on the product": "請掃一下包裝上條碼",
+  // Search
+  Select: "選取",
+  "Results Not Found": "搵唔到",
+  "Please share the information you have to us!": 
+`不如分享你手上
+既資料，下次其他
+用家都搵到啦！
+`,
+  "No, Thanks!": "不用，謝謝",
+  "Add Product": "立即報料",
+  "Search": "揀下先",
 
 };
 

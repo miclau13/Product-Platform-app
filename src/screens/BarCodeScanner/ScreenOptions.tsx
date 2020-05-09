@@ -7,7 +7,7 @@ import mapping from '../../languages/CN/mapping';
 
 const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
   const { navigation, route } = props;
-  const headerTitle = (route.params && route.params.headerTitle) || "Scanner";
+  const headerTitle = (route.params && mapping[route.params.headerTitle]) || mapping["Scanner"];
   const handleHeaderRightOnPress: IconProps['onPress'] = () => {
     navigation.navigate("Intro");
   };
@@ -26,7 +26,7 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
     },
     // title: "Scanner",
     headerShown: true,
-    headerTitle: mapping["Scanner"],
+    headerTitle: headerTitle,
   }
 };
 

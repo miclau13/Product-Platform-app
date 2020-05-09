@@ -16,6 +16,7 @@ type ProductSearchScreenNavigationProp = StackNavigationProp<
 type Props = {
   chipList:  BarCodeScannerViewProps['chipList'];
   handleChipOnPress: BarCodeScannerViewProps['handleChipOnPress'];
+  handleClearSearch: BarCodeScannerViewProps['handleClearSearch'];
   navigation: ProductSearchScreenNavigationProp;
   productList: BarCodeScannerViewProps['productList'];
   setFavoritedProductIdList: BarCodeScannerViewProps['setFavoritedProductIdList']; 
@@ -41,6 +42,7 @@ export interface ProductSearchViewProps {
   chipList:  BarCodeScannerViewProps['chipList'];
   handleAddButtonOnPress: ButtonProps['onPress'];
   handleChipOnPress: BarCodeScannerViewProps['handleChipOnPress'];
+  handleClearSearch: BarCodeScannerViewProps['handleClearSearch'];
   handleFavoriteIconOnPress(id: Product['id']): IconProps['onPress'];
   handleHistoryIconOnPress: IconProps['onPress'];
   handleImageAreaOnPress(id: Product['id']): TouchableOpacityProps['onPress'];
@@ -62,6 +64,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   const { 
     chipList,
     handleChipOnPress,
+    handleClearSearch,
     navigation,
     productList: productDataList, 
     setFavoritedProductIdList,
@@ -127,6 +130,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       chipList={chipList}
       handleAddButtonOnPress={handleAddButtonOnPress}
       handleChipOnPress={handleChipOnPress}
+      handleClearSearch={handleClearSearch}
       handleFavoriteIconOnPress={handleFavoriteIconOnPress}
       handleHistoryIconOnPress={handleHistoryIconOnPress}
       handleImageAreaOnPress={handleImageAreaOnPress}

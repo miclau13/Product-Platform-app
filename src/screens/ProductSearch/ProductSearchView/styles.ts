@@ -83,9 +83,34 @@ const styles = StyleSheet.create({
     // justifyContent: 'flex-end',
   },
   title: {
-    color: '#7F7F7F',
+    color: buttonTextWithWhiteBackgroudColor,
     // marginBottom: 10,
     // textAlign: 'center',
+  },
+
+  notFoundCardContainerStyles: {
+    backgroundColor: '#E2F5FA', 
+    borderColor: 'transparent',
+    borderRadius: 24, 
+    borderWidth: 0, 
+    flex: 1,
+  },
+  notFoundCardTitleStyles: {
+    color: buttonTextWithWhiteBackgroudColor, 
+    fontSize: 28,
+  },
+  notFoundCardTextStyles: {
+    alignSelf: 'center' ,
+    color: buttonTextWithWhiteBackgroudColor,
+    fontSize: 24, 
+    marginBottom: 10, 
+  },
+  notFoundCardButtonStyle: {
+    backgroundColor: 'white', 
+  },
+  notFoundCardButtonTitleStyle: {
+    color: buttonTextWithWhiteBackgroudColor,
+    fontSize: 22,
   },
 });
 

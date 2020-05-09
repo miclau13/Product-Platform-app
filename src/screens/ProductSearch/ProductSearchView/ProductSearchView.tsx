@@ -7,6 +7,7 @@ import NumberFormat from 'react-number-format';
 import styles from './styles';
 import { ProductSearchViewProps, ProductSearchItemCardProps } from '../ProductSearch';
 import { buttonPrimaryColor } from '../../../styles';
+import mapping from '../../../languages/CN/mapping';
 
 const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (props) => {
   const { 
@@ -26,7 +27,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
   const buttonIcon = selected 
     ? <Icon color={buttonPrimaryColor} name='check' type='material-community' />
     : null
-  const buttonTitle = selected ? 'Selected' : 'Select';
+  const buttonTitle = selected ? 'Selected' : mapping['Select'];
   const buttonType = selected ? 'outline' : 'solid';
   const cardBadge = 
           <Icon
@@ -93,6 +94,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
     chipList,
     handleAddButtonOnPress,
     handleChipOnPress,
+    handleClearSearch,
     handleFavoriteIconOnPress,
     handleImageAreaOnPress,
     handleSelectButtonOnPress,
@@ -121,19 +123,28 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
         <View style={styles.productListContainer}>
           {productList.length <= 0
             ? <Card 
-                containerStyle={{ backgroundColor: '#E2F5FA', borderRadius: 24, borderColor: 'transparent', borderWidth: 0 }}
-                title='Results Not Found' 
-                titleStyle={{ color: '#7F7F7F', fontSize: 28 }}
+                containerStyle={styles.notFoundCardContainerStyles}
+                dividerStyle={{ height: 0 }}
+                title={mapping['Results Not Found']} 
+                titleStyle={styles.notFoundCardTitleStyles}
               >
-                <Text style={{ color: '#7F7F7F', marginBottom: 10, fontSize: 24 }}>
-                  Please share the information you have to us!
+                <Text style={styles.notFoundCardTextStyles}>
+                  {mapping["Please share the information you have to us!"]}
                 </Text>
-                <View style={{ marginVertical: 16 }}/>
-                <Button
-                  onPress={handleAddButtonOnPress}
-                  titleStyle={{ fontSize: 24 }}
-                  title='Add Product'
-                />
+                <View style={styles.cardBottomContainerStyle}>
+                  <Button
+                    buttonStyle={styles.notFoundCardButtonStyle}
+                    onPress={handleClearSearch}
+                    titleStyle={styles.notFoundCardButtonTitleStyle}
+                    title={mapping['No, Thanks!']}
+                  />
+                  <Button
+                    buttonStyle={styles.notFoundCardButtonStyle}
+                    onPress={handleAddButtonOnPress}
+                    titleStyle={styles.notFoundCardButtonTitleStyle}
+                    title={mapping['Add Product']}
+                  />
+                </View>
               </Card>
             : null
           }

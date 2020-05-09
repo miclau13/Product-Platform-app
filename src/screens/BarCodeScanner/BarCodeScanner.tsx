@@ -14,6 +14,7 @@ import { useProductListContext } from '../../context/ProductListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { getDefaultProductList, Product } from '../ProductSearch';
+import mapping from '../../languages/CN/mapping';
 
 type BarCodeScannerScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -32,6 +33,7 @@ export interface BarCodeScannerViewProps {
   isSearchViewVisible: boolean;
 
   // For Search
+  handleClearSearch: ButtonProps['onPress'];
   onFocus: SearchBarProps['onFocus'];
   search: string;
   updateSearch: SearchBarProps['onChangeText'];
@@ -126,6 +128,9 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   }, [chipList, favoritedProductIdList, search, selectedCategory]);
 
   // For Search
+  const handleClearSearch = React.useCallback<BarCodeScannerViewProps['handleClearSearch']>(() => {
+    setSearch("");
+  }, []);
   const updateSearch = React.useCallback(search => {
     setSearch(search);
   }, [productList, search]);
@@ -155,14 +160,11 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     console.log("data", data)
     if (data.match(/0{13}/g)) {
       Alert.alert(
-        '搵唔到',
-  `不如分享你手上
-  既資料，下次其他
-  用家都搵到啦！
-  `,
+        mapping["Results Not Found"],
+        mapping["Please share the information you have to us!"],
         [
-          {text: '不用，謝謝', onPress: () => null},
-          {text: '立即報料', onPress: () =>{ 
+          {text: mapping["No, Thanks!"], onPress: () => null},
+          {text: mapping["Add Product"], onPress: () =>{ 
             navigation.navigate('AddProduct');
           }},
         ],
@@ -242,6 +244,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       handleInfoIconOnPress={handleInfoIconOnPress}
       isSearchViewVisible={isSearchViewVisible}
       // For Search
+      handleClearSearch={handleClearSearch}
       onFocus={onFocus}
       search={search}
       updateSearch={updateSearch}
