@@ -1,8 +1,9 @@
-import { map } from 'lodash';
+import { map, pick } from 'lodash';
 import React from 'react';
 import { Share } from 'react-native';
 import { AirbnbRatingProps, ButtonProps, IconProps, ListItemProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 import { getDefaultProductInfo } from './utils';
 import ProductInfoView from './ProductInfoView';
@@ -14,8 +15,11 @@ type ProductInfoScreenNavigationProp = StackNavigationProp<
   'ProductInfo'
 >;
 
+type ProductInfoScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "ProductInfo">;
+
 type Props = {
   navigation: ProductInfoScreenNavigationProp;
+  route: ProductInfoScreenRouteProp;
 };
 
 export interface ProductInfo {
@@ -28,7 +32,7 @@ export interface ProductInfo {
 
 type ProductInfoList = {
   key: string;
-  title: string;
+  // title: string;
   value: string;
 }[];
 
@@ -51,10 +55,11 @@ export interface ProductInfoViewProps extends ProductInfoGridViewProps {
 };
 
 const ProductInfo: React.ComponentType<Props> = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { product } = route.params;
 
   const [loading] = React.useState(false);
-  const [favorite, setFavorite] = React.useState(false);
+  const [favorite, setFavorite] = React.useState(product.favorite);
   const [isExpanded, setIsExpanded] = React.useState(true);
 
   const [rating, setRating] = React.useState(0);
@@ -62,23 +67,12 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     setRating(rating);
   }, [rating]);
 
-  const productInfo = React.useMemo(() => getDefaultProductInfo(), [getDefaultProductInfo]);
-
-  const productInfoList = React.useMemo<ProductInfoList>(() => map(productInfo, (value, key) => {
-    let title = "";
-    if (key === "title") {
-      title = value.toString();
-    } else if (key === "price") {
-      title = `${key.toUpperCase()}:   `;
-    } else {
-      title = `${key.toUpperCase()}:   ${value}`;
-    }
+  const productInfoList = React.useMemo<ProductInfoList>(() => map(pick(product, ["description", "labels", "origin", "price"]), (value, key) => {
     return {
       key, 
-      title,
-      value
+      value: value.toString(),
     }
-  }), [productInfo]);
+  }), [product]);
 
   const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
     navigation.navigate("ProductComparison");

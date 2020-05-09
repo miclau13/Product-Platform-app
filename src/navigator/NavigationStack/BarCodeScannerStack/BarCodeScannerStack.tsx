@@ -9,7 +9,7 @@ import ProductCategoriesScreen, { options as ProductCategoriesScreenOptions } fr
 import AddProductScreen, { options as AddProductScreenOptions } from "../../../screens/AddProduct";
 import ProductComparisonScreen, { options as ProductComparisonScreenOptions } from "../../../screens/ProductComparison";
 import ProductInfoScreen, { options as ProductInfoScreenOptions } from "../../../screens/ProductInfo";
-import ProductSearchScreen, { options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
+import ProductSearchScreen, { Product, options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
 import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
@@ -20,12 +20,14 @@ import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Int
 export type BarCodeScannerStackParamList = {
   AddProduct: undefined;
   BarCodeScanner: {
-    headerTitle?: string
+    headerTitle?: string;
   };
   Comments: undefined;
   ProductCategories: undefined;
   ProductComparison: undefined;
-  ProductInfo: undefined;
+  ProductInfo: {
+    product: Product;
+  };
   ProductSearch: undefined;
   Records: undefined;
   RecordsHistory: undefined;

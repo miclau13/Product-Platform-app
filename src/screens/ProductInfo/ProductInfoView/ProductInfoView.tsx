@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { find, map } from 'lodash';
 import React from 'react';
 import { ImageRequireSource, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { AirbnbRating, Button, Card, Icon, Image, ListItem, Rating } from 'react-native-elements';
@@ -25,6 +25,9 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
     compare = false,
     rating
   } = props;
+
+  // const favorited = JSON.parse(find(productInfoList, (product) => product.key === "favorite").value);
+  const labels = find(productInfoList, (product) => product.key === "labels").value.split(",");
 
   const cardClickArea = 
     <TouchableOpacity
@@ -98,6 +101,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
               />
           }
           {map(productInfoList, (item, key) => {
+              if (item.key === "labels") return;
               const isInNumberFormat = item.key === 'price';
               return (
                 <ListItem
@@ -121,12 +125,11 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
           {compare && !isExpanded 
             ? null
             : <View style={styles.labelContainer}>
-              <Chip style={styles.chip}>Label 1</Chip>
-              <Chip style={styles.chip}>Label 2</Chip>
-              <Chip style={styles.chip}>Label 3</Chip>
-              <Chip style={styles.chip}>Label 1</Chip>
-              <Chip style={styles.chip}>Label 2</Chip>
-              <Chip style={styles.chip}>Label 3</Chip>
+              {labels.map(label => {
+                return (
+                  <Chip key={label} style={styles.chip}>{label}</Chip>
+                )
+              })}
             </View>
           }
         </View>
@@ -149,9 +152,6 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
       <View style={{ marginVertical: 8 }} />
       <ListItem
         bottomDivider
-        // chevron={isExpanded ? <Icon name="keyboard-arrow-up" /> : <Icon name="keyboard-arrow-down" />}
-        // onPress={handleExpand}
-        // title="Default"
       />
       <SafeAreaView style={styles.container}>
         <ScrollView>

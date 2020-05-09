@@ -103,16 +103,18 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       } 
       return [...list, id];
     }))
-  }, [setFavoritedProductIdList]);
+  }, []);
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => () => {
-    navigation.navigate("ProductInfo");
-  }, [navigation]);
+    const product = productDataList.filter(product => product.id === id)[0];
+    navigation.navigate("ProductInfo", { product });
+  }, [navigation, productDataList]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
-    setSelectedProductId(id);
-  }, [setSelectedProductId]);
-
+    // setSelectedProductId(id);
+    const product = productDataList.filter(product => product.id === id)[0];
+    navigation.navigate("ProductInfo", { product });
+  }, [navigation, productDataList]);
 
   // For Search
   const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {
