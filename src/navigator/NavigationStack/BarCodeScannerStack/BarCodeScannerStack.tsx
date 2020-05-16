@@ -26,7 +26,7 @@ export type BarCodeScannerStackParamList = {
   ProductCategories: undefined;
   ProductComparison: undefined;
   ProductInfo: {
-    product: Product;
+    product: Pick<Product, "description" | "favorite" | "labels" | "origin" | "price">;
   };
   ProductSearch: undefined;
   Records: undefined;

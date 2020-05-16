@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e1e8ee',
     flexDirection: 'row', 
-    margin: 12,
+    margin: 8,
     marginBottom: 0,
     padding: 8,
     shadowColor: 'rgba(0,0,0, .2)',
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row', 
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     marginLeft: 10
   },
   listItemContentContainer: {
