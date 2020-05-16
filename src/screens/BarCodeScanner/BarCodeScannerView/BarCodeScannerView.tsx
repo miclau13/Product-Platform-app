@@ -60,6 +60,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     // For ButtonGroup
     onButtonIndexPress,
     selectedButtonIndex,
+    // For ProductSearchMultiSelect
   } = props; 
   
   return (
@@ -82,7 +83,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
           onFocus={onFocus}
           value={search}
         />
-        {!isSearchViewVisible 
+        {!isSearchViewVisible
           ? null
           : <Button
               containerStyle={styles.buttonContainer}

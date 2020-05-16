@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "column", 
     marginHorizontal: 16,
+    maxWidth: '50%',
     padding: 8,
   },
   gridContainer: {

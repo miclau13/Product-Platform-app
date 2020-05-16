@@ -1,15 +1,18 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Button, Card, Icon, Rating, Text } from 'react-native-elements';
+import { Button, Card, Icon, Text } from 'react-native-elements';
 import { Chip } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
 
 import styles from './styles';
-import { ProductSearchViewProps, ProductSearchItemCardProps } from '../ProductSearch';
+import { ProductSearchMultiSelectViewProps, ProductSearchMultiSelectComponentViewProps, ProductSearchMultiSelectItemCardProps } from '../ProductSearchMultiSelect';
+import DropdownComponent from '../../../components/DropdownComponent';
+import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
+import SearchBarComponent from '../../../components/SearchComponent';
 import { buttonPrimaryColor } from '../../../styles';
 import mapping from '../../../languages/CN/mapping';
 
-const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (props) => {
+const ProductSearchMultiSelectItemCard: React.ComponentType<ProductSearchMultiSelectItemCardProps> = (props) => {
   const { 
     name, 
     handleFavoriteIconOnPress,
@@ -27,7 +30,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
   const buttonIcon = selected 
     ? <Icon color={buttonPrimaryColor} name='check' type='material-community' />
     : null
-  const buttonTitle = selected ? 'Selected' : mapping['Select'];
+  const buttonTitle = selected ? '' : mapping['Select'];
   const buttonType = selected ? 'outline' : 'solid';
   const cardBadge = 
           <Icon
@@ -51,7 +54,6 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
       imageStyle={styles.cardImageStyle}
       containerStyle={styles.cardContainerStyle}
     >
-      {/* {cardBadge} */}
       {cardClickArea}
       <View>
         <Text style={styles.title}>
@@ -89,7 +91,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
   )
 };
 
-const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) => {
+const ProductSearchMultiSelectComponent: React.ComponentType<ProductSearchMultiSelectComponentViewProps> = (props) => {
   const { 
     chipList,
     handleAddButtonOnPress,
@@ -99,9 +101,6 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
     handleImageAreaOnPress,
     handleSelectButtonOnPress,
     productList, 
-
-    search,
-    updateSearch,
   } = props;
   return (
     <View style={styles.container}>
@@ -152,7 +151,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
             {productList.map(product => {
               return (
                 <View key={product.id} style={styles.cardOuterContainerStyle}>
-                  <ProductSearchItemCard 
+                  <ProductSearchMultiSelectItemCard 
                     {...product} 
                     handleFavoriteIconOnPress={handleFavoriteIconOnPress}
                     handleImageAreaOnPress={handleImageAreaOnPress}
@@ -165,6 +164,66 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
         </ScrollView>
       </SafeAreaView>
     </View>
+  )
+};
+
+const ProductSearchMultiSelectView: React.ComponentType<ProductSearchMultiSelectViewProps> = (props) => {
+  const { 
+    chipList,
+    handleAddButtonOnPress,
+    handleChipOnPress,
+    handleFavoriteIconOnPress,
+    handleImageAreaOnPress,
+    handleSelectButtonOnPress,
+    productList, 
+    navigation,
+
+    // For Search
+    handleClearSearch,
+    search,
+    updateSearch,
+    // For Dropdown
+    handleDropdownOnValueDown,
+    handleIOSDropdownOnDonePress,
+    selectedCategory,
+  } = props;
+  return (
+    <View style={styles.container}>
+      <SafeAreaView>
+      <View style={styles.topBarContainer}>
+        <View style={styles.dropDownContainer}>
+          <DropdownComponent
+            items={[
+              { label: mapping['Mask'], value: 'mask' },
+              { label: mapping['Sanitizer'], value: 'sanitizer' },
+            ]}
+            onDonePress={handleIOSDropdownOnDonePress}
+            onValueChange={handleDropdownOnValueDown}
+            value={selectedCategory}
+          />
+        </View>
+        <SearchBarComponent 
+          onChangeText={updateSearch}
+          // onFocus={onFocus}
+          value={search}
+        />
+        </View>
+      </SafeAreaView>
+      <ProductSearchMultiSelectComponent 
+          chipList={chipList}
+          handleAddButtonOnPress={handleAddButtonOnPress}
+          handleChipOnPress={handleChipOnPress}
+          handleClearSearch={handleClearSearch}
+          handleFavoriteIconOnPress={handleFavoriteIconOnPress}
+          handleImageAreaOnPress={handleImageAreaOnPress}
+          handleSelectButtonOnPress={handleSelectButtonOnPress}
+          productList={productList} 
+        />
+      {/* <FloatingMenuComponent 
+        currenScreen="BarCodeScanner"
+        navigation={navigation}
+      />  */}
+    </View>
   );
 }
-export default React.memo(ProductSearchView);
+export default React.memo(ProductSearchMultiSelectView);

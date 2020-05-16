@@ -143,9 +143,10 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
     handleExpand, 
     isExpanded,
     navigation,
+    productComparisonInfoList,
     ...productInfoGridViewProps
   } = props;
-  
+  console.log("productComparisonInfoList",productComparisonInfoList)
   return (
     <View style={styles.container}>
       <ProductInfoGridView {...productInfoGridViewProps} />
@@ -159,7 +160,17 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
             activeOpacity={0.5}
             onPress={handleExpand}
           >
-            <ProductInfoGridView {...productInfoGridViewProps} compare={true} isExpanded={isExpanded} />
+            {productComparisonInfoList.map((comparison, index) => {
+              return (
+                <ProductInfoGridView 
+                  {...productInfoGridViewProps} 
+                  productInfoList={comparison}
+                  key={index}
+                  compare={true} 
+                  isExpanded={isExpanded}
+                />
+              )
+            })}
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>

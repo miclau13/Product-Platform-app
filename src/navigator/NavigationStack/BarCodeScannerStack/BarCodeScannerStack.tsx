@@ -10,6 +10,7 @@ import AddProductScreen, { options as AddProductScreenOptions } from "../../../s
 import ProductComparisonScreen, { options as ProductComparisonScreenOptions } from "../../../screens/ProductComparison";
 import ProductInfoScreen, { options as ProductInfoScreenOptions } from "../../../screens/ProductInfo";
 import ProductSearchScreen, { Product, options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
+import ProductSearchMultiSelectScreen, { options as ProductSearchMultiSelectScreenOptions } from "../../../screens/ProductSearchMultiSelect";
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
 import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
@@ -21,16 +22,23 @@ export type BarCodeScannerStackParamList = {
   AddProduct: undefined;
   BarCodeScanner: {
     headerTitle?: string;
+    to?: string; 
   };
   Comments: undefined;
   ProductCategories: undefined;
   ProductComparison: {
-    product: Pick<Product, "description" | "favorite" | "labels" | "origin" | "price">;
+    product: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">;
+    productComparisonInfoList: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
   };
   ProductInfo: {
-    product: Pick<Product, "description" | "favorite" | "labels" | "origin" | "price">;
+    product: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">;
+    productComparisonList?: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
   };
   ProductSearch: undefined;
+  ProductSearchMultiSelect: {
+    handleProductSelected(selectedProductId: string[]): void;
+    selectedProductId?: string[]
+  };
   Records: undefined;
   RecordsHistory: undefined;
   RecordsSaved: undefined;
@@ -44,7 +52,7 @@ const BarCodeScannerStackScreen = (props) => {
   const { selectedCategory } = useSelectCategoryContext();
   const { displayIntro } = useDisplayIntroContext();
   const initialRouteName = 
-    !! displayIntro ? "Intro" :
+    displayIntro === "YES" ? "Intro" :
     !! selectedCategory ? "BarCodeScanner" : "ProductCategories"
   return (
     <BarCodeScannerStack.Navigator
@@ -60,6 +68,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="ProductComparison" component={ProductComparisonScreen} options={ProductComparisonScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductInfo" component={ProductInfoScreen} options={ProductInfoScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductSearch" component={ProductSearchScreen} options={ProductSearchScreenOptions}/>
+      <BarCodeScannerStack.Screen name="ProductSearchMultiSelect" component={ProductSearchMultiSelectScreen} options={ProductSearchMultiSelectScreenOptions}/>
       <BarCodeScannerStack.Screen name="Records" component={RecordsScreen} options={RecordsScreenOptions}/>
       <BarCodeScannerStack.Screen name="RecordsHistory" component={RecordsHistoryScreen} options={RecordsHistoryScreenOptions}/>
       <BarCodeScannerStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>

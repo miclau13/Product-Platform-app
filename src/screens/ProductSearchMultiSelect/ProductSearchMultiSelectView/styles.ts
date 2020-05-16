@@ -10,9 +10,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
+  dropDownContainer: {
+    padding: 8,
+  },
   labelContainer: {
     backgroundColor: 'white',
-    // flex: 1, 
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 8,

@@ -8,6 +8,7 @@ import { Alert, Keyboard, Platform } from 'react-native';
 import { ButtonProps, ButtonGroupProps, SearchBarProps, IconProps } from 'react-native-elements';
 import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCodeScannerView';
 import { useProductListContext } from '../../context/ProductListContext';
@@ -21,9 +22,12 @@ type BarCodeScannerScreenNavigationProp = StackNavigationProp<
   'BarCodeScanner'
 >;
 
+type BarCodeScannerScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "BarCodeScanner">;
+
 type Props = {
   navigation: BarCodeScannerScreenNavigationProp;
-  headerTitle?: string;
+  route: BarCodeScannerScreenRouteProp;
+  // headerTitle?: string;
 };
 
 export interface BarCodeScannerViewProps {
@@ -85,14 +89,14 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     setChipList(result);
   }, [chipList]);
   const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
-
+  
   const productList = React.useMemo(() => {
     // Get the result if caegory changed
     let result = getDefaultProductList(productDataList.filter(product => product.category === selectedCategory));
     // Get the result filtered by category
     result.filter(product => product.category === selectedCategory)
-    // Update the result with description
-    result = result.filter(product => product.description.toLowerCase().includes(search.toLowerCase()));
+    // Update the result with name
+    result = result.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
     // Filter the result with selected labels
     const selectedLabels = chipList.filter(chip => chip.selected);
     if (selectedLabels.length > 0) {
@@ -100,16 +104,6 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
         const diff = difference(selectedLabels.map(label => label.name), product.labels.map(label => label.trim()));
         if (diff.length > 0) return false;
         return true
-        // let _selected = true;
-        // selectedLabels.forEach(label => {
-        //   console.log("label",label)
-        //   console.log("product.labels",product.labels)
-        //   console.log("product.labels.includes(label.name)",product.labels.includes(label.name))
-        //   if (!product.labels.includes(label.name)) {
-        //     _selected = false;
-        //   }
-        // })
-        // return _selected;
       });
     }
     // Update the result with favorited product
@@ -125,7 +119,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
 
     return result;
     
-  }, [chipList, favoritedProductIdList, search, selectedCategory]);
+  }, [chipList, favoritedProductIdList, productDataList, search, selectedCategory]);
 
   // For Search
   const handleClearSearch = React.useCallback<BarCodeScannerViewProps['handleClearSearch']>(() => {
@@ -261,6 +255,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       // For ButtonGroup
       onButtonIndexPress={onButtonIndexPress}
       selectedButtonIndex={selectedButtonIndex}
+      // For ProductSearchMultiSelect
     />
   )
 };

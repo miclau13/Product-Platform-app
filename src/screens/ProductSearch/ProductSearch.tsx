@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
 import ProductSearchView from './ProductSearchView';
+import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
@@ -25,7 +26,7 @@ type Props = {
 
 export type Product = {
   category: string;
-  description: string;
+  name: string;
   favorite: boolean;
   id: string;
   image: CardProps['image'];
@@ -71,6 +72,9 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     setFavoritedProductIdList,
   } = props;
 
+  const { productComparisonList } = useProductComparisonListContext();
+  // console.log("productComparisonList",productComparisonList)
+
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
   const [selectedProductId, setSelectedProductId] = React.useState("");
@@ -108,14 +112,22 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => () => {
     const product = productDataList.filter(product => product.id === id)[0];
-    navigation.navigate("ProductInfo", { product });
-  }, [navigation, productDataList]);
+    navigation.navigate("ProductInfo", { 
+      product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]), 
+      productComparisonList: productComparisonList.filter(productComparison => productComparison.productId === id)[0].comparionsList,
+    });
+  }, [navigation, productDataList, productComparisonList]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
     // setSelectedProductId(id);
     const product = productDataList.filter(product => product.id === id)[0];
-    navigation.navigate("ProductInfo", { product: pick(product, ["description", "favorite", "labels", "origin", "price"]) });
-  }, [navigation, productDataList]);
+    const filteredProductComparisonList = (productComparisonList || []).filter(productComparison => productComparison.productId === id);
+    const selectedProductComparisonList = filteredProductComparisonList.length > 0 ? filteredProductComparisonList[0].comparionsList : [];
+    navigation.navigate("ProductInfo", { 
+      product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]), 
+      productComparisonList: selectedProductComparisonList,
+    });
+  }, [navigation, productDataList, productComparisonList]);
 
   // For Search
   const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {

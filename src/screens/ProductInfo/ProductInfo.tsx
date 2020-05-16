@@ -22,14 +22,6 @@ type Props = {
   route: ProductInfoScreenRouteProp;
 };
 
-export interface ProductInfo {
-  // category: string;
-  // functions: string;
-  origin: string;
-  price: string;
-  title: string;
-};
-
 type ProductInfoList = {
   key: string;
   // title: string;
@@ -52,11 +44,12 @@ export interface ProductInfoViewProps extends ProductInfoGridViewProps {
   handleExpand: ListItemProps['onPress'];
   isExpanded: boolean;
   navigation: ProductInfoScreenNavigationProp;
+  productComparisonInfoList: ProductInfoList[];
 };
 
 const ProductInfo: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
-  const { product } = route.params;
+  const { product, productComparisonList } = route.params;
 
   const [loading] = React.useState(false);
   const [favorite, setFavorite] = React.useState(product.favorite);
@@ -67,16 +60,37 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     setRating(rating);
   }, [rating]);
 
-  const productInfoList = React.useMemo<ProductInfoList>(() => map(pick(product, ["description", "labels", "origin", "price"]), (value, key) => {
+  const productInfoList = React.useMemo<ProductInfoList>(() => map(pick(product, ["name", "labels", "origin", "price"]), (value, key) => {
     return {
       key, 
       value: value.toString(),
     }
   }), [product]);
+  console.log("productComparisonInfoList", productComparisonList)
+
+  const productComparisonInfoList = React.useMemo<ProductInfoList[]>(() => {
+    if (productComparisonList.length > 0) {
+      const result = productComparisonList.map(comparionsList => {
+        return (
+          map(pick(comparionsList, ["name", "labels", "origin", "price"]), (value, key) => {
+            return {
+              key, 
+              value: value.toString(),
+            }
+          })
+        )
+      });
+      return result;
+    }
+    return [];
+  }, [productComparisonList]);
 
   const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
-    navigation.navigate("ProductComparison", { product: pick(product, ["description", "favorite", "labels", "origin", "price"]) });
-  }, [product, navigation]);
+    navigation.navigate("ProductComparison", { 
+      product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]),
+      productComparisonInfoList,
+    });
+  }, [navigation, product, productComparisonInfoList]);
 
   const handleEditIconOnPress = React.useCallback<ProductInfoViewProps['handleEditIconOnPress']>(() => {
     navigation.navigate("AddProduct");
@@ -132,6 +146,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       handleShareIconOnPress={handleShareIconOnPress}
       navigation={navigation}
       productInfoList={productInfoList}
+      productComparisonInfoList={productComparisonInfoList}
       rating={rating}
     />
   )

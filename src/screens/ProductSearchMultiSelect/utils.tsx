@@ -2,7 +2,7 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import { Product } from './ProductSearch';
+import { Product } from './ProductSearchMultiSelect';
 import { Product as ProductData } from '../../context/ProductListContext';
 
 const MaskCoverImage: Product['image'] = require('./assets/mask_cover.png');
@@ -13,7 +13,7 @@ const RiceCoverImage: Product['image'] = require('./assets/rice_cover.jpeg');
 const productList: Product[] = [
   {
     category: 'mask',
-    name: 'Mask',
+    description: 'Mask',
     favorite: false,
     id: '100',
     image: MaskCoverImage,
@@ -34,7 +34,7 @@ const productList: Product[] = [
   },
   { 
     category: 'sanitizer',
-    name: 'Sanitizer',
+    description: 'Sanitizer',
     favorite: false,
     id: '101',
     image: SanitizerCoverImage,
@@ -55,7 +55,7 @@ const productList: Product[] = [
   },
   { 
     category: 'mask',
-    name: 'Paper Roll',
+    description: 'Paper Roll',
     favorite: false,
     id: '102',
     image: PaperRollCoverImage,
@@ -76,7 +76,7 @@ const productList: Product[] = [
   },
   { 
     category: 'mask',
-    name: 'Rice',
+    description: 'Rice',
     favorite: false,
     id: '103',
     image: RiceCoverImage,
@@ -97,7 +97,7 @@ const productList: Product[] = [
   },
   { 
     category: 'mask',
-    name: '(Description 5)',
+    description: '(Description 5)',
     favorite: false,
     id: '104',
     image: RiceCoverImage,
@@ -118,7 +118,7 @@ const productList: Product[] = [
   },
   { 
     category: 'mask',
-    name: '(Description 6)',
+    description: '(Description 6)',
     favorite: false,
     id: '105',
     image: RiceCoverImage,
@@ -155,7 +155,7 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
         origin,
         price,
         rating,
-        name: `${name}`,
+        description: `${name}`,
         favorite: saved,
         imageProps: {
           resizeMode: 'contain',

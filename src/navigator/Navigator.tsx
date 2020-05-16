@@ -8,28 +8,32 @@ import RootStack from './NavigationStack/RootStack';
 import LoadingComponent from '../components/LoadingComponent';
 import { DisplayIntroContextProvider } from '../context/DisplayIntroContext';
 import { Product, ProductListContextProvider } from '../context/ProductListContext';
+import { ProductComparison, ProductComparisonListContextProvider } from '../context/ProductComparisonListContext';
 import { SelectCategoryContextProvider } from '../context/SelectCategoryContext';
 
 export type StackParamList = {};
 
 interface State {
-  displayIntro: boolean;
+  displayIntro: "YES" | "NO";
   loading: boolean;
   selectedCategory: string;
   productList: Array<Product> | [] ,
+  productComparisonList: Array<ProductComparison> | [] ,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST';
+  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST';
   value?: string;
   productList?: State['productList'];
+  productComparisonList?: State['productComparisonList'];
 };
 
 const initialState = {
-  displayIntro: true,
+  displayIntro: "YES",
   loading: true,
   selectedCategory: "",
   productList: [],
+  productComparisonList: [],
 };
 
 const reducer = (prevState: State, action: Action) => {
@@ -37,7 +41,7 @@ const reducer = (prevState: State, action: Action) => {
     case 'REMOVE_INTRO':
       return {
         ...prevState,
-        displayIntro: false,
+        displayIntro: "NO",
       };
     case 'UPDATE_SELECTED_CATEGORY':
       return {
@@ -53,6 +57,11 @@ const reducer = (prevState: State, action: Action) => {
       return {
         ...prevState,
         productList: action.productList,
+      };
+    case 'UPDATE_PRODUCT_COMPARISON_LIST':
+      return {
+        ...prevState,
+        productComparisonList: action.productComparisonList,
       };
   }
 };
@@ -76,6 +85,10 @@ const Navigator = () => {
   const productListContext = React.useMemo(() => ({
     productList: state.productList,
   }), [state.productList]);
+
+  const productComparisonListContext = React.useMemo(() => ({
+    productComparisonList: state.productComparisonList,
+  }), [state.productComparisonList]);
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
@@ -124,10 +137,35 @@ const Navigator = () => {
         dispatch({ type: 'DISABLE_LOADING' });
       }
     }
+    const fetchProductComparisonList = async () => {
+      try {
+        // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+        const response = await fetch(`http://192.168.0.106:5000/product-comparisons`, {
+          method: 'get',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        const result = await response.json() || [];
+        const productComparisonList = result.map(productComparison => {
+          return omit(productComparison, ['__v', '_id', 'createdAt'])
+        })
+        dispatch({ type: 'UPDATE_PRODUCT_COMPARISON_LIST', productComparisonList });
+      } catch (error) {
+        console.log(" fetchProductComparisonList error:", error);
+      } finally {
+        dispatch({ type: 'DISABLE_LOADING' });
+      }
+    }
     bootstrapAsync();
     fetchProductList();
+    fetchProductComparisonList();
     return () => {}
   }, []);
+
+  // console.log("productComparisonList", state.productComparisonList)
+  // console.log("productList", state.productList)
 
   if (state.loading) {
     return (
@@ -139,7 +177,9 @@ const Navigator = () => {
     <DisplayIntroContextProvider value={displayIntroContext}>
     <SelectCategoryContextProvider value={selectCategoryContext}>
       <ProductListContextProvider value={productListContext}>
-        <RootTab />
+        <ProductComparisonListContextProvider value={productComparisonListContext}>
+          <RootTab />
+        </ProductComparisonListContextProvider>
       </ProductListContextProvider>
     </SelectCategoryContextProvider>
     </DisplayIntroContextProvider>

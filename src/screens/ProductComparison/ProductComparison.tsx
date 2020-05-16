@@ -1,7 +1,7 @@
 import { map, pick } from 'lodash';
 import React from 'react';
 import { TouchableWithoutFeedbackProps } from 'react-native';
-import { AirbnbRatingProps, ButtonProps, IconProps, ListItemProps,TileProps } from 'react-native-elements';
+import { TileProps } from 'react-native-elements';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -15,7 +15,7 @@ BarCodeScannerStackParamList,
   'ProductComparison'
 >;
 
-type ProductComparisonScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "ProductInfo">;
+type ProductComparisonScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "ProductComparison">;
 
 type Props = {
   navigation: ProductComparisonScreenNavigationProp;
@@ -38,19 +38,39 @@ export interface ProductComparisonViewProps {
   handlePlusIconOnPress: TouchableWithoutFeedbackProps['onPress'];
   navigation: ProductComparisonScreenNavigationProp;
   productInfoList: ProductInfoList;
+  productComparisonInfoList: ProductInfoList[];
 };
 
 const ProductComparison: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
-  const { product } = route.params;
+  const { product, productComparisonInfoList } = route.params;
 
   const [loading] = React.useState(false);
 
   const handlePlusIconOnPress = React.useCallback(() => {
-    navigation.navigate("BarCodeScanner");
+    navigation.navigate("ProductSearchMultiSelect", { handleProductSelected });
   }, [navigation]);
 
-  const productInfoList = React.useMemo<ProductInfoList>(() => map(pick(product, ["description", "labels", "origin", "price"]), (value, key) => {
+  const handleProductSelected = React.useCallback(async (selectedProductId: string[]) => {
+    console.log("handleProductSelected called product", product)
+    console.log("handleProductSelected called selectedProductId", selectedProductId)
+    console.log(`http://localhost:5000/product-comparisons/update/${product.id}`)
+    // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+    const response = await fetch(`http://192.168.0.106:5000/product-comparisons/${product.id}`, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comparisonIdList: selectedProductId
+      }),
+    });
+    const result = await response.json() || [];
+    console.log("result",result)
+  }, [product]);
+
+  const productInfoList = React.useMemo<ProductInfoList>(() => map(pick(product, ["name", "labels", "origin", "price"]), (value, key) => {
     return {
       key, 
       value: value.toString(),
@@ -68,6 +88,7 @@ const ProductComparison: React.ComponentType<Props> = (props) => {
       handlePlusIconOnPress={handlePlusIconOnPress}
       navigation={navigation}
       productInfoList={productInfoList}
+      productComparisonInfoList={productComparisonInfoList}
     />
   )
 };

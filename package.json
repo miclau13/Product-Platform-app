@@ -49,6 +49,5 @@
     "babel-preset-expo": "~8.0.0",
     "typescript": "~3.6.3"
   },
-  "private": true,
-  "proxy": "http://192.168.0.104:5000/"
+  "private": true
 }
