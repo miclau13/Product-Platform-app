@@ -24,7 +24,9 @@ export type BarCodeScannerStackParamList = {
   };
   Comments: undefined;
   ProductCategories: undefined;
-  ProductComparison: undefined;
+  ProductComparison: {
+    product: Pick<Product, "description" | "favorite" | "labels" | "origin" | "price">;
+  };
   ProductInfo: {
     product: Pick<Product, "description" | "favorite" | "labels" | "origin" | "price">;
   };

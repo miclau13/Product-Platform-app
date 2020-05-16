@@ -114,7 +114,6 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
     // setSelectedProductId(id);
     const product = productDataList.filter(product => product.id === id)[0];
-    console.log("product",product)
     navigation.navigate("ProductInfo", { product: pick(product, ["description", "favorite", "labels", "origin", "price"]) });
   }, [navigation, productDataList]);
 

@@ -5,6 +5,7 @@ import { EventMapBase, NavigationState, RouteConfig } from '@react-navigation/na
 import strings from './strings';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { headerPrimaryColor } from '../../styles';
+import mapping from '../../languages/CN/mapping';
 
 const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
   const { navigation } = props;
@@ -22,7 +23,7 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
     //     />
     //   )
     // },
-    title: strings.title,
+    title: mapping[strings["title"]],
   };
 };
 

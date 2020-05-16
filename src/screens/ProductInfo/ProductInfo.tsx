@@ -75,8 +75,8 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   }), [product]);
 
   const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
-    navigation.navigate("ProductComparison");
-  }, [navigation]);
+    navigation.navigate("ProductComparison", { product: pick(product, ["description", "favorite", "labels", "origin", "price"]) });
+  }, [product, navigation]);
 
   const handleEditIconOnPress = React.useCallback<ProductInfoViewProps['handleEditIconOnPress']>(() => {
     navigation.navigate("AddProduct");

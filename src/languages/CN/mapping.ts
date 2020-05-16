@@ -44,6 +44,9 @@ const mapping = {
 
   // Product Info
   "Product Info": "基本資料",
+
+  // Product Info
+  "Product Comparison": "比較一下",
 };
 
 export default mapping
