@@ -41,6 +41,9 @@ const mapping = {
   "Add Remarks (Optional)": `比多啲資料，可以俾其他平台用家對產品更了解！`,
   "Rating": "評分",
   "Submit": "送出",
+
+  // Product Info
+  "Product Info": "基本資料",
 };
 
 export default mapping
