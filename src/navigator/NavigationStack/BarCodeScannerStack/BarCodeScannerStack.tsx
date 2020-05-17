@@ -35,9 +35,7 @@ export type BarCodeScannerStackParamList = {
   };
   ProductSearch: undefined;
   ProductSearchMultiSelect: {
-    handleProductSelected(selectedProductId: string[]): void;
     productId: string;
-    selectedProductIdList?: string[];
     originalSelectedProductIdList: string[];
   };
   Records: undefined;

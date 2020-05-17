@@ -9,6 +9,7 @@ import LoadingComponent from '../../components/LoadingComponent';
 import { Product, useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import favoriteProduct from '../../api/favoriteProduct';
 
 type ProductInfoScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -44,19 +45,21 @@ export interface ProductInfoViewProps extends ProductInfoGridViewProps {
 const ProductInfo: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
   const { productId } = route.params;
-  const { productList: productDataList } = useProductListContext();
-  const { productComparisonList } = useProductComparisonListContext();
-
+  const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
+  const { productComparisonList, refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const [loading] = React.useState(false);
   const [favorite, setFavorite] = React.useState(productDataList.filter(product => product.id === productId)[0].saved);
   const [expandedProductList, setExpandedProductList] = React.useState([]);
 
   const [rating, setRating] = React.useState(productDataList.filter(product => product.id === productId)[0].rating);
+
   const handleOnFinishRating = React.useCallback<ProductInfoViewProps['handleOnFinishRating']>((rating) => {
     setRating(rating);
   }, [rating]);
-
+  console.log("ProductInfo productId",productId)
   const productInfo = React.useMemo<Product>(() => {
+
+    console.log("ProductInfo productDataList",productDataList)
     const product = { ...productDataList.filter(product => product.id === productId)[0], rating, saved: favorite };
     return product;
   }, [favorite, productDataList, rating]);
@@ -71,15 +74,16 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     navigation.navigate("ProductComparison", { 
       productId,
     });
-  }, [navigation,  productId]);
+  }, [navigation, productId]);
 
   const handleEditIconOnPress = React.useCallback<ProductInfoViewProps['handleEditIconOnPress']>(() => {
     navigation.navigate("AddProduct", { productId });
   }, [navigation, productId]);
 
-  const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(() => {
+  const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(async () => {
     setFavorite((value)=> !value);
-  }, []);
+    await favoriteProduct(productId);
+  }, [productId]);
 
   const handleExpand = React.useCallback<ProductInfoViewProps['handleExpand']>(id => () => {
     setExpandedProductList(list => {
@@ -113,6 +117,15 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       alert(error.message);
     }
   },[]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', async() => {
+      await productListRefetch();
+      await productComparisonListRefetch();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   if (loading) {
     return (

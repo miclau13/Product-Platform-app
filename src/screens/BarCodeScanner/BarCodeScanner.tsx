@@ -73,6 +73,10 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
   const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
   // For ProductSearchView
+  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState([]);
+  React.useEffect(() => {
+    setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
+  }, [productDataList])
   const [chipList, setChipList] = React.useState(
     [
       { name: "PM2.5", selected: false }, 
@@ -90,8 +94,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     });
     setChipList(result);
   }, [chipList]);
-  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
-  
+
   const productList = React.useMemo(() => {
     // Get the result if caegory changed
     let result = getDefaultProductList(productDataList.filter(product => product.category === selectedCategory));

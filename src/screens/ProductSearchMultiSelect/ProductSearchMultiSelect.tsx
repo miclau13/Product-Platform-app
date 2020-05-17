@@ -1,8 +1,8 @@
-import { difference } from 'lodash';
+import { difference, xor } from 'lodash';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { Platform, TouchableOpacityProps } from 'react-native';
-import { ButtonProps, CardProps, IconProps, SearchBarProps } from 'react-native-elements';
+import { ButtonProps, IconProps, SearchBarProps } from 'react-native-elements';
 import { PickerProps } from 'react-native-picker-select';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,6 +13,7 @@ import LoadingComponent from '../../components/LoadingComponent';
 import { getDefaultProductList, Product } from '../ProductSearch';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { useProductListContext } from '../../context/ProductListContext';
+import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 
 type ProductSearchMultiSelectScreenNavigationProp = StackNavigationProp<
@@ -83,6 +84,7 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   }, []);
 
   const { productList: productDataList } = useProductListContext();
+  const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
 
@@ -182,11 +184,23 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   }, [search]);
 
   React.useEffect(() => {
-    navigation.setParams({ selectedProductIdList });
-    return (() => {
-      // handleProductSelected(selectedProductIdList);
-    })
-  }, [selectedProductIdList]);
+    const unsubscribe = navigation.addListener('blur', async() => {
+      const updateProductIdList = xor(originalSelectedProductIdList, selectedProductIdList);
+      await fetch(`http://192.168.0.106:5000/product-comparisons/${productId}`, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          comparisonIdList: updateProductIdList
+        }),
+      });
+      await productComparisonListRefetch();
+    });
+
+    return unsubscribe;
+  }, [productId, navigation, selectedProductIdList, originalSelectedProductIdList]);
   
   if (loading) {
     return (

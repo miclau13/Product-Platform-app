@@ -80,7 +80,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     }
   }));
   const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
-  const { productList: productDataList, refetch } = useProductListContext();
+  const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
   const productInfo = React.useMemo<Product>(() => {
     const product = { ...productDataList.filter(product => product.id === productId)[0] };
     return product;
@@ -224,10 +224,6 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   };
 
   const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(async () => {
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: 'Records' }],
-    // });
     try {
       setLoading(true);
             const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
@@ -246,9 +242,12 @@ const AddProduct: React.ComponentType<Props> = (props) => {
           saved: false,
         }),
       });
-      await refetch();
+      await productListRefetch();
       const result = await response.json() || [];
       console.log("result", result)
+      console.log("result._id, result._id",result._id)
+      navigation.navigate("ProductInfo", { productId: result._id });
+      console.log("after navigation")
     } catch (error) {
       console.log(" handleSubmitButtonOnPress error:", error);
     } finally {

@@ -1,4 +1,3 @@
-import { pick } from 'lodash';
 import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import { ButtonProps, CardProps, IconProps, SearchBarProps } from 'react-native-elements';
@@ -6,9 +5,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BarCodeScannerViewProps } from '../BarCodeScanner';
 import ProductSearchView from './ProductSearchView';
+import { useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import favoriteProduct from '../../api/favoriteProduct';
 
 type ProductSearchScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -72,8 +73,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     setFavoritedProductIdList,
   } = props;
 
-  const { productComparisonList, refetch } = useProductComparisonListContext();
-  // console.log(" Product Search productComparisonList",productComparisonList)
+  const { refetch: productListRefetch } = useProductListContext();
+  const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
@@ -103,16 +104,18 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     navigation.navigate('Records');
   }, [navigation]);
 
-  const handleFavoriteIconOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
+  const handleFavoriteIconOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
     setFavoritedProductIdList((list => {
       if (list.includes(id)) {
         return list.filter(_id => _id !== id)
       } 
       return [...list, id];
     }))
+    await favoriteProduct(id);
   }, []);
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => async () => {
+    await productListRefetch();
     await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
       method: 'post',
       headers: {
@@ -123,13 +126,14 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
         comparisonIdList: []
       }),
     });
-    await refetch();
+    await productComparisonListRefetch();
     navigation.navigate("ProductInfo", { 
       productId: id,
     });
   }, [navigation, productDataList]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
+    await productListRefetch();
     await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
       method: 'post',
       headers: {
@@ -140,7 +144,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
         comparisonIdList: []
       }),
     });
-    await refetch();
+    await productComparisonListRefetch();
     navigation.navigate("ProductInfo", { 
       productId: id,
     });

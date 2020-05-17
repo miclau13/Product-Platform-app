@@ -1,4 +1,4 @@
-import { find, map } from 'lodash';
+import { map, pick } from 'lodash';
 import React from 'react';
 import { ImageRequireSource, TouchableOpacity } from 'react-native';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
@@ -14,10 +14,11 @@ const Mask1Image: ImageRequireSource = require('../assets/mask1.jpeg');
 
 const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewProps> = (props) => {
   const { 
-    productInfoList,
+    productInfo,
   } = props;
 
-  const labels = find(productInfoList, (product) => product.key === "labels").value.split(",").map(label => label.trim()).filter(Boolean);
+  const labels = (productInfo.labels || []).map(label => label.trim()).filter(Boolean);
+
   return (
     <View style={styles.gridContainer}>
       <Image
@@ -26,20 +27,19 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
       />
         <View style={styles.rightContainer}>
           <View style={styles.contentContainer}>
-            {map(productInfoList, (item, key) => {
-                if (item.key === "labels" || item.key === "id") return;
-                const isInNumberFormat = item.key === 'price';
+            {map(pick(productInfo, ["name", "origin", "price"]), (value: string, key) => {
+                const isInNumberFormat = key === 'price';
                 return (
                   <View key={key}>
                     {!isInNumberFormat 
-                      ? <Text>{item.value}</Text> 
+                      ? <Text>{value}</Text> 
                       : <NumberFormat 
                         decimalScale={0}
                         displayType={'text'} 
                         prefix={'$'}
                         renderText={value => <Text>{`${value}`}</Text>}
                         thousandSeparator={true} 
-                        value={item.value}
+                        value={value}
                       />
                     }
                     <View style={{ marginBottom: 8 }} />
@@ -63,13 +63,13 @@ const ProductComparisonView: React.ComponentType<ProductComparisonViewProps> = (
   const { 
     handlePlusIconOnPress,
     navigation,
-    productInfoList,
+    productInfo,
     productComparisonInfoList,
   } = props;
   
   return (
     <View style={styles.container}>
-      <ProductComparisonGridView productInfoList={productInfoList} />
+      <ProductComparisonGridView productInfo={productInfo} />
       <View style={{ marginVertical: 8 }} />
       <TouchableOpacity
         activeOpacity={0.5}
@@ -81,11 +81,11 @@ const ProductComparisonView: React.ComponentType<ProductComparisonViewProps> = (
       </TouchableOpacity>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          {productComparisonInfoList.map((comparison, index) => {
+          {productComparisonInfoList.map(product => {
               return (
                 <ProductComparisonGridView 
-                  productInfoList={comparison}
-                  key={index}
+                  productInfo={product}
+                  key={product.id}
                 />
               )
             })}
