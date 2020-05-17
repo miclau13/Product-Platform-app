@@ -19,21 +19,18 @@ import CommentsScreen, { options as CommentsScreenOptions } from "../../../scree
 import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Intro";
 
 export type BarCodeScannerStackParamList = {
-  AddProduct: undefined;
+  AddProduct: {
+    productId: string;
+  };
   BarCodeScanner: {
     headerTitle?: string;
-    to?: string; 
   };
   Comments: undefined;
   ProductCategories: undefined;
   ProductComparison: {
-    product: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">;
-    productComparisonInfoList?: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
     productId: string;
   };
   ProductInfo: {
-    product: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">;
-    productComparisonList?: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
     productId: string;
   };
   ProductSearch: undefined;

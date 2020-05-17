@@ -124,9 +124,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       }),
     });
     await refetch();
-    const product = productDataList.filter(product => product.id === id)[0];
     navigation.navigate("ProductInfo", { 
-      product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]), 
       productId: id,
     });
   }, [navigation, productDataList]);
@@ -143,9 +141,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       }),
     });
     await refetch();
-    const product = productDataList.filter(product => product.id === id)[0];
     navigation.navigate("ProductInfo", { 
-      product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]), 
       productId: id,
     });
   }, [navigation, productDataList]);

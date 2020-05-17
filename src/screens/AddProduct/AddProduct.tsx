@@ -6,9 +6,11 @@ import { ActionSheetIOS, Platform } from 'react-native';
 import { AirbnbRatingProps, ButtonProps, IconProps, InputProps, TileProps } from 'react-native-elements'; 
 import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 import AddProductView from './AddProductView';
 import { titleMap } from './utils';
+import { Product, useProductListContext } from '../../context/ProductListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
@@ -18,8 +20,11 @@ type AddProductScreenNavigationProp = StackNavigationProp<
   'AddProduct'
 >;
 
+type  AddProductScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "AddProduct">;
+
 type Props = {
   navigation: AddProductScreenNavigationProp;
+  route: AddProductScreenRouteProp;
 };
 
 type InputValues = {
@@ -64,7 +69,8 @@ export type imageTile = {
 };
 
 const AddProduct: React.ComponentType<Props> = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { productId } = route.params;
   const [loading, setLoading] = React.useState(false);
   const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
     return {
@@ -74,18 +80,26 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     }
   }));
   const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
+  const { productList: productDataList } = useProductListContext();
+  const productInfo = React.useMemo<Product>(() => {
+    const product = { ...productDataList.filter(product => product.id === productId)[0] };
+    return product;
+  }, [productDataList]);
+  console.log("productInfo",productInfo)
+  console.log("productId",productId)
   // Form values
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
   const [inputValues, setInputValues] = React.useState({
-    name: "",
-    brandName: "",
-    price: 0,
-    origin: "",
-    remarks: "",
+    name: productInfo.name || "",
+    brandName: productInfo.brandName || "",
+    price: productInfo.price || 0,
+    origin: productInfo.origin || "",
+    remarks: productInfo.remarks ||  "",
   });
+  console.log("inputValues",inputValues)
   const [keywordTagInput, setKeywordTagInput] = React.useState("");
-  const [keywordTagLabels, setKeywordTagLabels] = React.useState([]);
-  const [rating, setRating] = React.useState(0);
+  const [keywordTagLabels, setKeywordTagLabels] = React.useState(productInfo.labels || []);
+  const [rating, setRating] = React.useState(productInfo.rating || 0);
 
   const handleInputOnChange = React.useCallback<AddProductViewProps['handleInputOnChange']>(field => value => {
     setInputValues(values => {

@@ -1,4 +1,3 @@
-import { pick } from 'lodash';
 import React from 'react';
 import { Share } from 'react-native';
 import { AirbnbRatingProps, IconProps, ListItemProps } from 'react-native-elements';
@@ -44,9 +43,8 @@ export interface ProductInfoViewProps extends ProductInfoGridViewProps {
 
 const ProductInfo: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
-  const { product, productId } = route.params;
+  const { productId } = route.params;
   const { productList: productDataList } = useProductListContext();
-  
   const { productComparisonList } = useProductComparisonListContext();
 
   const [loading] = React.useState(false);
@@ -71,14 +69,13 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
 
   const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
     navigation.navigate("ProductComparison", { 
-      product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]),
       productId,
     });
-  }, [navigation, product,  productId]);
+  }, [navigation,  productId]);
 
   const handleEditIconOnPress = React.useCallback<ProductInfoViewProps['handleEditIconOnPress']>(() => {
-    navigation.navigate("AddProduct");
-  }, [navigation]);
+    navigation.navigate("AddProduct", { productId });
+  }, [navigation, productId]);
 
   const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(() => {
     setFavorite((value)=> !value);

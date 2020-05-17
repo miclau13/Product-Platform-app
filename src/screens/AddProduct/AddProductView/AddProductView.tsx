@@ -44,6 +44,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
     onImagePress, 
     onSubmitButtonPress,
     rating,
+    inputValues,
 
     // For Dropdown
     handleDropdownOnValueDown,
@@ -72,6 +73,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           labelStyle={styles.label}
           onChangeText={handleInputOnChange("brandName")}
           placeholder='e.g. H&M'
+          value={inputValues.brandName}
         />
         <View style={{ margin: 8 }}></View>
         <Input
@@ -80,6 +82,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           labelStyle={styles.label}
           onChangeText={handleInputOnChange("name")}
           placeholder='Koala'
+          value={inputValues.name}
         />
         <View style={{ margin: 8 }}></View>
         <Input
@@ -90,6 +93,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           leftIcon={{ type: 'font-awesome', name: 'dollar' }}
           leftIconContainerStyle={{ marginRight: 8 }}
           onChangeText={handleInputOnChange("price")}
+          value={inputValues.price.toString()}
         />
         <View style={{ margin: 8 }}></View>
         <Input
@@ -98,6 +102,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           labelStyle={styles.label}
           onChangeText={handleInputOnChange("origin")}
           placeholder='e.g. Japan'
+          value={inputValues.origin}
         />
         <View style={{ margin: 8 }}></View>
         <Input
@@ -153,6 +158,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           numberOfLines={3}
           onChangeText={handleInputOnChange("remarks")}
           placeholder={mapping['Add Remarks (Optional)']}
+          value={inputValues.remarks}
         />
         <View style={{ margin: 8 }}></View>
           <RatingComponent 
