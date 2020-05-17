@@ -244,10 +244,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       });
       await productListRefetch();
       const result = await response.json() || [];
-      console.log("result", result)
-      console.log("result._id, result._id",result._id)
       navigation.navigate("ProductInfo", { productId: result._id });
-      console.log("after navigation")
     } catch (error) {
       console.log(" handleSubmitButtonOnPress error:", error);
     } finally {

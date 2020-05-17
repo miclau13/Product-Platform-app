@@ -56,10 +56,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   const handleOnFinishRating = React.useCallback<ProductInfoViewProps['handleOnFinishRating']>((rating) => {
     setRating(rating);
   }, [rating]);
-  console.log("ProductInfo productId",productId)
   const productInfo = React.useMemo<Product>(() => {
-
-    console.log("ProductInfo productDataList",productDataList)
     const product = { ...productDataList.filter(product => product.id === productId)[0], rating, saved: favorite };
     return product;
   }, [favorite, productDataList, rating]);
