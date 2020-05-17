@@ -12,6 +12,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCodeScannerView';
 import { useProductListContext } from '../../context/ProductListContext';
+import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { getDefaultProductList, Product } from '../ProductSearch';
@@ -61,7 +62,8 @@ export interface BarCodeScannerViewProps {
 
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
-  const { productList: productDataList } = useProductListContext();
+  const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
+  const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
   const [hasBarCodeScannerPermission, setHasBarCodeScannerPermission] = useState(null);
   const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);

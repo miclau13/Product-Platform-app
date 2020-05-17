@@ -70,7 +70,7 @@ export type imageTile = {
 
 const AddProduct: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
-  const { productId } = route.params;
+  const productId = route?.params?.productId;
   const [loading, setLoading] = React.useState(false);
   const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
     return {
@@ -80,13 +80,11 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     }
   }));
   const { selectedCategory: defaultSelectedCategory } = useSelectCategoryContext();
-  const { productList: productDataList } = useProductListContext();
+  const { productList: productDataList, refetch } = useProductListContext();
   const productInfo = React.useMemo<Product>(() => {
     const product = { ...productDataList.filter(product => product.id === productId)[0] };
     return product;
   }, [productDataList]);
-  console.log("productInfo",productInfo)
-  console.log("productId",productId)
   // Form values
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
   const [inputValues, setInputValues] = React.useState({
@@ -96,7 +94,6 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     origin: productInfo.origin || "",
     remarks: productInfo.remarks ||  "",
   });
-  console.log("inputValues",inputValues)
   const [keywordTagInput, setKeywordTagInput] = React.useState("");
   const [keywordTagLabels, setKeywordTagLabels] = React.useState(productInfo.labels || []);
   const [rating, setRating] = React.useState(productInfo.rating || 0);
@@ -233,7 +230,8 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     // });
     try {
       setLoading(true);
-      const uri = `https://miclo1.azurewebsites.net/products/add`;
+            const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
+      // const uri = productId ? `https://miclo1.azurewebsites.net/products/${productId}` :`https://miclo1.azurewebsites.net/products/add`;
       const response = await fetch(uri, {
         method: 'post',
         headers: {
@@ -242,19 +240,21 @@ const AddProduct: React.ComponentType<Props> = (props) => {
         },
         body: JSON.stringify({
           ...inputValues,
+          rating,
           category: selectedCategory,
           labels: keywordTagLabels,
-          rating,
+          saved: false,
         }),
       });
+      await refetch();
       const result = await response.json() || [];
-      // console.log("result", result)
+      console.log("result", result)
     } catch (error) {
       console.log(" handleSubmitButtonOnPress error:", error);
     } finally {
       setLoading(false);
     }
-  }, [inputValues, keywordTagLabels, rating, selectedCategory]);
+  }, [inputValues, keywordTagLabels, productId, rating, selectedCategory]);
 
   if (loading) {
     return (

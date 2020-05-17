@@ -12,15 +12,14 @@ const RecordsHistoryView: React.ComponentType<RecordsHistoryViewProps> = (props)
     <SafeAreaView>
       <ScrollView>
         {recordsItemsList.map((item, i) => (
-            <ListItem
-              key={i}
-              leftAvatar={item.leftAvatar}
-              title={item.title}
-              subtitle={item.subtitle}
-              bottomDivider
-            />
-          ))
-        }
+          <ListItem
+            key={i}
+            leftAvatar={item.leftAvatar}
+            title={item.title}
+            subtitle={item.subtitle}
+            bottomDivider
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

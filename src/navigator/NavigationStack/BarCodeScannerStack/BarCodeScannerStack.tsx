@@ -20,7 +20,7 @@ import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Int
 
 export type BarCodeScannerStackParamList = {
   AddProduct: {
-    productId: string;
+    productId?: string;
   };
   BarCodeScanner: {
     headerTitle?: string;

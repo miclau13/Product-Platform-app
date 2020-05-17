@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import { ButtonGroup, ButtonGroupProps, Icon, ListItem } from 'react-native-elements';
 
 import styles, { buttonGroupStyles } from './styles';
 import { RecordsViewProps, RecordsListItemViewProps } from '../Records';
+import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 
 const RecordsButtonsGroupView: React.ComponentType<ButtonGroupProps> = (props) => {
   return (
@@ -19,23 +20,28 @@ const RecordsButtonsGroupView: React.ComponentType<ButtonGroupProps> = (props) =
 };
 
 export const RecordsListItemView: React.ComponentType<RecordsListItemViewProps> = (props) => {
-  const { favoriteIconOnPress, item } = props;
+  const { favoriteIconOnPress, handleProductOnPress, item } = props;
   return (
-    <ListItem
-      bottomDivider
+    <TouchableOpacity
+      activeOpacity={0.5}
       key={item.id}
-      leftAvatar={item.leftAvatar}
-      rightIcon={            
-        <Icon
-          color='#00aced'
-          name={item.favorite ? 'favorite' : 'favorite-border'}
-          onPress={favoriteIconOnPress(item.id)}
-        />
-      }
-      rightTitle={item.rightTitle}
-      subtitle={item.subtitle}
-      title={item.title}
-    />
+      onPress={handleProductOnPress(item.id)}
+    >
+      <ListItem
+        bottomDivider
+        leftAvatar={item.leftAvatar}
+        rightIcon={            
+          <Icon
+            color='#00aced'
+            name={item.favorite ? 'favorite' : 'favorite-border'}
+            onPress={favoriteIconOnPress(item.id)}
+          />
+        }
+        rightTitle={item.rightTitle}
+        subtitle={item.subtitle}
+        title={item.title}
+      />
+    </TouchableOpacity>
   );
 };
 
@@ -50,6 +56,7 @@ const RecordsView: React.ComponentType<RecordsViewProps> = (props) => {
     onRefresh,
     renderItem,
     recordsItemsList,
+    navigation,
   } = props;
   
   return (
@@ -65,6 +72,10 @@ const RecordsView: React.ComponentType<RecordsViewProps> = (props) => {
         onRefresh={onRefresh}
         renderItem={renderItem}
       />
+      <FloatingMenuComponent 
+        currenScreen="Records"
+        navigation={navigation}
+      /> 
     </SafeAreaView>
   );
 }

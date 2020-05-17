@@ -47,6 +47,12 @@ const mapping = {
 
   // Product Info
   "Product Comparison": "比較一下",
+
+  // Records
+  "Records": "睇過咩",
+  "Products": "產品",
+  "Comparisons": "比較",
+  "Saved": "收藏",
 };
 
 export default mapping

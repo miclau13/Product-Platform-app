@@ -65,14 +65,14 @@ const savedlist: RecordsItem[] = [
 export const getDefaultAllList = (productList: Product[]) => {
   if (productList.length > 0) {
     const list: RecordsItem[] = productList.map(product => {
-      const { id, saved, productionDate, origin, productName } = product;
+      const { id, saved, updatedAt, origin, name } = product;
       return ({
         id,
         favorite: saved,
         leftAvatar: { source: Mask1Image },
-        rightTitle: `${getTime(productionDate)}`,
+        rightTitle: `${getTime(updatedAt)}`,
         subtitle: origin,
-        title: productName,
+        title: name,
       });
     });
     return list;
