@@ -72,8 +72,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     setFavoritedProductIdList,
   } = props;
 
-  const { productComparisonList } = useProductComparisonListContext();
-  // console.log("productComparisonList",productComparisonList)
+  const { productComparisonList, refetch } = useProductComparisonListContext();
+  // console.log(" Product Search productComparisonList",productComparisonList)
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
@@ -91,6 +91,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     }
     return productDataList
   }, [productDataList, selectedProductId]);
+
+  // console.log("ProductSearch productList", productList)
 
   // For ProductSearchView
   const handleAddButtonOnPress = React.useCallback<ProductSearchViewProps['handleAddButtonOnPress']>(() => {
@@ -110,24 +112,43 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     }))
   }, []);
 
-  const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => () => {
+  const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => async () => {
+    await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comparisonIdList: []
+      }),
+    });
+    await refetch();
     const product = productDataList.filter(product => product.id === id)[0];
     navigation.navigate("ProductInfo", { 
       product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]), 
-      productComparisonList: productComparisonList.filter(productComparison => productComparison.productId === id)[0].comparionsList,
+      productId: id,
     });
-  }, [navigation, productDataList, productComparisonList]);
+  }, [navigation, productDataList]);
 
-  const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => () => {
-    // setSelectedProductId(id);
+  const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
+    await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comparisonIdList: []
+      }),
+    });
+    await refetch();
     const product = productDataList.filter(product => product.id === id)[0];
-    const filteredProductComparisonList = (productComparisonList || []).filter(productComparison => productComparison.productId === id);
-    const selectedProductComparisonList = filteredProductComparisonList.length > 0 ? filteredProductComparisonList[0].comparionsList : [];
     navigation.navigate("ProductInfo", { 
       product: pick(product, ["name", "favorite", "id", "labels", "origin", "price"]), 
-      productComparisonList: selectedProductComparisonList,
+      productId: id,
     });
-  }, [navigation, productDataList, productComparisonList]);
+  }, [navigation, productDataList]);
 
   // For Search
   const updateSearch = React.useCallback<ProductSearchViewProps['updateSearch']>(search => {

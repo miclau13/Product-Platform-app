@@ -7,7 +7,7 @@ export type ProductComparison = {
   updatedAt: Date;
 };
 
-const initialValue: { productComparisonList: Array<ProductComparison>} = { productComparisonList: []};
+const initialValue: { productComparisonList: Array<ProductComparison>, refetch(): void } = { productComparisonList: [], refetch: () => {}};
 const ProductComparisonListContext = React.createContext(initialValue);
 
 export const ProductComparisonListContextConsumer = ProductComparisonListContext.Consumer;

@@ -57,7 +57,7 @@ export interface ProductSearchMultiSelectItemCardProps extends Product {
 
 const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
-  const handleProductSelected = route.params && route.params.handleProductSelected;
+  const { productId, originalSelectedProductIdList } = route.params;
 
   const [chipList, setChipList] = React.useState(
     [
@@ -90,7 +90,7 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
-  const [selectedProductId, setSelectedProductId] = React.useState([]);
+  const [selectedProductIdList, setSelectedProductIdList] = React.useState(originalSelectedProductIdList || []);
 
   const productList = React.useMemo(() => {
     // Get the result if caegory changed
@@ -116,9 +116,12 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
       return { ...product, favorite: false }
     });
 
-    if (selectedProductId.length > 0) {
+    // Exclude the origin product
+    result = result.filter(product => product.id !== productId)
+
+    if (selectedProductIdList.length > 0) {
       result = result.map(product => {
-        if (selectedProductId.includes(product.id)) {
+        if (selectedProductIdList.includes(product.id)) {
           return { ...product, selected: true }
         }
         return { ...product, selected: false }
@@ -128,7 +131,7 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
     return result;
     
-  }, [chipList, favoritedProductIdList, productDataList, search, selectedCategory, selectedProductId]);
+  }, [chipList, favoritedProductIdList, productDataList, productId, search, selectedCategory, selectedProductIdList]);
 
    // For Dropdown
   const handleDropdownOnValueDown = React.useCallback<BarCodeScannerViewProps['handleDropdownOnValueDown']>(async (value) => {
@@ -165,7 +168,7 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   }, [navigation, productDataList]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchMultiSelectItemCardProps['handleSelectButtonOnPress']>(id => () => {
-    setSelectedProductId(selectedProductIdList => {
+    setSelectedProductIdList(selectedProductIdList => {
       if (selectedProductIdList.includes(id)) {
         return selectedProductIdList.filter(selectedProductId => selectedProductId !== id);
       }
@@ -179,11 +182,11 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   }, [search]);
 
   React.useEffect(() => {
-    navigation.setParams({ selectedProductId });
+    navigation.setParams({ selectedProductIdList });
     return (() => {
-      // handleProductSelected(selectedProductId);
+      // handleProductSelected(selectedProductIdList);
     })
-  }, [selectedProductId]);
+  }, [selectedProductIdList]);
   
   if (loading) {
     return (

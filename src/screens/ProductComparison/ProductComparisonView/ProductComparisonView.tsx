@@ -17,7 +17,7 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
     productInfoList,
   } = props;
 
-  const labels = find(productInfoList, (product) => product.key === "labels").value.split(",");
+  const labels = find(productInfoList, (product) => product.key === "labels").value.split(",").map(label => label.trim()).filter(Boolean);
   return (
     <View style={styles.gridContainer}>
       <Image
@@ -27,7 +27,7 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
         <View style={styles.rightContainer}>
           <View style={styles.contentContainer}>
             {map(productInfoList, (item, key) => {
-                if (item.key === "labels") return;
+                if (item.key === "labels" || item.key === "id") return;
                 const isInNumberFormat = item.key === 'price';
                 return (
                   <View key={key}>

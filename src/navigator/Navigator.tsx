@@ -67,6 +67,7 @@ const reducer = (prevState: State, action: Action) => {
 };
 
 const Navigator = () => {
+
   const [state, dispatch] = React.useReducer(
     reducer,
     initialState
@@ -83,12 +84,66 @@ const Navigator = () => {
   }), [state.selectedCategory]);
 
   const productListContext = React.useMemo(() => ({
+    refetch: () => fetchProductList(),
     productList: state.productList,
   }), [state.productList]);
 
   const productComparisonListContext = React.useMemo(() => ({
+    refetch: () => fetchProductComparisonList(),
     productComparisonList: state.productComparisonList,
   }), [state.productComparisonList]);
+
+  const fetchProductList = async () => {
+    try {
+      const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json() || [];
+      const productList = result.map(product => {
+        return omit({
+          id: product._id,
+          ...product,
+        },['__v', '_id'])
+      })
+      dispatch({ type: 'UPDATE_PRODUCT_LIST', productList });
+    } catch (error) {
+      console.log(" fetchProductList error:", error);
+    } finally {
+      dispatch({ type: 'DISABLE_LOADING' });
+    }
+  }
+
+  const fetchProductComparisonList = async () => {
+    try {
+      // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+      const response = await fetch(`http://192.168.0.106:5000/product-comparisons`, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json() || [];
+      const productComparisonList = result.map(productComparison => {
+        const comparionsList = productComparison.comparionsList.map(product => {
+          return omit({
+            id: product._id,
+            ...product,
+          },['__v', '_id'])
+        });
+        return { ...omit(productComparison, ['__v', '_id', 'createdAt']), comparionsList }
+      })
+      dispatch({ type: 'UPDATE_PRODUCT_COMPARISON_LIST', productComparisonList });
+    } catch (error) {
+      console.log(" fetchProductComparisonList error:", error);
+    } finally {
+      dispatch({ type: 'DISABLE_LOADING' });
+    }
+  }
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
@@ -113,58 +168,13 @@ const Navigator = () => {
         dispatch({ type: 'UPDATE_SELECTED_CATEGORY', value: selectedCategory });
       };
     };
-
-    const fetchProductList = async () => {
-      try {
-        const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
-          method: 'get',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        });
-        const result = await response.json() || [];
-        const productList = result.map(product => {
-          return omit({
-            id: product._id,
-            ...product,
-          },['__v', '_id', 'updatedAt'])
-        })
-        dispatch({ type: 'UPDATE_PRODUCT_LIST', productList });
-      } catch (error) {
-        console.log(" fetchProductList error:", error);
-      } finally {
-        dispatch({ type: 'DISABLE_LOADING' });
-      }
-    }
-    const fetchProductComparisonList = async () => {
-      try {
-        // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
-        const response = await fetch(`http://192.168.0.106:5000/product-comparisons`, {
-          method: 'get',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        });
-        const result = await response.json() || [];
-        const productComparisonList = result.map(productComparison => {
-          return omit(productComparison, ['__v', '_id', 'createdAt'])
-        })
-        dispatch({ type: 'UPDATE_PRODUCT_COMPARISON_LIST', productComparisonList });
-      } catch (error) {
-        console.log(" fetchProductComparisonList error:", error);
-      } finally {
-        dispatch({ type: 'DISABLE_LOADING' });
-      }
-    }
     bootstrapAsync();
     fetchProductList();
     fetchProductComparisonList();
     return () => {}
   }, []);
 
-  // console.log("productComparisonList", state.productComparisonList)
+  // console.log(" navigator productComparisonList", state.productComparisonList)
   // console.log("productList", state.productList)
 
   if (state.loading) {

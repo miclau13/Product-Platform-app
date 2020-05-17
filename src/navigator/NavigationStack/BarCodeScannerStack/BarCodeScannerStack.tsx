@@ -28,16 +28,20 @@ export type BarCodeScannerStackParamList = {
   ProductCategories: undefined;
   ProductComparison: {
     product: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">;
-    productComparisonInfoList: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
+    productComparisonInfoList?: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
+    productId: string;
   };
   ProductInfo: {
     product: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">;
     productComparisonList?: Pick<Product, "name" | "favorite" | "id" | "labels" | "origin" | "price">[];
+    productId: string;
   };
   ProductSearch: undefined;
   ProductSearchMultiSelect: {
     handleProductSelected(selectedProductId: string[]): void;
-    selectedProductId?: string[]
+    productId: string;
+    selectedProductIdList?: string[];
+    originalSelectedProductIdList: string[];
   };
   Records: undefined;
   RecordsHistory: undefined;

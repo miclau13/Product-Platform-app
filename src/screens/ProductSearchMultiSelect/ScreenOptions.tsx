@@ -1,3 +1,4 @@
+import { xor } from 'lodash'; 
 import React from 'react';
 import { EventMapBase, NavigationState, RouteConfig } from '@react-navigation/native';
 import { HeaderBackButton } from '@react-navigation/stack';
@@ -10,8 +11,10 @@ const options: RouteConfig<BarCodeScannerStackParamList, "ProductSearchMultiSele
   const { navigation, route } = props;
   const headerTitle = mapping[strings['title']];
   const handleHeaderLeftOnPress = () => {
-    const selectedProductId = route?.params?.selectedProductId || [];
-    route.params["handleProductSelected"](selectedProductId);
+    const selectedProductIdList = route?.params?.selectedProductIdList || [];
+    const originalSelectedProductIdList = route.params.originalSelectedProductIdList;
+    const updateProductIdList = xor(originalSelectedProductIdList, selectedProductIdList);
+    route.params["handleProductSelected"](updateProductIdList);
     navigation.goBack();
   };
   return {

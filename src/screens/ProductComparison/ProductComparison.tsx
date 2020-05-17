@@ -1,4 +1,4 @@
-import { map, pick } from 'lodash';
+import { find, map, pick } from 'lodash';
 import React from 'react';
 import { TouchableWithoutFeedbackProps } from 'react-native';
 import { TileProps } from 'react-native-elements';
@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import {  } from './utils';
 import ProductComparisonView from './ProductComparisonView';
 import LoadingComponent from '../../components/LoadingComponent';
+import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type ProductComparisonScreenNavigationProp = StackNavigationProp<
@@ -43,18 +44,15 @@ export interface ProductComparisonViewProps {
 
 const ProductComparison: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
-  const { product, productComparisonInfoList } = route.params;
+  const { product, productId } = route.params;
+  const { refetch, productComparisonList } = useProductComparisonListContext();
 
   const [loading] = React.useState(false);
 
-  const handlePlusIconOnPress = React.useCallback(() => {
-    navigation.navigate("ProductSearchMultiSelect", { handleProductSelected });
-  }, [navigation]);
-
   const handleProductSelected = React.useCallback(async (selectedProductId: string[]) => {
-    console.log("handleProductSelected called product", product)
-    console.log("handleProductSelected called selectedProductId", selectedProductId)
-    console.log(`http://localhost:5000/product-comparisons/update/${product.id}`)
+    // console.log("handleProductSelected called product", product)
+    // console.log("handleProductSelected called selectedProductId", selectedProductId)
+    // console.log(`http://localhost:5000/product-comparisons/update/${product.id}`)
     // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
     const response = await fetch(`http://192.168.0.106:5000/product-comparisons/${product.id}`, {
       method: 'post',
@@ -67,7 +65,7 @@ const ProductComparison: React.ComponentType<Props> = (props) => {
       }),
     });
     const result = await response.json() || [];
-    console.log("result",result)
+    await refetch();
   }, [product]);
 
   const productInfoList = React.useMemo<ProductInfoList>(() => map(pick(product, ["name", "labels", "origin", "price"]), (value, key) => {
@@ -76,6 +74,36 @@ const ProductComparison: React.ComponentType<Props> = (props) => {
       value: value.toString(),
     }
   }), [product]);
+
+  const productComparisonInfoList = React.useMemo<ProductInfoList[]>(() => {
+    const selectedProductComparisonList = (productComparisonList || []).filter(productComparison => productComparison.productId === productId);
+    const comparionsList = selectedProductComparisonList.length > 0 ? selectedProductComparisonList[0].comparionsList : [];
+    if (comparionsList.length > 0) {
+      const result = comparionsList.map(comparions => {
+        return (
+          map(pick(comparions, ["_id", "name", "labels", "origin", "price"]), (value, key) => {
+            return {
+              key: key === "_id" ? "id" : key, 
+              value: value.toString(),
+            }
+          })
+        )
+      });
+      return result;
+    }
+    return [];
+  }, [productComparisonList, productId]);
+
+  const handlePlusIconOnPress = React.useCallback(() => {
+    const selectedProductIdList = productComparisonInfoList.map(productComparison => {
+      return find(productComparison, (productInfo) => productInfo.key === "id").value
+    });
+    navigation.navigate("ProductSearchMultiSelect", { 
+      handleProductSelected, 
+      productId,
+      originalSelectedProductIdList: selectedProductIdList,
+    });
+  }, [navigation, product, productComparisonInfoList]);
 
   if (loading) {
     return (

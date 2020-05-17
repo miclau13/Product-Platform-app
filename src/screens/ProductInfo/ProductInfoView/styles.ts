@@ -1,57 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  button: {
-    borderRadius: 0, 
-    marginBottom: 0,
-    marginLeft: 0, 
-    marginRight: 0, 
-  },
-  buttonContainer: {
-    backgroundColor: '#00aced', 
-    width: '100%',
-  },
-  buttonTitle: {
-    color: 'white', 
-    fontSize: 16,
-  },
-
-  imageContainerStyle: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    marginBottom: 0,
-    borderColor: 'grey',
-    shadowColor: 'rgba(0,0,0, .2)',
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 1,
-  },
-  favoriteIconStyle: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-  },
-  iconBarContainer: {
-    flexDirection: "row", 
-  },
-
-  leftImageContainer: {
-    height: 200,
-    margin: 0,
-    width: 130,
-  },
-
-  
   container: {
     flex: 1,
   },
   gridContainer: {
+    // backgroundColor: 'blue',
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#e1e8ee',
     flexDirection: 'row', 
     margin: 8,
-    marginBottom: 0,
+    marginBottom: 0, 
     padding: 8,
     shadowColor: 'rgba(0,0,0, .2)',
     shadowOffset: { height: 0, width: 0 },
@@ -72,7 +32,7 @@ const styles = StyleSheet.create({
   },
   leftCardContainer: {
     borderWidth: 0,
-    height: 200,
+    // height: '100%',
     margin: 0,
     shadowOpacity: 0,
     shadowRadius: 0,
@@ -99,6 +59,9 @@ const styles = StyleSheet.create({
   rightContainerOptionIconContainerStyle: {
     // flexDirection: 'row',
     // justifyContent: 'center',
+    // backgroundColor: 'pink',
+    // width: 200,
+    // height: 150,
     position: 'absolute',
     right: 4,
     top: 0,
@@ -112,7 +75,9 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   listItemContentContainer: {
+    // backgroundColor: 'pink',
     backgroundColor: 'transparent', 
+    marginRight: 8,
     padding: 8,
   },
 });

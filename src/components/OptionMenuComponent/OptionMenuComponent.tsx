@@ -38,15 +38,14 @@ const OptionMenuComponent: React.ComponentType<OptionMenuProps> = (props) => {
   }, [setOpen]);
 
   return (
-    <View
-      style={containerStyle}
-    >
+    <View style={containerStyle}>
       <Menu
         visible={open}
         onDismiss={closeMenu}
         anchor={
           <Icon 
             color='#00aced'
+            // containerStyle={{ alignItems: 'flex-end' }}
             name="dots-horizontal"
             size={40}
             onPress={openMenu}
@@ -54,18 +53,11 @@ const OptionMenuComponent: React.ComponentType<OptionMenuProps> = (props) => {
             underlayColor="grey"
           />
         }
-        style={{ top: 50, right: 0,  width: 100 }}
+        style={{ top: 50,  width: 100, }}
         contentStyle={{ width: 100 }}
       >
         {menuItemList.map((item, index) => {
           return (
-            // <Menu.Item 
-            //   icon={item.icon}
-            //   key={index} 
-            //   onPress={item.onPress}  
-            //   // title=" hihi"
-            //   style={{ justifyContent: 'flex-end'}}
-            // />
             <MenuItem 
               key={index} 
               onPress={item.onPress}  
@@ -79,3 +71,56 @@ const OptionMenuComponent: React.ComponentType<OptionMenuProps> = (props) => {
 }; 
 
 export default OptionMenuComponent;
+
+// import React from 'react';
+// import { GestureResponderEvent } from 'react-native';
+// import { FAB } from 'react-native-paper';
+// // import { Icon, IconProps } from 'react-native-elements';
+// import { StackNavigationProp } from '@react-navigation/stack';
+
+// import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+// import mapping from '../../languages/CN/mapping';
+
+// interface Actions {
+//   icon: string;
+//   label: string;
+//   onPress: () => void;
+// };
+
+// type ScreenNavigationProp = StackNavigationProp<
+//   BarCodeScannerStackParamList,
+//   keyof BarCodeScannerStackParamList
+// >;
+
+// export interface FloatingMenuProps {
+//   // currenScreen: keyof BarCodeScannerStackParamList;
+//   // navigation: ScreenNavigationProp;
+//   actions?: Actions[];
+//   icon?: string;
+// };
+
+// const OptionMenuComponent: React.ComponentType<FloatingMenuProps> = (props) => {
+//   const { actions, icon } = props;
+//   const [open, setOpen] = React.useState(false);
+
+//   const _onStateChange = React.useCallback(({ _open }) => {
+//     setOpen(!open);
+//   }, [open]);
+
+
+//   const handleOnPress = React.useCallback(() => {
+//   }, [open]);
+
+//   return (
+//     <FAB.Group
+//       open={open}
+//       icon={'dots-horizontal'}
+//       actions={actions}
+//       onStateChange={_onStateChange}
+//       onPress={handleOnPress}
+//       visible={true}
+//     />
+//   )
+// }; 
+
+// export default OptionMenuComponent;

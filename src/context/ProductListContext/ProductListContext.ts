@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type Product = {
-  barCodeNumber: string;
+  barCodeNumber?: string;
   brandName: string;
   category: string;
   id: string;
@@ -10,12 +10,13 @@ export type Product = {
   origin: string;
   price: number;
   productionDate: Date;
-  saved: boolean;
   rating: number;
+  saved: boolean;
   remarks: string;
+  updatedAt: Date;
 };
 
-const initialValue: { productList: Array<Product>} = { productList: []};
+const initialValue: { productList: Array<Product>, refetch(): void } = { productList: [], refetch: () => {}};
 const ProductListContext = React.createContext(initialValue);
 
 export const ProductListContextConsumer = ProductListContext.Consumer;
