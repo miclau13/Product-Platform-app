@@ -186,7 +186,8 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async() => {
       const updateProductIdList = xor(originalSelectedProductIdList, selectedProductIdList);
-      await fetch(`http://192.168.0.106:5000/product-comparisons/${productId}`, {
+      // await fetch(`http://192.168.0.106:5000/product-comparisons/${productId}`, {
+      await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${productId}`, {
         method: 'post',
         headers: {
           Accept: 'application/json',

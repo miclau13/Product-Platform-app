@@ -116,7 +116,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => async () => {
     await productListRefetch();
-    await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+    // await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+    await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${id}`, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -134,7 +135,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
     await productListRefetch();
-    await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+    // await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+    await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${id}`, {
       method: 'post',
       headers: {
         Accept: 'application/json',

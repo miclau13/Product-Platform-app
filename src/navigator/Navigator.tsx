@@ -120,7 +120,8 @@ const Navigator = () => {
   const fetchProductComparisonList = async () => {
     try {
       // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
-      const response = await fetch(`http://192.168.0.106:5000/product-comparisons`, {
+      // const response = await fetch(`http://192.168.0.106:5000/product-comparisons`, {    
+      const response =  await fetch(`https://miclo1.azurewebsites.net/product-comparisons`, {
         method: 'get',
         headers: {
           Accept: 'application/json',
