@@ -73,7 +73,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
   const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
   // For ProductSearchView
-  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState([]);
+  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
   React.useEffect(() => {
     setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
   }, [productDataList])

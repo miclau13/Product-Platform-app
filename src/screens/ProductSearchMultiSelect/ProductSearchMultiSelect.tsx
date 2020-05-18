@@ -15,6 +15,7 @@ import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/Ba
 import { useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
+import favoriteProduct from '../../api/favoriteProduct';
 
 type ProductSearchMultiSelectScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -83,12 +84,15 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
     setSearch("");
   }, []);
 
-  const { productList: productDataList } = useProductListContext();
+  const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
   const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
 
   const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
+  }, [productDataList])
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
@@ -155,13 +159,14 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
     navigation.navigate('AddProduct');
   }, [navigation]);
 
-  const handleFavoriteIconOnPress = React.useCallback<ProductSearchMultiSelectItemCardProps['handleSelectButtonOnPress']>(id => () => {
+  const handleFavoriteIconOnPress = React.useCallback<ProductSearchMultiSelectItemCardProps['handleSelectButtonOnPress']>(id => async () => {
     setFavoritedProductIdList((list => {
       if (list.includes(id)) {
         return list.filter(_id => _id !== id)
       } 
       return [...list, id];
     }))
+    await favoriteProduct(id);
   }, []);
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchMultiSelectItemCardProps['handleImageAreaOnPress']>(id => () => {
@@ -202,6 +207,12 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
     return unsubscribe;
   }, [productId, navigation, selectedProductIdList, originalSelectedProductIdList]);
+
+  // React.useEffect(() => {
+  //   (async() => { 
+  //     await productListRefetch();
+  //   })();
+  // }, []);
   
   if (loading) {
     return (
