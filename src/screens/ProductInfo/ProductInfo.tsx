@@ -10,6 +10,7 @@ import { Product, useProductListContext } from '../../context/ProductListContext
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import favoriteProduct from '../../api/favoriteProduct';
+import ratingProduct from '../../api/ratingProduct';
 
 type ProductInfoScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -53,9 +54,11 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
 
   const [rating, setRating] = React.useState(productDataList.filter(product => product.id === productId)[0].rating);
 
-  const handleOnFinishRating = React.useCallback<ProductInfoViewProps['handleOnFinishRating']>((rating) => {
+  const handleOnFinishRating = React.useCallback<ProductInfoViewProps['handleOnFinishRating']>(async (rating) => {
     setRating(rating);
+    await ratingProduct(productId, rating);
   }, [rating]);
+
   const productInfo = React.useMemo<Product>(() => {
     const product = { ...productDataList.filter(product => product.id === productId)[0], rating, saved: favorite };
     return product;

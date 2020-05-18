@@ -171,5 +171,5 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
     });
     return list;
   } 
-  return productList;
+  return [];
 }
