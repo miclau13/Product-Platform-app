@@ -39,15 +39,16 @@ const styles = StyleSheet.create({
     width: 130,
   },
   leftCardImageContainer: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#e1e8ee',
-    marginBottom: 0,
-    position: 'relative',
-    shadowColor: 'rgba(0,0,0, .2)',
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 1,
+    // backgroundColor: 'transparent',
+    // borderWidth: 1,
+    // borderColor: '#e1e8ee',
+    // marginBottom: 0,
+    // position: 'relative',
+    position: 'absolute',
+    // shadowColor: 'rgba(0,0,0, .2)',
+    // shadowOffset: { height: 0, width: 0 },
+    // shadowOpacity: 1,
+    // shadowRadius: 1,
   },
 
   chip: {
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   listItemContentContainer: {
     // backgroundColor: 'pink',
     backgroundColor: 'transparent', 
-    marginRight: 8,
+    marginRight: 40,
     padding: 8,
   },
 });

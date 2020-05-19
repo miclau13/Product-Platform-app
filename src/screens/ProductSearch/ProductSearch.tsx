@@ -30,15 +30,16 @@ export type Product = {
   name: string;
   favorite: boolean;
   id: string;
-  image: CardProps['image'];
+  image: string;
   imageProps: CardProps['imageProps'];
-  imageStyle: CardProps['imageStyle'];
+  imageStyle?: CardProps['imageStyle'];
   labels: string[];
   origin: string;
+  photos?: string[];
   price: number;
   rating: number;
   selected: boolean;
-  title: CardProps['title'];
+  title?: CardProps['title'];
 };
 
 export interface ProductSearchViewProps {
@@ -115,22 +116,22 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   }, []);
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => async () => {
-    await productListRefetch();
-    // await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
-    await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${id}`, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        comparisonIdList: []
-      }),
-    });
-    await productComparisonListRefetch();
-    navigation.navigate("ProductInfo", { 
-      productId: id,
-    });
+    // await productListRefetch();
+    // // await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
+    // await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${id}`, {
+    //   method: 'post',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     comparisonIdList: []
+    //   }),
+    // });
+    // await productComparisonListRefetch();
+    // navigation.navigate("ProductInfo", { 
+    //   productId: id,
+    // });
   }, [navigation, productDataList]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {

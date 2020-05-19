@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
+    justifyContent: 'center',
     flexDirection: "column", 
     marginHorizontal: 16,
     maxWidth: '50%',
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 1,
     shadowRadius: 1,
+    maxHeight: 212,
   },
   labelContainer: {
     alignItems: 'center',

@@ -8,6 +8,7 @@ export type Product = {
   labels: Array<string>;
   name: string;
   origin: string;
+  photos?: string[];
   price: number;
   productionDate: Date;
   rating: number;

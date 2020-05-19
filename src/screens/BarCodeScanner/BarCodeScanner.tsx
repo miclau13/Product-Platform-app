@@ -126,6 +126,8 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     
   }, [chipList, favoritedProductIdList, productDataList, search, selectedCategory]);
 
+  // console.log("barcodr productList", productList)
+
   // For Search
   const handleClearSearch = React.useCallback<BarCodeScannerViewProps['handleClearSearch']>(() => {
     setSearch("");

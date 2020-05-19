@@ -1,11 +1,9 @@
 import { ImageRequireSource } from 'react-native';
 
-import { Buttons, RecordsItem } from './Records';
+import { RecordsItem } from './Records';
 import { Product } from '../../context/ProductListContext';
 
 const Mask1Image: ImageRequireSource = require('./assets/mask1.jpeg');
-
-const buttons: Buttons[] = ['All', 'Saved'];
 
 const currentTime = new Date().toDateString().split(" ").slice(1).join(" ");
 const getTime = (date) => new Date(date).toDateString().split(" ").slice(1).join(" ");
@@ -65,11 +63,12 @@ const savedlist: RecordsItem[] = [
 export const getDefaultAllList = (productList: Product[]) => {
   if (productList.length > 0) {
     const list: RecordsItem[] = productList.map(product => {
-      const { id, saved, updatedAt, origin, name } = product;
+      const { id, saved, updatedAt, origin, name, photos } = product;
+      const image = (photos && photos.length > 0 && photos[0]);
       return ({
         id,
         favorite: saved,
-        leftAvatar: { source: Mask1Image },
+        leftAvatar: { source: { uri: image } },
         rightTitle: `${getTime(updatedAt)}`,
         subtitle: origin,
         title: name,
@@ -82,8 +81,4 @@ export const getDefaultAllList = (productList: Product[]) => {
 
 export const getDefaultSavedList = () => {
   return savedlist;
-};
-
-export const getDefaultButtons = () => {
-  return buttons;
 };

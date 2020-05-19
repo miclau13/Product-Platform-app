@@ -1,7 +1,8 @@
 import { map, pick } from 'lodash';
 import React from 'react';
-import { ImageRequireSource, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image as RNImage, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { AirbnbRating, Button, Card, Icon, Image, ListItem, Rating } from 'react-native-elements';
+import Lightbox from 'react-native-lightbox';
 import { Chip, Provider } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
 
@@ -9,8 +10,16 @@ import styles from './styles';
 import { ProductInfoViewProps, ProductInfoGridViewProps } from '../ProductInfo';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import OptionMenuComponent from '../../../components/OptionMenuComponent';
+import ImageCarousel from '../../../components/ImageCarousel';
 
-const Mask1Image: ImageRequireSource = require('../assets/mask1.jpeg');
+const renderCarousel = (photos, currentPage) => {
+  return (
+    <ImageCarousel
+      album={photos}
+      currentPage={currentPage}
+    />
+  )
+};
 
 const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (props) => {
   const { 
@@ -27,15 +36,16 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
   const labels = (productInfo.labels || []).map(label => label.trim()).filter(Boolean);
   const rating = productInfo.rating || 0;
   const favorite = productInfo.saved || false;
+  const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "";
 
-  const cardClickArea = 
-    <TouchableOpacity
-      activeOpacity={0.5}
-      onPress={()=> alert("pressed")}
-      // onPress={handleImageAreaOnPress(id)}
-      style={styles.leftCardClickAreaStyle}
-    >
-    </TouchableOpacity>
+  // const cardClickArea = 
+  //   <TouchableOpacity
+  //     activeOpacity={0.5}
+  //     onPress={()=> alert("pressed")}
+  //     // onPress={handleImageAreaOnPress(id)}
+  //     style={styles.leftCardClickAreaStyle}
+  //   >
+  //   </TouchableOpacity>
   const favoriteIcon = 
       <Icon
         color='#00aced'
@@ -64,15 +74,46 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
     },
   ];
 
+  const currentPage = productInfo.photos.findIndex(_photo => _photo === imageUri);
+  
+  const ImageComponent = () => {
+    return (
+      <Lightbox 
+        renderContent={() => renderCarousel(productInfo.photos, currentPage)}
+        springConfig={{ tension: 10, friction: 10 }} 
+        swipeToDismiss={false}
+      >
+        <RNImage
+          // key={id}
+          style={{
+            width: 130,
+            height: 150,
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            borderColor: '#e1e8ee',
+            shadowColor: 'rgba(0,0,0, .2)',
+            shadowOffset: { height: 0, width: 0 },
+            shadowOpacity: 1,
+            shadowRadius: 1,
+          }}
+          source={{ uri: imageUri }}
+          resizeMode='cover'
+        />
+      </Lightbox>
+    )
+  }
+
   return (
     <View style={[styles.gridContainer, !compare && { maxHeight: 212 }]}>
       <Card
-        image={Mask1Image}
-        imageProps={{ resizeMode: 'cover' }}
+        image={{ uri: imageUri }}
+        imageProps={{
+          ImageComponent,
+        }}
         imageStyle={styles.leftCardImageContainer}
         containerStyle={[styles.leftCardContainer, (compare && !expanded && { height: 150 })]}
       >
-        {cardClickArea}
+        {/* {cardClickArea} */}
         {favoriteIcon}
         {compare 
           ? expanded 

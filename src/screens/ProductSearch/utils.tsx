@@ -142,24 +142,31 @@ const productList: Product[] = [
 export const getDefaultProductList = (productDataList: ProductData[]) => {
   if (productDataList.length > 0) {
     const list: Product[] = productDataList.map(product => {
-      const { id, saved, price, origin, name, category, rating, labels } = product;
-      const image = 
-        category === "mask" 
-          ? MaskCoverImage
-          : SanitizerCoverImage
+      const { id, saved, price, origin, name, category, rating, labels, photos } = product;
+      // console.log("getDefaultProductList getDefaultProductList", photos)
+      // const image = 
+        // category === "mask" 
+        //   ? MaskCoverImage
+        //   : SanitizerCoverImage
+        // console.log("(photos && photos.length > 0 && photos[0]) ", (photos && photos.length > 0 && photos[0]) )
+      const image = (photos && photos.length > 0 && photos[0]) 
+        || (category === "mask" 
+        ? MaskCoverImage
+        : SanitizerCoverImage);
       return ({
         category,
         id,
         image,
         labels,
         origin,
+        photos: photos.filter(Boolean),
         price,
         rating,
         name: `${name}`,
         favorite: saved,
         imageProps: {
-          resizeMode: 'contain',
-          PlaceholderContent: <ActivityIndicator />
+          // resizeMode: 'contain',
+          // PlaceholderContent: <ActivityIndicator />
         },
         // imageStyle: {
         //   height: 150,

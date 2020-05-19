@@ -1,16 +1,25 @@
 import { map, pick } from 'lodash';
 import React from 'react';
-import { ImageRequireSource, TouchableOpacity } from 'react-native';
+import { Image as RNImage, TouchableOpacity } from 'react-native';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Icon, Image } from 'react-native-elements';
+import Lightbox from 'react-native-lightbox';
 import { Chip } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
 
 import styles from './styles';
 import { ProductComparisonViewProps, ProductComparisonGridViewProps } from '../ProductComparison';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
+import ImageCarousel from '../../../components/ImageCarousel';
 
-const Mask1Image: ImageRequireSource = require('../assets/mask1.jpeg');
+const renderCarousel = (photos, currentPage) => {
+  return (
+    <ImageCarousel
+      album={photos}
+      currentPage={currentPage}
+    />
+  )
+};
 
 const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewProps> = (props) => {
   const { 
@@ -18,13 +27,37 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
   } = props;
 
   const labels = (productInfo.labels || []).map(label => label.trim()).filter(Boolean);
+  const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "";
+  const currentPage = productInfo.photos.findIndex(_photo => _photo === imageUri);
 
   return (
     <View style={styles.gridContainer}>
-      <Image
-        source={Mask1Image}
+      {/* <Image
+        source={{ uri: imageUri }}
         style={{ width: 100, height: 100 }}
-      />
+      /> */}
+      <Lightbox 
+        renderContent={() => renderCarousel(productInfo.photos, currentPage)}
+        springConfig={{ tension: 10, friction: 10 }} 
+        swipeToDismiss={false}
+      >
+        <RNImage
+          // key={id}
+          style={{
+            width: 100,
+            height: 100,
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            borderColor: '#e1e8ee',
+            shadowColor: 'rgba(0,0,0, .2)',
+            shadowOffset: { height: 0, width: 0 },
+            shadowOpacity: 1,
+            shadowRadius: 1,
+          }}
+          source={{ uri: imageUri }}
+          resizeMode='cover'
+        />
+      </Lightbox>
         <View style={styles.rightContainer}>
           <View style={styles.contentContainer}>
             {map(pick(productInfo, ["name", "origin", "price"]), (value: string, key) => {
@@ -47,13 +80,15 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
                 )
             })}
           </View>
-          <View style={styles.labelContainer}>
-            {(labels || []).map(label => {
-              return (
-                <Chip key={label} style={styles.chip}>{label}</Chip>
-              )
-            })}
-          </View>
+          <ScrollView>
+            <View style={styles.labelContainer}>
+              {(labels || []).map(label => {
+                return (
+                  <Chip key={label} style={styles.chip}>{label}</Chip>
+                )
+              })}
+            </View>
+          </ScrollView>
       </View>
     </View>
   )

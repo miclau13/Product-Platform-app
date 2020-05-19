@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   cardBottomContainerStyle: {
     flexDirection: 'row', 
     justifyContent: 'space-around',
+    marginTop: 'auto'
   },
   cardSelectButtonStyle: {
     backgroundColor: pageBackgroundColor, 
@@ -77,9 +78,10 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   cardImageStyle: {
-    borderWidth: 1, 
-    borderRadius: 4,
-    borderColor: '#B5B5B5',
+    // borderWidth: 1, 
+    // borderRadius: 4,
+    // borderColor: '#B5B5B5',
+    position: 'absolute',
   },
   priceContainer: {
     // alignItems: 'center', 

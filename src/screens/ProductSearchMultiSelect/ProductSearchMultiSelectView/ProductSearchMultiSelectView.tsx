@@ -1,6 +1,7 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Image as RNImage, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Button, Card, Icon, Text } from 'react-native-elements';
+import Lightbox from 'react-native-lightbox';
 import { Chip } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
 
@@ -11,6 +12,16 @@ import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import SearchBarComponent from '../../../components/SearchComponent';
 import { buttonPrimaryColor } from '../../../styles';
 import mapping from '../../../languages/CN/mapping';
+import ImageCarousel from '../../../components/ImageCarousel';
+
+const renderCarousel = (photos, currentPage) => {
+  return (
+    <ImageCarousel
+      album={photos}
+      currentPage={currentPage}
+    />
+  )
+};
 
 const ProductSearchMultiSelectItemCard: React.ComponentType<ProductSearchMultiSelectItemCardProps> = (props) => {
   const { 
@@ -24,6 +35,8 @@ const ProductSearchMultiSelectItemCard: React.ComponentType<ProductSearchMultiSe
     price,
     rating,
     selected,
+    image,
+    photos,
     ...cardProps 
   } = props;
 
@@ -40,22 +53,53 @@ const ProductSearchMultiSelectItemCard: React.ComponentType<ProductSearchMultiSe
             size={32}
             onPress={handleFavoriteIconOnPress(id)}
           />
-  const cardClickArea = 
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={handleImageAreaOnPress(id)}
-            style={styles.cardClickAreaStyle}
-          >
-          </TouchableOpacity>
+  // const cardClickArea = 
+  //         <TouchableOpacity
+  //           activeOpacity={0.5}
+  //           onPress={handleImageAreaOnPress(id)}
+  //           style={styles.cardClickAreaStyle}
+  //         >
+  //         </TouchableOpacity>
+  const currentPage = photos.findIndex(_photo => _photo === image);
+  
+  const ImageComponent = () => {
+    return (
+      <Lightbox 
+        renderContent={() => renderCarousel(photos, currentPage)}
+        springConfig={{ tension: 10, friction: 10 }} 
+        swipeToDismiss={false}
+      >
+        <RNImage
+          // key={id}
+          style={{
+            width: 157,
+            height: 150,
+            // zIndex: 2,
+            borderWidth: 1, 
+            borderRadius: 4,
+            borderColor: '#B5B5B5',
+          }}
+          source={{ uri: image }}
+          resizeMode='contain'
+        />
+      </Lightbox>
+    )
+  }
 
   return (
     <Card
       {...cardProps}
+      image={{ uri: image }}
+      imageProps={{
+        ImageComponent
+      }}
       imageStyle={styles.cardImageStyle}
+      imageWrapperStyle={{ flex: 1 }}
       containerStyle={styles.cardContainerStyle}
+      wrapperStyle={{ flex: 1 }}
     >
-      {cardClickArea}
-      <View>
+      {/* {cardClickArea} */}
+      <View style={{ flexGrow: 1 }}>
         <Text style={styles.title}>
           {name}
         </Text>
