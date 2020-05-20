@@ -171,8 +171,8 @@ const Navigator = () => {
 
   const fetchMoreInfo = async () => {
     try {
-      // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
-      const response = await fetch(`http://192.168.0.106:5000/admin`, {
+      const response = await fetch(`https://miclo1.azurewebsites.net/admin`, {
+      // const response = await fetch(`http://192.168.0.106:5000/admin`, {
         method: 'get',
         headers: {
           Accept: 'application/json',
