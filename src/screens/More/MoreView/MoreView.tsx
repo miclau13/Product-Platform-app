@@ -4,16 +4,19 @@ import { ListItem, Text } from 'react-native-elements';
 
 import styles from './styles';
 import { MoreViewProps } from '../More';
+import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
+import mapping from '../../../languages/CN/mapping';
 
 const MoreView: React.ComponentType<MoreViewProps> = (props) => {
   const { 
     handleListItemOnPress,
     optionList,
+    navigation,
   } = props;
   
   return (
     <View style={styles.container}>
-      <Text h2 style={{ alignSelf: 'center' }}>More</Text>
+      {/* <Text h2 style={{ alignSelf: 'center' }}>More</Text> */}
       <View style={{ marginVertical: 16 }}></View>
       <View>
         {optionList.map(option => (
@@ -22,7 +25,7 @@ const MoreView: React.ComponentType<MoreViewProps> = (props) => {
               containerStyle={option.id === 0 ? styles.listItemTopContainer : styles.listItemContainer}
               key={option.id}
               onPress={handleListItemOnPress(option.id)}
-              title={option.title}
+              title={mapping[option['title']]}
               titleStyle={{ fontSize: 28 }}
             />
           ))
@@ -32,6 +35,10 @@ const MoreView: React.ComponentType<MoreViewProps> = (props) => {
       <Text h4 style={{ alignSelf: 'center'}}>App Version</Text>
       <Text h4 style={{ alignSelf: 'center'}}>V1.1</Text>
       <View style={{ marginVertical: 4 }}></View>
+      <FloatingMenuComponent 
+        currenScreen="BarCodeScanner"
+        navigation={navigation}
+      /> 
     </View>
   );
 }

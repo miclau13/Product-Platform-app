@@ -25,6 +25,7 @@ export type Option = {
 export interface MoreViewProps {
   handleListItemOnPress(id: Option['id']): ListItemProps['onPress'];
   optionList: Option[];
+  navigation: Props['navigation'];
 };
 
 
@@ -49,6 +50,7 @@ const More: React.ComponentType<Props> = (props) => {
     <MoreView 
       handleListItemOnPress={handleListItemOnPress}
       optionList={optionList}
+      navigation={navigation}
     />
   )
 };

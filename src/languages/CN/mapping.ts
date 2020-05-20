@@ -1,19 +1,19 @@
 const mapping = {
   // Product Category
-  Mask: "口罩",
-  mask: "口罩",
-  Sanitizer: "搓手液",
-  sanitizer: "搓手液",
+  "Mask": "口罩",
+  "mask": "口罩",
+  "Sanitizer": "搓手液",
+  "sanitizer": "搓手液",
 
   // Floating Menu 
-  Scan: "掃描",
-  History: "紀錄",
-  Add: "報料",
-  More: "更多",
+  "Scan": "掃描",
+  "History": "紀錄",
+  "Add": "報料",
+  "More": "更多",
 
   // BarCode Scanner
-  Cancel: "取消",
-  Scanner: "掃一下",
+  "Cancel": "取消",
+  "Scanner": "掃一下",
   // BarCodeScannerMarker
   "Please scan the Barcode on the product": "請掃一下包裝上條碼",
   // Search
@@ -53,6 +53,15 @@ const mapping = {
   "Products": "產品",
   "Comparisons": "比較",
   "Saved": "收藏",
+
+  // More
+  "About Us": "關於我們",
+  "Tutorial": "教學",
+  "FAQ": "常見問題",
+  "Comments": "你的意見",
+  "Privacy": "隱私政策",
+  "Terms & Conditions": "使用條款",
+  "Language": "切換語言",
 };
 
 export default mapping

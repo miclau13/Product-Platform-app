@@ -3,7 +3,7 @@ import { Option } from './More';
 const optionList: Option[] = [
   { 
     id: 0,
-    screen: "Comments",
+    screen: "AboutUs",
     title: "About Us",
   },
   { 

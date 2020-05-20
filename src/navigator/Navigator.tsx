@@ -7,6 +7,7 @@ import RootTab from './TabNavigator/RootTab';
 import RootStack from './NavigationStack/RootStack';
 import LoadingComponent from '../components/LoadingComponent';
 import { DisplayIntroContextProvider } from '../context/DisplayIntroContext';
+import { MoreInfo, MoreInfoContextProvider } from '../context/MoreInfoContext';
 import { Product, ProductListContextProvider } from '../context/ProductListContext';
 import { ProductComparison, ProductComparisonListContextProvider } from '../context/ProductComparisonListContext';
 import { SelectCategoryContextProvider } from '../context/SelectCategoryContext';
@@ -19,13 +20,15 @@ interface State {
   selectedCategory: string;
   productList: Array<Product> | [] ,
   productComparisonList: Array<ProductComparison> | [] ,
+  moreInfo: MoreInfo,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST';
+  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST' | 'UPDATE_MORE_INFO';
   value?: string;
   productList?: State['productList'];
   productComparisonList?: State['productComparisonList'];
+  moreInfo?: State['moreInfo'];
 };
 
 const initialState = {
@@ -34,6 +37,13 @@ const initialState = {
   selectedCategory: "",
   productList: [],
   productComparisonList: [],
+  moreInfo: {
+    aboutUs: {
+      title: "",
+      content: "",
+      footer: "",
+    }
+  },
 };
 
 const reducer = (prevState: State, action: Action) => {
@@ -62,6 +72,11 @@ const reducer = (prevState: State, action: Action) => {
       return {
         ...prevState,
         productComparisonList: action.productComparisonList,
+      };
+    case 'UPDATE_MORE_INFO':
+      return {
+        ...prevState,
+        moreInfo: action.moreInfo,
       };
   }
 };
@@ -92,6 +107,11 @@ const Navigator = () => {
     refetch: () => fetchProductComparisonList(),
     productComparisonList: state.productComparisonList,
   }), [state.productComparisonList]);
+
+  const moreInfoContext = React.useMemo(() => ({
+    refetch: () => fetchMoreInfo(),
+    moreInfo: state.moreInfo,
+  }), [state.moreInfo]);
 
   const fetchProductList = async () => {
     try {
@@ -146,6 +166,25 @@ const Navigator = () => {
     }
   }
 
+  const fetchMoreInfo = async () => {
+    try {
+      // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+      const response = await fetch(`http://192.168.0.106:5000/admin`, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json() || [];
+      dispatch({ type: 'UPDATE_MORE_INFO', moreInfo: result[0] });
+    } catch (error) {
+      console.log(" fetchMoreInfo error:", error);
+    } finally {
+      dispatch({ type: 'DISABLE_LOADING' });
+    }
+  }
+
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let displayIntro, selectedCategory, deviceID;
@@ -172,12 +211,13 @@ const Navigator = () => {
     bootstrapAsync();
     fetchProductList();
     fetchProductComparisonList();
+    fetchMoreInfo();
     return () => {}
   }, []);
 
   // console.log(" navigator productComparisonList", state.productComparisonList)
   // console.log("productList", state.productList)
-
+  // console.log("moreInfo",state.moreInfo)
   if (state.loading) {
     return (
       <LoadingComponent />
@@ -189,7 +229,9 @@ const Navigator = () => {
     <SelectCategoryContextProvider value={selectCategoryContext}>
       <ProductListContextProvider value={productListContext}>
         <ProductComparisonListContextProvider value={productComparisonListContext}>
-          <RootTab />
+          <MoreInfoContextProvider value={moreInfoContext}>
+            <RootTab />
+          </MoreInfoContextProvider>
         </ProductComparisonListContextProvider>
       </ProductListContextProvider>
     </SelectCategoryContextProvider>

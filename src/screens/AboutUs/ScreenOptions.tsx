@@ -3,7 +3,7 @@ import { EventMapBase, NavigationState, RouteConfig } from '@react-navigation/na
 import strings  from './strings';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
-const options: RouteConfig<BarCodeScannerStackParamList, "More", NavigationState, object, EventMapBase>['options'] = (props) => {
+const options: RouteConfig<BarCodeScannerStackParamList, "AboutUs", NavigationState, object, EventMapBase>['options'] = (props) => {
   return {
     title: strings.title,
   }

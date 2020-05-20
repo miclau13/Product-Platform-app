@@ -4,9 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { screenOptions } from './NavigatorOptions';
 import { useSelectCategoryContext } from '../../../context/SelectCategoryContext';
 import { useDisplayIntroContext } from '../../../context/DisplayIntroContext';
-import BarCodeScannerScreen, { options as BarCodeScannerScreenOptions } from '../../../screens/BarCodeScanner';
-import ProductCategoriesScreen, { options as ProductCategoriesScreenOptions } from '../../../screens/ProductCategories';
+import AboutUsScreen, { options as AboutUsScreenOptions } from "../../../screens/AboutUs";
 import AddProductScreen, { options as AddProductScreenOptions } from "../../../screens/AddProduct";
+import BarCodeScannerScreen, { options as BarCodeScannerScreenOptions } from '../../../screens/BarCodeScanner';
+import CommentsScreen, { options as CommentsScreenOptions } from "../../../screens/Comments";
+import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Intro";
+import MoreScreen, { options as MoreScreenOptions } from "../../../screens/More";
+import ProductCategoriesScreen, { options as ProductCategoriesScreenOptions } from '../../../screens/ProductCategories';
 import ProductComparisonScreen, { options as ProductComparisonScreenOptions } from "../../../screens/ProductComparison";
 import ProductInfoScreen, { options as ProductInfoScreenOptions } from "../../../screens/ProductInfo";
 import ProductSearchScreen, { Product, options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
@@ -14,14 +18,12 @@ import ProductSearchMultiSelectScreen, { options as ProductSearchMultiSelectScre
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
 import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
-import MoreScreen, { options as MoreScreenOptions } from "../../../screens/More";
-import CommentsScreen, { options as CommentsScreenOptions } from "../../../screens/Comments";
-import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Intro";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: {
     productId?: string;
   };
+  AboutUs: undefined;
   BarCodeScanner: {
     headerTitle?: string;
   };
@@ -73,6 +75,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>
       <BarCodeScannerStack.Screen name="More" component={MoreScreen} options={MoreScreenOptions}/>
       <BarCodeScannerStack.Screen name="Intro" component={IntroScreen} options={IntroScreenOptions}/>
+      <BarCodeScannerStack.Screen name="AboutUs" component={AboutUsScreen} options={AboutUsScreenOptions}/>
     </BarCodeScannerStack.Navigator>
   );
 };
