@@ -8,6 +8,7 @@ import AboutUsScreen, { options as AboutUsScreenOptions } from "../../../screens
 import AddProductScreen, { options as AddProductScreenOptions } from "../../../screens/AddProduct";
 import BarCodeScannerScreen, { options as BarCodeScannerScreenOptions } from '../../../screens/BarCodeScanner';
 import CommentsScreen, { options as CommentsScreenOptions } from "../../../screens/Comments";
+import FAQScreen, { options as FAQScreenOptions } from "../../../screens/FAQ";
 import IntroScreen, { options as IntroScreenOptions } from "../../../screens/Intro";
 import MoreScreen, { options as MoreScreenOptions } from "../../../screens/More";
 import ProductCategoriesScreen, { options as ProductCategoriesScreenOptions } from '../../../screens/ProductCategories';
@@ -28,6 +29,7 @@ export type BarCodeScannerStackParamList = {
     headerTitle?: string;
   };
   Comments: undefined;
+  FAQ: undefined,
   ProductCategories: undefined;
   ProductComparison: {
     productId: string;
@@ -66,6 +68,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="ProductCategories" component={ProductCategoriesScreen} options={ProductCategoriesScreenOptions}/>
       <BarCodeScannerStack.Screen name="AddProduct" component={AddProductScreen} options={AddProductScreenOptions}/>
       <BarCodeScannerStack.Screen name="Comments" component={CommentsScreen} options={CommentsScreenOptions}/>
+      <BarCodeScannerStack.Screen name="FAQ" component={FAQScreen} options={FAQScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductComparison" component={ProductComparisonScreen} options={ProductComparisonScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductInfo" component={ProductInfoScreen} options={ProductInfoScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductSearch" component={ProductSearchScreen} options={ProductSearchScreenOptions}/>

@@ -5,7 +5,10 @@ export type MoreInfo = {
     title: string;
     content: string;
     footer: string;
-  }
+  },
+  faq: {
+    content: string;
+  },
 };
 
 const initialValue: { moreInfo: MoreInfo, refetch(): void } = { moreInfo: {
@@ -13,6 +16,9 @@ const initialValue: { moreInfo: MoreInfo, refetch(): void } = { moreInfo: {
     title: "",
     content: "",
     footer: ""
+  },
+  faq: {
+    content: "",
   }
 }, refetch: () => {}};
 const MoreInfoContext = React.createContext(initialValue);

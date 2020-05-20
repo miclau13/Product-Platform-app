@@ -42,6 +42,9 @@ const initialState = {
       title: "",
       content: "",
       footer: "",
+    },
+    faq: {
+      content: "",
     }
   },
 };

@@ -13,7 +13,7 @@ const optionList: Option[] = [
   },
   { 
     id: 2,
-    screen: "Comments",
+    screen: "FAQ",
     title: "FAQ",
   },
   { 
