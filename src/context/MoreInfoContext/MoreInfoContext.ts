@@ -9,6 +9,36 @@ export type MoreInfo = {
   faq: {
     content: string;
   },
+  terms: {
+    title1: string;
+    content1: string;
+    title2: string;
+    content2: string;
+    title3: string;
+    content3: string;
+  },
+  privacy: {
+    title1: string;
+    content1: string;
+    title2: string;
+    content2: string;
+    title3: string;
+    content3: string;
+    title4: string;
+    content4: string;
+    title5: string;
+    content5: string;
+    title6: string;
+    content6: string;
+    title7: string;
+    content7: string;
+    title8: string;
+    content8: string;
+    title9: string;
+    content9: string;
+    title10: string;
+    content10: string;
+  }
 };
 
 const initialValue: { moreInfo: MoreInfo, refetch(): void } = { moreInfo: {

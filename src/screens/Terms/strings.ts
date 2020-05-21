@@ -1,6 +1,6 @@
 import mapping from '../../languages/CN/mapping';
 const strings = {
-  title: mapping["Comments"]
+  title: mapping["Terms & Conditions"]
 }
 
 export default strings;

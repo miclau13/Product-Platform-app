@@ -23,12 +23,12 @@ const optionList: Option[] = [
   },
   { 
     id: 4,
-    screen: "Comments",
+    screen: "Privacy",
     title: "Privacy",
   },
   { 
     id: 5,
-    screen: "Comments",
+    screen: "Terms",
     title: "Terms & Conditions",
   },
   { 

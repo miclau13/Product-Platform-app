@@ -5,6 +5,7 @@ import { Button, Input } from 'react-native-elements';
 import styles from './styles';
 import { CommentsViewProps } from '../Comments';
 import RatingComponent from '../../../components/RatingComponent';
+import mapping from '../../../languages/CN/mapping';
 
 const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
   const { 
@@ -25,13 +26,14 @@ const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
         defaultRating={rating}
         onFinishRating={handleOnFinishRating}
         showRating={false}
+        label={mapping["Rating"]}
       />
       <View style={{ margin: 8 }}></View>
       <Input
         multiline
         inputContainerStyle={styles.textAreaContainer}
         inputStyle={styles.textArea}
-        label="Comments"
+        label={mapping["Comments"]}
         labelStyle={styles.label}
         numberOfLines={3}
         onChangeText={handleOnChangeComments}
@@ -41,7 +43,7 @@ const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
       <View style={{ margin: 8 }}></View>
         <Button
           onPress={handleSubmitButtonOnPress}
-          title='Submit' 
+          title={mapping['Submit']}
         >
         </Button> 
     </ScrollView>

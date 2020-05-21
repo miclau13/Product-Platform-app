@@ -19,6 +19,8 @@ import ProductSearchMultiSelectScreen, { options as ProductSearchMultiSelectScre
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
 import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
 import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
+import TermsScreen, { options as TermsScreenOptions } from "../../../screens/Terms";
+import PrivacyScreen, { options as PrivacyScreenOptions } from "../../../screens/Privacy";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: {
@@ -47,6 +49,8 @@ export type BarCodeScannerStackParamList = {
   RecordsSaved: undefined;
   More: undefined;
   Intro: undefined;
+  Terms: undefined,
+  Privacy: undefined,
 };
 
 const BarCodeScannerStack = createStackNavigator();
@@ -79,6 +83,8 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="More" component={MoreScreen} options={MoreScreenOptions}/>
       <BarCodeScannerStack.Screen name="Intro" component={IntroScreen} options={IntroScreenOptions}/>
       <BarCodeScannerStack.Screen name="AboutUs" component={AboutUsScreen} options={AboutUsScreenOptions}/>
+      <BarCodeScannerStack.Screen name="Terms" component={TermsScreen} options={TermsScreenOptions}/>
+      <BarCodeScannerStack.Screen name="Privacy" component={PrivacyScreen} options={PrivacyScreenOptions}/>
     </BarCodeScannerStack.Navigator>
   );
 };
