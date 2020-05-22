@@ -17,8 +17,6 @@ import ProductInfoScreen, { options as ProductInfoScreenOptions } from "../../..
 import ProductSearchScreen, { Product, options as ProductSearchScreenOptions } from "../../../screens/ProductSearch";
 import ProductSearchMultiSelectScreen, { options as ProductSearchMultiSelectScreenOptions } from "../../../screens/ProductSearchMultiSelect";
 import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens/Records";
-import RecordsHistoryScreen, { options as RecordsHistoryScreenOptions } from "../../../screens/RecordsHistory";
-import RecordsSavedScreen, { options as RecordsSavedScreenOptions } from "../../../screens/RecordsSaved";
 import TermsScreen, { options as TermsScreenOptions } from "../../../screens/Terms";
 import PrivacyScreen, { options as PrivacyScreenOptions } from "../../../screens/Privacy";
 import InfoScreen, { options as InfoScreenOptions } from "../../../screens/Info";
@@ -81,8 +79,6 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="ProductSearch" component={ProductSearchScreen} options={ProductSearchScreenOptions}/>
       <BarCodeScannerStack.Screen name="ProductSearchMultiSelect" component={ProductSearchMultiSelectScreen} options={ProductSearchMultiSelectScreenOptions}/>
       <BarCodeScannerStack.Screen name="Records" component={RecordsScreen} options={RecordsScreenOptions}/>
-      <BarCodeScannerStack.Screen name="RecordsHistory" component={RecordsHistoryScreen} options={RecordsHistoryScreenOptions}/>
-      <BarCodeScannerStack.Screen name="RecordsSaved" component={RecordsSavedScreen} options={RecordsSavedScreenOptions}/>
       <BarCodeScannerStack.Screen name="More" component={MoreScreen} options={MoreScreenOptions}/>
       <BarCodeScannerStack.Screen name="Intro" component={IntroScreen} options={IntroScreenOptions}/>
       <BarCodeScannerStack.Screen name="AboutUs" component={AboutUsScreen} options={AboutUsScreenOptions}/>
