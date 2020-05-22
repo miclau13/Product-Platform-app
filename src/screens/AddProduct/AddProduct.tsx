@@ -1,6 +1,7 @@
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { ActionSheetIOS, Platform } from 'react-native';
 import { AirbnbRatingProps, ButtonProps, IconProps, InputProps, TileProps } from 'react-native-elements'; 
@@ -226,8 +227,9 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(async () => {
     try {
       setLoading(true);
-            // const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
-      const uri = productId ? `https://miclo1.azurewebsites.net/products/${productId}` :`https://miclo1.azurewebsites.net/products`;
+      const deviceId = await SecureStore.getItemAsync("deviceId");
+      const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
+      // const uri = productId ? `https://miclo1.azurewebsites.net/products/${productId}` :`https://miclo1.azurewebsites.net/products`;
       const response = await fetch(uri, {
         method: 'post',
         headers: {
@@ -239,7 +241,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
           rating,
           category: selectedCategory,
           labels: keywordTagLabels,
-          saved: false,
+          deviceId: deviceId,
         }),
       });
       await productListRefetch();

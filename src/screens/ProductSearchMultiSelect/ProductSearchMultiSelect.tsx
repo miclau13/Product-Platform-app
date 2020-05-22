@@ -166,7 +166,8 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
       } 
       return [...list, id];
     }))
-    await favoriteProduct(id);
+    const deviceId = await SecureStore.getItemAsync("deviceId");
+    await favoriteProduct(id, deviceId);
   }, []);
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchMultiSelectItemCardProps['handleImageAreaOnPress']>(id => () => {
@@ -190,6 +191,7 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async() => {
+      const deviceId = await SecureStore.getItemAsync("deviceId");
       const updateProductIdList = xor(originalSelectedProductIdList, selectedProductIdList);
       // await fetch(`http://192.168.0.106:5000/product-comparisons/${productId}`, {
       await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${productId}`, {
@@ -199,7 +201,8 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          comparisonIdList: updateProductIdList
+          comparisonIdList: updateProductIdList,
+          deviceId,
         }),
       });
       await productComparisonListRefetch();

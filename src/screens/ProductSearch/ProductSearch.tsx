@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import { ButtonProps, CardProps, IconProps, SearchBarProps } from 'react-native-elements';
@@ -112,7 +113,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
       } 
       return [...list, id];
     }))
-    await favoriteProduct(id);
+    const deviceId = await SecureStore.getItemAsync("deviceId");
+    await favoriteProduct(id, deviceId);
   }, []);
 
   const handleImageAreaOnPress = React.useCallback<ProductSearchItemCardProps['handleImageAreaOnPress']>(id => async () => {
@@ -135,6 +137,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   }, [navigation, productDataList]);
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
+    const deviceId = await SecureStore.getItemAsync("deviceId");
     await productListRefetch();
     // await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
     await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${id}`, {
@@ -144,7 +147,8 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        comparisonIdList: []
+        comparisonIdList: [],
+        deviceId,
       }),
     });
     await productComparisonListRefetch();

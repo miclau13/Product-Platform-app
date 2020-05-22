@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { Share } from 'react-native';
 import { AirbnbRatingProps, IconProps, ListItemProps } from 'react-native-elements';
@@ -57,7 +58,8 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
 
   const handleOnFinishRating = React.useCallback<ProductInfoViewProps['handleOnFinishRating']>(async (rating) => {
     setRating(rating);
-    await ratingProduct(productId, rating);
+    const deviceId = await SecureStore.getItemAsync("deviceId");
+    await ratingProduct(productId, deviceId, rating);
   }, [rating]);
 
   const productInfo = React.useMemo<Product>(() => {
@@ -83,7 +85,8 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
 
   const handleFavoriteIconOnPress = React.useCallback<ProductInfoViewProps['handleFavoriteIconOnPress']>(async () => {
     setFavorite((value)=> !value);
-    await favoriteProduct(productId);
+    const deviceId = await SecureStore.getItemAsync("deviceId");
+    await favoriteProduct(productId, deviceId);
   }, [productId]);
 
   const handleInfoIconOnPress = React.useCallback<ProductInfoViewProps['handleInfoIconOnPress']>(async () => {

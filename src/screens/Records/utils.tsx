@@ -64,7 +64,7 @@ export const getDefaultAllList = (productList: Product[]) => {
   if (productList.length > 0) {
     const list: RecordsItem[] = productList.map(product => {
       const { id, saved, updatedAt, origin, name, photos } = product;
-      const image = (photos && photos.length > 0 && photos[0]);
+      const image = (photos && photos.length > 0 && photos[0]) || "https://cdn.ztore.com/images/ztore/production/product/750px/1032361_1.jpg";
       return ({
         id,
         favorite: saved,

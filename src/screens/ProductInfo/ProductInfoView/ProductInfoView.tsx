@@ -37,7 +37,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
   const labels = (productInfo.labels || []).map(label => label.trim()).filter(Boolean);
   const rating = productInfo.rating || 0;
   const favorite = productInfo.saved || false;
-  const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "";
+  const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "https://cdn.ztore.com/images/ztore/production/product/750px/1032361_1.jpg";
 
   // const cardClickArea = 
   //   <TouchableOpacity

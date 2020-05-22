@@ -92,11 +92,13 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
         ImageComponent,
       }}
       imageStyle={styles.cardImageStyle}
+      imageWrapperStyle={{ flex: 1 }}
       containerStyle={styles.cardContainerStyle}
+      wrapperStyle={{ flex: 1 }}
     >
       {/* {cardBadge} */}
       {/* {cardClickArea} */}
-      <View>
+      <View style={{ flexGrow: 1 }}>
         <Text style={styles.title}>
           {name}
         </Text>

@@ -150,9 +150,7 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
         //   : SanitizerCoverImage
         // console.log("(photos && photos.length > 0 && photos[0]) ", (photos && photos.length > 0 && photos[0]) )
       const image = (photos && photos.length > 0 && photos[0]) 
-        || (category === "mask" 
-        ? MaskCoverImage
-        : SanitizerCoverImage);
+        || "https://cdn.ztore.com/images/ztore/production/product/750px/1032361_1.jpg";
       return ({
         category,
         id,

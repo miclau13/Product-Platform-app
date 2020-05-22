@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   cardBottomContainerStyle: {
     flexDirection: 'row', 
     justifyContent: 'space-around',
+    marginTop: 'auto',
   },
   cardSelectButtonStyle: {
     backgroundColor: pageBackgroundColor, 

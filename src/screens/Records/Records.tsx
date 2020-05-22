@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import { find } from 'lodash';
 import React from 'react';
 import { FlatListProps, TouchableOpacityProps } from 'react-native';
@@ -73,21 +74,28 @@ const Records: React.ComponentType<Props> = (props) => {
       return find(productDataList, (product) => product.id === productId);
     }))
     return result || [];
-  }, [productComparisonList, productDataList])
+  }, [productComparisonList, productDataList]);
+
+  const recordsItemsFavoritList = React.useMemo(() => {
+    const productList = productDataList.filter(product => favoritedProductList.includes(product.id));
+    const result = getDefaultAllList(productList);
+    return result || [];
+  }, [productDataList]);
 
   const renderRecordsItemsList = React.useMemo(() => {
     const updatedRecordsItemsList = recordsItemsList.map(recordsItem => {
       return { ...recordsItem, favorite: favoritedProductList.includes(recordsItem.id)}
-    })
+    });
+
     switch (selectedButtonIndex) {
       case 0:
         return updatedRecordsItemsList;
       case 1:
         return recordsItemsComparisonList;
       case 2:
-        return updatedRecordsItemsList.filter(recordItem => recordItem.favorite);
+        return recordsItemsFavoritList;
     }
-  }, [favoritedProductList, recordsItemsList, recordsItemsComparisonList, selectedButtonIndex]);
+  }, [favoritedProductList, recordsItemsList, recordsItemsComparisonList, selectedButtonIndex, recordsItemsFavoritList]);
 
   const favoriteIconOnPress = React.useCallback<RecordsListItemViewProps['favoriteIconOnPress']>((id) => async () => {
     if (favoritedProductList.includes(id)) {
@@ -95,7 +103,9 @@ const Records: React.ComponentType<Props> = (props) => {
     } else {
       setFavoritedProductList(productIdlist => [ ...productIdlist, id]);
     };
-    await favoriteProduct(id);
+    const deviceId = await SecureStore.getItemAsync("deviceId");
+    await favoriteProduct(id, deviceId);
+    await productListRefetch();
   }, [favoritedProductList]);
 
   const onButtonIndexPress = React.useCallback<RecordsViewProps['onButtonIndexPress']>((index) => {

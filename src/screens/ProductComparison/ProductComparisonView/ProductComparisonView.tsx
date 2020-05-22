@@ -27,7 +27,7 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
   } = props;
 
   const labels = (productInfo.labels || []).map(label => label.trim()).filter(Boolean);
-  const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "";
+  const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "https://cdn.ztore.com/images/ztore/production/product/750px/1032361_1.jpg";
   const currentPage = productInfo.photos.findIndex(_photo => _photo === imageUri);
 
   return (

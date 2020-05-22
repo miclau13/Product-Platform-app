@@ -159,7 +159,9 @@ const Navigator = () => {
 
   const fetchProductList = async () => {
     try {
-      const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
+      const deviceId = await SecureStore.getItemAsync("deviceId");
+      // const response = await fetch(`http://192.168.0.106:5000/products/device/${deviceId}`, {
+      const response = await fetch(`https://miclo1.azurewebsites.net/products/device/${deviceId}`, {
         method: 'get',
         headers: {
           Accept: 'application/json',
@@ -167,12 +169,7 @@ const Navigator = () => {
         },
       });
       const result = await response.json() || [];
-      const productList = result.map(product => {
-        return omit({
-          id: product._id,
-          ...product,
-        },['__v', '_id'])
-      })
+      const productList = result;
       dispatch({ type: 'UPDATE_PRODUCT_LIST', productList });
     } catch (error) {
       console.log(" fetchProductList error:", error);
@@ -182,10 +179,10 @@ const Navigator = () => {
   }
 
   const fetchProductComparisonList = async () => {
-    try {
-      // const response = await fetch(`https://miclo1.azurewebsites.net/products`, {
-      // const response = await fetch(`http://192.168.0.106:5000/product-comparisons`, {    
-      const response =  await fetch(`https://miclo1.azurewebsites.net/product-comparisons`, {
+    try { 
+      const deviceId = await SecureStore.getItemAsync("deviceId");
+      // const response = await fetch(`http://192.168.0.106:5000/product-comparisons/device/${deviceId}`, {
+      const response = await fetch(`https://miclo1.azurewebsites.net/product-comparisons/device/${deviceId}`, {
         method: 'get',
         headers: {
           Accept: 'application/json',
@@ -270,15 +267,15 @@ const Navigator = () => {
 
   return (
     <DisplayIntroContextProvider value={displayIntroContext}>
-    <SelectCategoryContextProvider value={selectCategoryContext}>
-      <ProductListContextProvider value={productListContext}>
-        <ProductComparisonListContextProvider value={productComparisonListContext}>
-          <MoreInfoContextProvider value={moreInfoContext}>
-            <RootTab />
-          </MoreInfoContextProvider>
-        </ProductComparisonListContextProvider>
-      </ProductListContextProvider>
-    </SelectCategoryContextProvider>
+      <SelectCategoryContextProvider value={selectCategoryContext}>
+        <ProductListContextProvider value={productListContext}>
+          <ProductComparisonListContextProvider value={productComparisonListContext}>
+            <MoreInfoContextProvider value={moreInfoContext}>
+              <RootTab />
+            </MoreInfoContextProvider>
+          </ProductComparisonListContextProvider>
+        </ProductListContextProvider>
+      </SelectCategoryContextProvider>
     </DisplayIntroContextProvider>
   )
 };
