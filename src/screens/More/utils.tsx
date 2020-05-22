@@ -8,7 +8,7 @@ const optionList: Option[] = [
   },
   { 
     id: 1,
-    screen: "Comments",
+    screen: "Intro",
     title: "Tutorial",
   },
   { 
@@ -31,11 +31,11 @@ const optionList: Option[] = [
     screen: "Terms",
     title: "Terms & Conditions",
   },
-  { 
-    id: 6,
-    screen: "Comments",
-    title: "Language",
-  },
+  // { 
+  //   id: 6,
+  //   screen: "Comments",
+  //   title: "Language",
+  // },
 ];
 
 export const getDefaultOptionList = () => {

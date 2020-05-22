@@ -61,12 +61,18 @@ export interface BarCodeScannerViewProps {
 };
 
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
   const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
   const [hasBarCodeScannerPermission, setHasBarCodeScannerPermission] = useState(null);
   const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);
+  React.useEffect(() => {
+    if (route && route.params && route.params.screen === "BarCodeScanner") {
+      setIsSearchViewVisible(false);
+      navigation.setParams({ screen: "" });
+    };
+  }, [route]);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
   // For ButtonGroup
@@ -74,9 +80,11 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
   // For ProductSearchView
   const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
+
   React.useEffect(() => {
     setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
-  }, [productDataList])
+  }, [productDataList]);
+
   const [chipList, setChipList] = React.useState(
     [
       { name: "PM2.5", selected: false }, 

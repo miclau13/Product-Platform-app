@@ -38,18 +38,70 @@ export type MoreInfo = {
     content9: string;
     title10: string;
     content10: string;
-  }
+  },
+  info: {
+    title1: string;
+    content1: string;
+    title2: string;
+    content2: string;
+    title3: string;
+    content3: string;
+  },
+  version: {
+    content: string;
+  },
 };
 
 const initialValue: { moreInfo: MoreInfo, refetch(): void } = { moreInfo: {
   aboutUs: {
     title: "",
     content: "",
-    footer: ""
+    footer: "",
   },
   faq: {
     content: "",
-  }
+  },
+  terms: {
+    title1: "",
+    content1: "",
+    title2: "",
+    content2: "",
+    title3: "",
+    content3: "",
+  },
+  privacy: {
+    title1: "",
+    content1: "",
+    title2: "",
+    content2: "",
+    title3: "",
+    content3: "",
+    title4: "",
+    content4: "",
+    title5: "",
+    content5: "",
+    title6: "",
+    content6: "",
+    title7: "",
+    content7: "",
+    title8: "",
+    content8: "",
+    title9: "",
+    content9: "",
+    title10: "",
+    content10: "",
+  },
+  info: {
+    title1: "",
+    content1: "",
+    title2: "",
+    content2: "",
+    title3: "",
+    content3: "",
+  },
+  version: {
+    content: "",
+  },
 }, refetch: () => {}};
 const MoreInfoContext = React.createContext(initialValue);
 

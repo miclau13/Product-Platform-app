@@ -38,6 +38,7 @@ export interface ProductInfoGridViewProps {
 }
 export interface ProductInfoViewProps extends ProductInfoGridViewProps {
   handleExpand(id: string): ListItemProps['onPress'];
+  handleInfoIconOnPress: IconProps['onPress'];
   expandedProductList: string[];  
   navigation: ProductInfoScreenNavigationProp;
   productComparisonInfoList: Product[];
@@ -84,6 +85,10 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     setFavorite((value)=> !value);
     await favoriteProduct(productId);
   }, [productId]);
+
+  const handleInfoIconOnPress = React.useCallback<ProductInfoViewProps['handleInfoIconOnPress']>(async () => {
+    navigation.navigate("Info");
+  }, [navigation]);
 
   const handleExpand = React.useCallback<ProductInfoViewProps['handleExpand']>(id => () => {
     setExpandedProductList(list => {
@@ -141,6 +146,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       handleEditIconOnPress={handleEditIconOnPress}
       handleExpand={handleExpand}
       handleFavoriteIconOnPress={handleFavoriteIconOnPress}
+      handleInfoIconOnPress={handleInfoIconOnPress}
       handleOnFinishRating={handleOnFinishRating}
       handleShareIconOnPress={handleShareIconOnPress}
       navigation={navigation}

@@ -39,8 +39,8 @@ const FloatingMenuComponent: React.ComponentType<FloatingMenuProps> = (props) =>
   }, [currenScreen, navigation]);
 
   const handleScanIconOnPress = React.useCallback(() => {
-    if (currenScreen === "BarCodeScanner") return;
-    navigation.navigate("BarCodeScanner");
+    // if (currenScreen === "BarCodeScanner") return;
+    navigation.navigate("BarCodeScanner", { screen: "BarCodeScanner" });
   }, [currenScreen, navigation]);
 
   const handleOnPress = React.useCallback(() => {

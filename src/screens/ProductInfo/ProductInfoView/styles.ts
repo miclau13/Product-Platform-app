@@ -81,6 +81,12 @@ const styles = StyleSheet.create({
     marginRight: 40,
     padding: 8,
   },
+
+  header: {
+    alignItems: 'center',
+    flexDirection: 'row', 
+    paddingLeft: 24,
+  },
 });
 
 export default styles;

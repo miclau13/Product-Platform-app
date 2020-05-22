@@ -10,19 +10,20 @@ import mapping from '../../languages/CN/mapping';
 const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerStackParamList, NavigationState, object, EventMapBase>['options'] = (props) => {
   const { navigation } = props;
   const handleHeaderRightOnPress: IconProps['onPress'] = () => {
-    navigation.navigate("ProductSearch");
+    navigation.navigate("Info");
   };
   return {
-    // headerRight: (props) => {
-    //   return (
-    //     <Icon
-    //       onPress={handleHeaderRightOnPress}
-    //       name='add'
-    //       size={32}
-    //       underlayColor={headerPrimaryColor}
-    //     />
-    //   )
-    // },
+    headerRight: (props) => {
+      return (
+        <Icon
+          containerStyle={{ marginRight: 16 }}
+          onPress={handleHeaderRightOnPress}
+          name='info-outline'
+          size={45}
+          underlayColor={"grey"}
+        />
+      )
+    },
     title: mapping[strings["title"]],
   };
 };

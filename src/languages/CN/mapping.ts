@@ -62,6 +62,7 @@ const mapping = {
   "Privacy": "隱私政策",
   "Terms & Conditions": "使用條款",
   "Language": "切換語言",
+  "Info": "註解",
 };
 
 export default mapping

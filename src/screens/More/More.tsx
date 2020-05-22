@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { getDefaultOptionList } from './utils';
 import MoreView from './MoreView';
+import { useMoreInfoContext, MoreInfo } from '../../context/MoreInfoContext';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
@@ -26,6 +27,7 @@ export interface MoreViewProps {
   handleListItemOnPress(id: Option['id']): ListItemProps['onPress'];
   optionList: Option[];
   navigation: Props['navigation'];
+  version: MoreInfo['version']['content'];
 };
 
 
@@ -34,6 +36,7 @@ const More: React.ComponentType<Props> = (props) => {
 
   const [loading] = React.useState(false);
   const optionList = React.useMemo(() => getDefaultOptionList(),[]);
+  const { moreInfo } = useMoreInfoContext();
 
   const handleListItemOnPress = React.useCallback(id => () => {
     // console.log(optionList[id].screen);
@@ -51,6 +54,7 @@ const More: React.ComponentType<Props> = (props) => {
       handleListItemOnPress={handleListItemOnPress}
       optionList={optionList}
       navigation={navigation}
+      version={moreInfo.version.content}
     />
   )
 };

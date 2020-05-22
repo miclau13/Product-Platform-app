@@ -1,7 +1,7 @@
 import { map, pick } from 'lodash';
 import React from 'react';
-import { Image as RNImage, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { AirbnbRating, Button, Card, Icon, Image, ListItem, Rating } from 'react-native-elements';
+import { Image as RNImage, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { AirbnbRating, Button, Card, Icon, Image, ListItem, Rating, Text } from 'react-native-elements';
 import Lightbox from 'react-native-lightbox';
 import { Chip, Provider } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
@@ -11,6 +11,7 @@ import { ProductInfoViewProps, ProductInfoGridViewProps } from '../ProductInfo';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import OptionMenuComponent from '../../../components/OptionMenuComponent';
 import ImageCarousel from '../../../components/ImageCarousel';
+import mapping from '../../../languages/CN/mapping';
 
 const renderCarousel = (photos, currentPage) => {
   return (
@@ -182,16 +183,28 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
     expandedProductList,
     navigation,
     productComparisonInfoList,
+    handleInfoIconOnPress,
     ...productInfoGridViewProps
   } = props;
   // console.log("productComparisonInfoList",productComparisonInfoList)
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text h4>{mapping[props.productInfo.category]}</Text>
+        <View style={{ paddingHorizontal: 4 }}/>
+        <Icon
+          containerStyle={{ marginRight: 16 }}
+          onPress={handleInfoIconOnPress}
+          name='info-outline'
+          size={45}
+          underlayColor={"grey"}
+        />
+      </View>
       <Provider>
         <ProductInfoGridView {...productInfoGridViewProps} />
       </Provider>
       <ListItem bottomDivider />
-      <SafeAreaView style={{ height: 520 }}>
+      <SafeAreaView style={{ height: 475 }}>
         <ScrollView>
             {productComparisonInfoList.map((product, index) => {
               const expaneded = expandedProductList.includes(product.id);

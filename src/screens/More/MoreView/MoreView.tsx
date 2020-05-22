@@ -12,6 +12,7 @@ const MoreView: React.ComponentType<MoreViewProps> = (props) => {
     handleListItemOnPress,
     optionList,
     navigation,
+    version,
   } = props;
   
   return (
@@ -33,7 +34,7 @@ const MoreView: React.ComponentType<MoreViewProps> = (props) => {
       </View>
       <View style={{ marginVertical: 32 }}></View>
       <Text h4 style={{ alignSelf: 'center'}}>App Version</Text>
-      <Text h4 style={{ alignSelf: 'center'}}>V1.1</Text>
+      <Text h4 style={{ alignSelf: 'center'}}>{`V${version}`}</Text>
       <View style={{ marginVertical: 4 }}></View>
       <FloatingMenuComponent 
         currenScreen="BarCodeScanner"

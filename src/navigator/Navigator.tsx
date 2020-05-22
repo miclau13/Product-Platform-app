@@ -75,7 +75,18 @@ const initialState = {
       content9: "",
       title10: "",
       content10: "",
-    }
+    },
+    info: {
+      title1: "",
+      content1: "",
+      title2: "",
+      content2: "",
+      title3: "",
+      content3: "",
+    },
+    version: {
+      content: "",
+    },
   },
 };
 
