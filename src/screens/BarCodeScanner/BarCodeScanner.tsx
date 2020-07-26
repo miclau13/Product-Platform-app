@@ -85,14 +85,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
   }, [productDataList]);
 
-  const [chipList, setChipList] = React.useState(
-    [
-      { name: "PM2.5", selected: false }, 
-      { name: "BFE-95%", selected: false },
-      { name: "PFE-95%", selected: false },
-      { name: "VFE-95%", selected: false }
-    ]
-  );
+  const [chipList, setChipList] = React.useState([]);
 
   React.useEffect(() => {
     const chipList = productDataList.reduce((acc, product) => {
@@ -120,10 +113,10 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     result.filter(product => product.category === selectedCategory)
     // Update the result with name
     result = result.filter(product => 
-      product.name.toLowerCase().includes(search.toLowerCase()) ||
-      product.origin.toLowerCase().includes(search.toLowerCase()) ||
-      product.labels.includes(search.toLowerCase())
-      );
+      product.name.toLowerCase().includes(search.toLowerCase()) 
+      || product.origin.toLowerCase().includes(search.toLowerCase()) 
+      // product.labels.includes(search.toLowerCase())
+    );
     // Filter the result with selected labels
     const selectedLabels = chipList.filter(chip => chip.selected);
     if (selectedLabels.length > 0) {

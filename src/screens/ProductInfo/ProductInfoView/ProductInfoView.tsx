@@ -48,13 +48,15 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
   //   >
   //   </TouchableOpacity>
   const favoriteIcon = 
-      <Icon
-        color='#00aced'
-        name={favorite ? 'favorite' : 'favorite-border'}
-        containerStyle={styles.leftCardFavoriteIconContainerStyle}
-        size={32}
-        onPress={compare ? null : handleFavoriteIconOnPress}
-      />
+    compare && !favorite 
+      ? null 
+      : <Icon
+          color='#00aced'
+          name={favorite ? 'favorite' : 'favorite-border'}
+          containerStyle={styles.leftCardFavoriteIconContainerStyle}
+          size={32}
+          onPress={compare ? null : handleFavoriteIconOnPress}
+        />
   const chevronIcon = compare &&
           expanded 
             ? <Icon name="keyboard-arrow-up" color='#00aced' containerStyle={styles.rightContainerOptionIconContainerStyle} /> 
