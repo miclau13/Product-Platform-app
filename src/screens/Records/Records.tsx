@@ -11,6 +11,7 @@ import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
+import { useFavoritedProductListContext } from '../../context/FavoritedProductListContext';
 import mapping from '../../languages/CN/mapping';
 import favoriteProduct from '../../api/favoriteProduct';
 
@@ -44,7 +45,7 @@ export interface RecordsViewProps {
 };
 
 export interface RecordsListItemViewProps {
-  favoriteIconOnPress(id: string): IconProps['onPress'];
+  // favoriteIconOnPress(id: string): IconProps['onPress'];
   handleProductOnPress(id: string): TouchableOpacityProps['onPress'];
   item: RecordsItem;
 };
@@ -55,41 +56,38 @@ const Records: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
   const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
   const { productComparisonList, refetch: productComparisonListRefetch } = useProductComparisonListContext();
+  const { favoritedProductList, refetch: favoritedProductListtRefetch } = useFavoritedProductListContext();
   const [loading] = React.useState(false);
   const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0);
   const [isRefreshing, setIsRefreshing] = React.useState(false);
-  const [favoritedProductList, setFavoritedProductList] = React.useState(productDataList.filter(product => product.saved).map(product => product.id));
+  // const [favoritedProductList, setFavoritedProductList] = React.useState(productDataList.filter(product => product.saved).map(product => product.id));
 
-  const recordsItemsList =  React.useMemo(() => { 
+  const recordsItemsList = React.useMemo(() => { 
     const productIdList = productComparisonList.filter(productComparison => productComparison.comparionsList).map(productComparison => productComparison.productId);
     const result = getDefaultAllList(productIdList.map(productId => {
       return find(productDataList, (product) => product.id === productId);
-    }))
+    }), favoritedProductList);
     return result || [];
-  }, [productComparisonList, productDataList]);
+  }, [productComparisonList, productDataList, favoritedProductList]);
 
   const recordsItemsComparisonList = React.useMemo(() => {
     const productIdList = productComparisonList.filter(productComparison => productComparison.comparionsList.length > 0).map(productComparison => productComparison.productId);
     const result = getDefaultAllList(productIdList.map(productId => {
       return find(productDataList, (product) => product.id === productId);
-    }))
+    }), favoritedProductList)
     return result || [];
-  }, [productComparisonList, productDataList]);
+  }, [productComparisonList, productDataList, favoritedProductList]);
 
   const recordsItemsFavoritList = React.useMemo(() => {
-    const productList = productDataList.filter(product => favoritedProductList.includes(product.id));
-    const result = getDefaultAllList(productList);
+    // const productList = productDataList.filter(product => favoritedProductList.includes(product.id));
+    const result = getDefaultAllList(productDataList, favoritedProductList).filter(product => product.favorite);
     return result || [];
-  }, [productDataList]);
+  }, [favoritedProductList, productDataList]);
 
   const renderRecordsItemsList = React.useMemo(() => {
-    const updatedRecordsItemsList = recordsItemsList.map(recordsItem => {
-      return { ...recordsItem, favorite: favoritedProductList.includes(recordsItem.id)}
-    });
-
     switch (selectedButtonIndex) {
       case 0:
-        return updatedRecordsItemsList;
+        return recordsItemsList;
       case 1:
         return recordsItemsComparisonList;
       case 2:
@@ -97,16 +95,16 @@ const Records: React.ComponentType<Props> = (props) => {
     }
   }, [favoritedProductList, recordsItemsList, recordsItemsComparisonList, selectedButtonIndex, recordsItemsFavoritList]);
 
-  const favoriteIconOnPress = React.useCallback<RecordsListItemViewProps['favoriteIconOnPress']>((id) => async () => {
-    if (favoritedProductList.includes(id)) {
-      setFavoritedProductList(productIdlist => productIdlist.filter(productId => productId !== id));
-    } else {
-      setFavoritedProductList(productIdlist => [ ...productIdlist, id]);
-    };
-    const deviceId = await SecureStore.getItemAsync("deviceId");
-    await favoriteProduct(id, deviceId);
-    await productListRefetch();
-  }, [favoritedProductList]);
+  // const favoriteIconOnPress = React.useCallback<RecordsListItemViewProps['favoriteIconOnPress']>((id) => async () => {
+  //   if (favoritedProductList.includes(id)) {
+  //     setFavoritedProductList(productIdlist => productIdlist.filter(productId => productId !== id));
+  //   } else {
+  //     setFavoritedProductList(productIdlist => [ ...productIdlist, id]);
+  //   };
+  //   const deviceId = await SecureStore.getItemAsync("deviceId");
+  //   await favoriteProduct(id, deviceId);
+  //   await productListRefetch();
+  // }, [favoritedProductList]);
 
   const onButtonIndexPress = React.useCallback<RecordsViewProps['onButtonIndexPress']>((index) => {
     setSelectedButtonIndex(index);
@@ -124,6 +122,7 @@ const Records: React.ComponentType<Props> = (props) => {
       // await myRehabRequestsRefetch();
       await productListRefetch();
       await productComparisonListRefetch();
+      await favoritedProductListtRefetch();
     } catch (error) {
       console.log("refetch error", error)
     };
@@ -133,19 +132,19 @@ const Records: React.ComponentType<Props> = (props) => {
   const renderItem = React.useCallback<RecordsViewProps['renderItem']>(({ item }) => {
     return (
       <RecordsListItemView
-        favoriteIconOnPress={favoriteIconOnPress}
+        // favoriteIconOnPress={favoriteIconOnPress}
         handleProductOnPress={handleProductOnPress}
         item={item}
       />
     );
-  },[favoriteIconOnPress, handleProductOnPress]);
+  },[handleProductOnPress]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async() => {
       await productListRefetch();
       await productComparisonListRefetch();
+      await favoritedProductListtRefetch();
     });
-
     return unsubscribe;
   }, [navigation]);
 

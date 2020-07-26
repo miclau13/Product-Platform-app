@@ -78,7 +78,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
   const { refetch: productListRefetch } = useProductListContext();
   const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
 
-  const [loading] = React.useState(false);  
+  const [loading, setLoading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
   const [selectedProductId, setSelectedProductId] = React.useState("");
 
@@ -106,7 +106,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     navigation.navigate('Records');
   }, [navigation]);
 
-  const handleFavoriteIconOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
+  const handleFavoriteIconOnPress = React.useCallback<ProductSearchItemCardProps['handleFavoriteIconOnPress']>(id => async () => {
     setFavoritedProductIdList((list => {
       if (list.includes(id)) {
         return list.filter(_id => _id !== id)
@@ -138,6 +138,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
 
   const handleSelectButtonOnPress = React.useCallback<ProductSearchItemCardProps['handleSelectButtonOnPress']>(id => async () => {
     const deviceId = await SecureStore.getItemAsync("deviceId");
+    setLoading(true);
     await productListRefetch();
     // await fetch(`http://192.168.0.106:5000/product-comparisons/${id}`, {
     await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${id}`, {
@@ -155,6 +156,7 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     navigation.navigate("ProductInfo", { 
       productId: id,
     });
+    setLoading(false);
   }, [navigation, productDataList]);
 
   // For Search

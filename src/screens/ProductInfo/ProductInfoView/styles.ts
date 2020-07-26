@@ -73,7 +73,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     flexWrap: 'wrap',
     // justifyContent: 'space-between',
-    marginLeft: 10
+    marginLeft: 10,
+  },
+  subjectLabelContainer: {
+    maxHeight: 140,
+    overflow: 'hidden',
   },
   listItemContentContainer: {
     // backgroundColor: 'pink',

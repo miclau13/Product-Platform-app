@@ -1,12 +1,17 @@
+import { orderBy } from 'lodash';
 import { ImageRequireSource } from 'react-native';
 
 import { RecordsItem } from './Records';
 import { Product } from '../../context/ProductListContext';
+import { FavoritedProduct } from '../../context/FavoritedProductListContext';
 
 const Mask1Image: ImageRequireSource = require('./assets/mask1.jpeg');
 
 const currentTime = new Date().toDateString().split(" ").slice(1).join(" ");
 const getTime = (date) => new Date(date).toDateString().split(" ").slice(1).join(" ");
+const getDateAndTime = (date) => new Date(date).toLocaleString();
+const getLocaleDate = (date) => new Date(date).toLocaleDateString();
+const getLocaleTime = (date) => new Date(date).toLocaleTimeString();
 
 const allList: RecordsItem[] = [
   {
@@ -60,25 +65,33 @@ const savedlist: RecordsItem[] = [
   },
 ];
 
-export const getDefaultAllList = (productList: Product[]) => {
+export const getDefaultAllList = (productList: Product[], favoriteProductList: FavoritedProduct[]) => {
   if (productList.length > 0) {
+    const favoriteProductMap = favoriteProductList.reduce((acc, product) => {
+      const result = {
+        ...acc,
+        [product.productId]: product.saved,
+      }
+      return result;
+    }, {});
     const list: RecordsItem[] = productList.map(product => {
-      const { id, saved, updatedAt, origin, name, photos } = product;
+      const { id, updatedAt, origin, name, photos } = product;
       const image = (photos && photos.length > 0 && photos[0]) || "https://cdn.ztore.com/images/ztore/production/product/750px/1032361_1.jpg";
       return ({
         id,
-        favorite: saved,
+        favorite: favoriteProductMap[id],
         leftAvatar: { source: { uri: image } },
-        rightTitle: `${getTime(updatedAt)}`,
+        rightTitle: `${getLocaleDate(updatedAt)} ${getLocaleTime(updatedAt)}`,
         subtitle: origin,
         title: name,
       });
     });
-    return list;
+    return orderBy(list, ["rightTitle"], ['desc']);
   } 
-  return allList;
+  return [];
 };
 
 export const getDefaultSavedList = () => {
   return savedlist;
 };
+

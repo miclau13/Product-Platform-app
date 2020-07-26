@@ -142,7 +142,7 @@ const productList: Product[] = [
 export const getDefaultProductList = (productDataList: ProductData[]) => {
   if (productDataList.length > 0) {
     const list: Product[] = productDataList.map(product => {
-      const { id, saved, price, origin, name, category, rating, labels, photos } = product;
+      const { id, saved, price, origin, name, category, rating, labels, photos, brandName } = product;
       // console.log("getDefaultProductList getDefaultProductList", photos)
       // const image = 
         // category === "mask" 
@@ -160,7 +160,7 @@ export const getDefaultProductList = (productDataList: ProductData[]) => {
         photos: photos.filter(Boolean),
         price,
         rating,
-        name: `${name}`,
+        name: `${brandName} ${name}`,
         favorite: saved,
         imageProps: {
           // resizeMode: 'contain',

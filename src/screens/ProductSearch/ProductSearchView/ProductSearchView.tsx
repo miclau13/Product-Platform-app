@@ -102,10 +102,11 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
         <Text style={styles.title}>
           {name}
         </Text>
-        <Text style={styles.title}>
-          {origin}
-        </Text>
         <View style={styles.priceContainer}>
+          <Text style={styles.title}>
+            {origin}
+          </Text> 
+          <View style={{ marginHorizontal: 4 }}></View>
           <NumberFormat 
             decimalScale={0}
             displayType={'text'} 
@@ -150,7 +151,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
   } = props;
   return (
     <View style={styles.container}>
-      <View style={styles.labelContainer}>
+      <ScrollView horizontal style={styles.labelContainer}>
         {chipList.map(chip => {
           return (
             <Chip 
@@ -163,7 +164,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
             </Chip>
           )
         })}
-      </View>
+      </ScrollView>
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <View style={styles.productListContainer}>

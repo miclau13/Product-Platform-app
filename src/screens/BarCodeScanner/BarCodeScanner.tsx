@@ -2,7 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import { BarCodeScanner as ExpoBarCodeScanner, BarCodeScannerProps as ExpoBarCodeScannerProps } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import { difference } from 'lodash';
+import { difference, uniq } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Keyboard, Platform } from 'react-native';
 import { ButtonProps, ButtonGroupProps, SearchBarProps, IconProps } from 'react-native-elements';
@@ -93,6 +93,16 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       { name: "VFE-95%", selected: false }
     ]
   );
+
+  React.useEffect(() => {
+    const chipList = productDataList.reduce((acc, product) => {
+      const list = product.labels.map(label => label)
+      return [...acc, ...list];
+    }, []);
+    const uniqueChipList = uniq(chipList);
+    setChipList(uniqueChipList.map(label => ({ name: label, selected: false })))
+  }, [productDataList]);
+
   const handleChipOnPress = React.useCallback(name => () => {
     const result = chipList.map(chip => {
       if (name === chip.name) {
@@ -109,7 +119,11 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     // Get the result filtered by category
     result.filter(product => product.category === selectedCategory)
     // Update the result with name
-    result = result.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
+    result = result.filter(product => 
+      product.name.toLowerCase().includes(search.toLowerCase()) ||
+      product.origin.toLowerCase().includes(search.toLowerCase()) ||
+      product.labels.includes(search.toLowerCase())
+      );
     // Filter the result with selected labels
     const selectedLabels = chipList.filter(chip => chip.selected);
     if (selectedLabels.length > 0) {

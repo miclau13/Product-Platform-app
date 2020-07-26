@@ -14,7 +14,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     // flex: 1, 
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexGrow: 0,
+    // height: '100%',
+    // height: 50,
     padding: 8,
   },
   productListContainer: {
@@ -84,6 +86,7 @@ const styles = StyleSheet.create({
   priceContainer: {
     // alignItems: 'center', 
     // justifyContent: 'flex-end',
+    flexDirection: 'row',
   },
   title: {
     color: buttonTextWithWhiteBackgroudColor,

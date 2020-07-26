@@ -105,7 +105,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
   }
 
   return (
-    <View style={[styles.gridContainer, !compare && { maxHeight: 212 }]}>
+    <View style={[styles.gridContainer, !compare && { maxHeight: 250 }]}>
       <Card
         image={{ uri: imageUri }}
         imageProps={{
@@ -117,7 +117,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
         {/* {cardClickArea} */}
         {favoriteIcon}
         {compare 
-          ? expanded 
+          ? expanded && rating
               ? <Rating
                   imageSize={18}
                   readonly
@@ -132,7 +132,8 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
           />
         }
       </Card>
-      <ScrollView style={styles.rightContainer}>
+      <View style={styles.rightContainer}>
+      {/* <ScrollView style={styles.rightContainer}> */}
         {compare 
           ? chevronIcon
           : <OptionMenuComponent 
@@ -140,31 +141,28 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
               menuItemList={optionItemList}
             />
         }
-        {map(pick(productInfo, ["name", "origin", "price"]), (value: string, key) => {
-          const isInNumberFormat = key === 'price';
-          return (
-            <ListItem
-              containerStyle={styles.listItemContentContainer}
-              key={key}
-              title={
-                !isInNumberFormat 
-                  ? value 
-                  : <NumberFormat 
-                      decimalScale={0}
-                      displayType={'text'} 
-                      prefix={'$'}
-                      renderText={value => <Text style={{ fontSize: 17, marginLeft: 10 }}>{`${value}`}</Text>}
-                      thousandSeparator={true} 
-                      value={value}
-                    />
-              }
-              titleStyle={{ marginLeft: 10 }}
+        <ListItem
+          containerStyle={styles.listItemContentContainer}
+          title={`${productInfo.brandName} ${productInfo.name}`}
+          titleStyle={{ marginLeft: 10 }}
+        />
+        <ListItem
+          containerStyle={styles.listItemContentContainer}
+          title={
+            <NumberFormat 
+              decimalScale={0}
+              displayType={'text'} 
+              prefix={'$'}
+              renderText={value => <Text style={{ fontSize: 17, marginLeft: 10 }}>{`${productInfo.origin} ${value}`}</Text>}
+              thousandSeparator={true} 
+              value={productInfo.price}
             />
-          )
-        })}
+          }
+          titleStyle={{ marginLeft: 10 }}
+        />
         {compare && !expanded 
           ? null
-          : <View style={styles.labelContainer}>
+          : <View style={[styles.labelContainer, !compare && styles.subjectLabelContainer]}>
             {labels.map(label => {
               return (
                 <Chip key={label} style={styles.chip}>{label}</Chip>
@@ -172,7 +170,8 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
             })}
           </View>
         }
-      </ScrollView>
+      </View>
+      {/* </ScrollView> */}
     </View>
   )
 };
@@ -203,7 +202,6 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
       <Provider>
         <ProductInfoGridView {...productInfoGridViewProps} />
       </Provider>
-      <ListItem bottomDivider />
       <SafeAreaView style={{ height: 475 }}>
         <ScrollView>
             {productComparisonInfoList.map((product, index) => {
@@ -223,7 +221,6 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
                 </TouchableOpacity>
               )
             })}
-          
         </ScrollView>
       </SafeAreaView>
       <FloatingMenuComponent 

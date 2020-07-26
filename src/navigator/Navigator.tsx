@@ -4,13 +4,14 @@ import { omit } from 'lodash';
 import React from 'react';
 
 import RootTab from './TabNavigator/RootTab';
-import RootStack from './NavigationStack/RootStack';
+// import RootStack from './NavigationStack/RootStack';
 import LoadingComponent from '../components/LoadingComponent';
 import { DisplayIntroContextProvider } from '../context/DisplayIntroContext';
 import { MoreInfo, MoreInfoContextProvider } from '../context/MoreInfoContext';
 import { Product, ProductListContextProvider } from '../context/ProductListContext';
 import { ProductComparison, ProductComparisonListContextProvider } from '../context/ProductComparisonListContext';
 import { SelectCategoryContextProvider } from '../context/SelectCategoryContext';
+import favoritedProductListContext, { FavoritedProduct, FavoritedProductListContextProvider } from '../context/FavoritedProductListContext';
 
 export type StackParamList = {};
 
@@ -20,15 +21,17 @@ interface State {
   selectedCategory: string;
   productList: Array<Product> | [] ,
   productComparisonList: Array<ProductComparison> | [] ,
+  favoritedProductList: Array<FavoritedProduct> | [],
   moreInfo: MoreInfo,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST' | 'UPDATE_MORE_INFO';
+  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST' | 'UPDATE_MORE_INFO' | 'UPDATE_FAVORITED_PRODUCT_LIST';
   value?: string;
   productList?: State['productList'];
   productComparisonList?: State['productComparisonList'];
   moreInfo?: State['moreInfo'];
+  favoritedProductList?: State['favoritedProductList'];
 };
 
 const initialState = {
@@ -37,6 +40,7 @@ const initialState = {
   selectedCategory: "",
   productList: [],
   productComparisonList: [],
+  favoritedProductList: [],
   moreInfo: {
     aboutUs: {
       title: "",
@@ -122,6 +126,11 @@ const reducer = (prevState: State, action: Action) => {
         ...prevState,
         moreInfo: action.moreInfo,
       };
+    case 'UPDATE_FAVORITED_PRODUCT_LIST':
+      return {
+        ...prevState,
+        favoritedProductList: action.favoritedProductList,
+      };
   }
 };
 
@@ -156,6 +165,11 @@ const Navigator = () => {
     refetch: () => fetchMoreInfo(),
     moreInfo: state.moreInfo,
   }), [state.moreInfo]);
+
+  const favoritedProductListContext = React.useMemo(() => ({
+    refetch: () => fetchFavoritedProductList(),
+    favoritedProductList: state.favoritedProductList,
+  }), [state.favoritedProductList]);
 
   const fetchProductList = async () => {
     try {
@@ -226,6 +240,27 @@ const Navigator = () => {
     }
   }
 
+  const fetchFavoritedProductList = async () => {
+    try { 
+      const deviceId = await SecureStore.getItemAsync("deviceId");
+      // const response = await fetch(`http://192.168.0.106:5000/product-comparisons/device/${deviceId}`, {
+      const response = await fetch(`https://miclo1.azurewebsites.net/product-favorite/device/${deviceId}`, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json() || [];
+      const favoritedProductList = result;
+      dispatch({ type: 'UPDATE_FAVORITED_PRODUCT_LIST', favoritedProductList });
+    } catch (error) {
+      console.log(" fetchFavoritedProductList error:", error);
+    } finally {
+      dispatch({ type: 'DISABLE_LOADING' });
+    }
+  }
+
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let displayIntro, selectedCategory, deviceID;
@@ -253,11 +288,12 @@ const Navigator = () => {
     fetchProductList();
     fetchProductComparisonList();
     fetchMoreInfo();
+    fetchFavoritedProductList();
     return () => {}
   }, []);
 
   // console.log(" navigator productComparisonList", state.productComparisonList)
-  // console.log("productList", state.productList)
+  // console.log("favoritedProductList", state.favoritedProductList)
   // console.log("moreInfo",state.moreInfo)
   if (state.loading) {
     return (
@@ -270,9 +306,11 @@ const Navigator = () => {
       <SelectCategoryContextProvider value={selectCategoryContext}>
         <ProductListContextProvider value={productListContext}>
           <ProductComparisonListContextProvider value={productComparisonListContext}>
-            <MoreInfoContextProvider value={moreInfoContext}>
-              <RootTab />
-            </MoreInfoContextProvider>
+            <FavoritedProductListContextProvider value={favoritedProductListContext}>
+              <MoreInfoContextProvider value={moreInfoContext}>
+                <RootTab />
+              </MoreInfoContextProvider>
+            </FavoritedProductListContextProvider>
           </ProductComparisonListContextProvider>
         </ProductListContextProvider>
       </SelectCategoryContextProvider>
