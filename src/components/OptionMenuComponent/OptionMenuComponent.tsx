@@ -44,8 +44,6 @@ const OptionMenuComponent: React.ComponentType<OptionMenuProps> = (props) => {
         onDismiss={closeMenu}
         anchor={
           <Icon 
-            color='#00aced'
-            // containerStyle={{ alignItems: 'flex-end' }}
             name="dots-horizontal"
             size={40}
             onPress={openMenu}

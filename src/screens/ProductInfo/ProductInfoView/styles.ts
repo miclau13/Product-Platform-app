@@ -1,22 +1,25 @@
 import { StyleSheet } from 'react-native';
+import { pageBackgroundColor, primaryBorderColor } from '../../../styles';
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
   },
   gridContainer: {
     // backgroundColor: 'blue',
     backgroundColor: 'white',
-    borderWidth: 1,
+    borderRadius: 16,
+    // borderWidth: 1,
     borderColor: '#e1e8ee',
     flexDirection: 'row', 
     margin: 8,
     marginBottom: 0, 
     padding: 8,
-    shadowColor: 'rgba(0,0,0, .2)',
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 1,
+    // shadowColor: 'rgba(0,0,0, .2)',
+    // shadowOffset: { height: 0, width: 0 },
+    // shadowOpacity: 1,
+    // shadowRadius: 1,
   },
   leftCardClickAreaStyle: {
     position: 'absolute',
@@ -53,6 +56,10 @@ const styles = StyleSheet.create({
 
   chip: {
     marginBottom: 4,
+    marginRight: 2,
+    backgroundColor: pageBackgroundColor,
+    borderColor: primaryBorderColor,
+    borderWidth: 1,
   },
   rightContainer: {
     flex: 1,
@@ -76,8 +83,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   subjectLabelContainer: {
-    maxHeight: 140,
-    overflow: 'hidden',
+    // maxHeight: 140,
+    // overflow: 'hidden',
+    // backgroundColor: 'green'
   },
   listItemContentContainer: {
     // backgroundColor: 'pink',
