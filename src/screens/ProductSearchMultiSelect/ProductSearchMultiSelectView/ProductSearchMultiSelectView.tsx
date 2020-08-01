@@ -72,8 +72,8 @@ const ProductSearchMultiSelectItemCard: React.ComponentType<ProductSearchMultiSe
         <RNImage
           // key={id}
           style={{
-            width: 157,
-            height: 150,
+            width: 130,
+            height: 130,
             // zIndex: 2,
             borderWidth: 1, 
             borderRadius: 4,
@@ -148,7 +148,7 @@ const ProductSearchMultiSelectComponent: React.ComponentType<ProductSearchMultiS
   } = props;
   return (
     <View style={styles.container}>
-      <View style={styles.labelContainer}>
+      <ScrollView horizontal style={styles.labelContainer}>
         {chipList.map(chip => {
           return (
             <Chip 
@@ -161,7 +161,7 @@ const ProductSearchMultiSelectComponent: React.ComponentType<ProductSearchMultiS
             </Chip>
           )
         })}
-      </View>
+      </ScrollView>
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <View style={styles.productListContainer}>

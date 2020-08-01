@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   labelContainer: {
     backgroundColor: 'white',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexGrow: 0,
     padding: 8,
   },
   productListContainer: {

@@ -1,4 +1,4 @@
-import { difference, xor } from 'lodash';
+import { difference, xor, uniq } from 'lodash';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { Platform, TouchableOpacityProps } from 'react-native';
@@ -61,14 +61,23 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
   const { productId, originalSelectedProductIdList } = route.params;
 
-  const [chipList, setChipList] = React.useState(
-    [
-      { name: "PM2.5", selected: false }, 
-      { name: "BFE-95%", selected: false },
-      { name: "PFE-95%", selected: false },
-      { name: "VFE-95%", selected: false }
-    ]
-  );
+  const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
+  const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
+  const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
+  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
+
+  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
+
+  const [chipList, setChipList] = React.useState([]);
+
+  React.useEffect(() => {
+    const chipList = productDataList.filter(product => product.id !== productId).reduce((acc, product) => {
+      const list = product.labels.map(label => label)
+      return [...acc, ...list];
+    }, []);
+    const uniqueChipList = uniq(chipList);
+    setChipList(uniqueChipList.map(label => ({ name: label, selected: false })))
+  }, [productDataList, productId]);
 
   const handleChipOnPress = React.useCallback(name => () => {
     const result = chipList.map(chip => {
@@ -84,15 +93,9 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
     setSearch("");
   }, []);
 
-  const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
-  const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
-  const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
-  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
-
-  const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
   React.useEffect(() => {
     setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
-  }, [productDataList])
+  }, [productDataList]);
 
   const [loading] = React.useState(false);  
   const [search, setSearch] = React.useState('');
@@ -104,7 +107,11 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
     // Get the result filtered by category
     result.filter(product => product.category === selectedCategory)
     // Update the result with name
-    result = result.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
+    result = result.filter(product => 
+      product.name.toLowerCase().includes(search.toLowerCase()) 
+      || product.origin.toLowerCase().includes(search.toLowerCase()) 
+      // product.labels.includes(search.toLowerCase())
+    );
     // Filter the result with selected labels
     const selectedLabels = chipList.filter(chip => chip.selected);
     if (selectedLabels.length > 0) {
@@ -124,7 +131,6 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
     // Exclude the origin product
     result = result.filter(product => product.id !== productId)
-
     if (selectedProductIdList.length > 0) {
       result = result.map(product => {
         if (selectedProductIdList.includes(product.id)) {
@@ -210,12 +216,6 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
     return unsubscribe;
   }, [productId, navigation, selectedProductIdList, originalSelectedProductIdList]);
-
-  // React.useEffect(() => {
-  //   (async() => { 
-  //     await productListRefetch();
-  //   })();
-  // }, []);
   
   if (loading) {
     return (
