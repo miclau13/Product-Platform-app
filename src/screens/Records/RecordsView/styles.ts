@@ -3,6 +3,7 @@ import { headerPrimaryColor } from '../../../styles';
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
   },
 });
