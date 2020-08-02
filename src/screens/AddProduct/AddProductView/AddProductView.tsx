@@ -7,6 +7,7 @@ import styles from './styles';
 import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
 import DropdownInputComponent from '../../../components/DropdownInputComponent';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
+import InputComponent from '../../../components/InputComponent';
 import RatingComponent from '../../../components/RatingComponent';
 import mapping from '../../../languages/CN/mapping';
 
@@ -53,9 +54,9 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
   } = props;
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white' }}>
+    <SafeAreaView style={styles.contanier}>
       <ScrollView>
-        <View style={{ margin: 8 }}></View>
+        <View style={styles.verticalViewBox1}></View>
         <DropdownInputComponent
           items={[
             { label: mapping['Mask'], value: 'mask' },
@@ -66,70 +67,62 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           onValueChange={handleDropdownOnValueDown}
           value={selectedCategory}
         />
-        <View style={{ margin: 8 }}></View>
-        <Input
-          inputContainerStyle={styles.textAreaContainer}
+        <View style={styles.verticalViewBox1}></View>
+        <InputComponent
+          errorMessage={mapping["Please Enter the brand name"]}   
           label={mapping["Product Brand"]}
-          labelStyle={styles.label}
           onChangeText={handleInputOnChange("brandName")}
           placeholder='e.g. H&M'
           value={inputValues.brandName}
         />
-        <View style={{ margin: 8 }}></View>
-        <Input
-          inputContainerStyle={styles.textAreaContainer}
+        <View style={styles.verticalViewBox1}></View>
+        <InputComponent
+          errorMessage={mapping["Please Enter the product name"]}   
           label={mapping["Product Name"]}
-          labelStyle={styles.label}
           onChangeText={handleInputOnChange("name")}
-          placeholder='Koala'
+          placeholder='e.g. Koala'
           value={inputValues.name}
         />
-        <View style={{ margin: 8 }}></View>
-        <Input
-          inputContainerStyle={styles.textAreaContainer}
-          keyboardType="decimal-pad"
+        <View style={styles.verticalViewBox1}></View>
+        <InputComponent
+          errorMessage={mapping["Please Enter the reference price"]}  
+          keyboardType="decimal-pad" 
           label={mapping["Reference Price"]}
-          labelStyle={styles.label}
           leftIcon={{ type: 'font-awesome', name: 'dollar' }}
-          leftIconContainerStyle={{ marginRight: 8 }}
+          leftIconContainerStyle={{ marginHorizontal: 8 }}
           onChangeText={handleInputOnChange("price")}
           value={inputValues.price.toString()}
         />
-        <View style={{ margin: 8 }}></View>
-        <Input
-          inputContainerStyle={styles.textAreaContainer}
+        <View style={styles.verticalViewBox1}></View>
+        <InputComponent
+          errorMessage={mapping["Please Enter the origin"]}  
           label={mapping["Origin"]}
-          labelStyle={styles.label}
           onChangeText={handleInputOnChange("origin")}
           placeholder='e.g. Japan'
           value={inputValues.origin}
         />
-        <View style={{ margin: 8 }}></View>
-        <Input
-          errorMessage={
-            keywordTagLabels.map(label => label.toUpperCase()).includes(keywordTagInput.toUpperCase())
-              ? "Same tag already existed" : null
-          }
-          inputContainerStyle={styles.textAreaContainer}
+        <View style={styles.verticalViewBox1}></View>
+        <InputComponent
           label={mapping["Keyword Tag"]}
-          labelStyle={styles.label}
           rightIcon={{ name: 'add', onPress: handleKeywordTagAddIconOnPress }}
           rightIconContainerStyle={{ marginRight: 8 }}
           value={keywordTagInput}
           onChangeText={handleKeywordTagInputOnChangeText}
         />
         <View style={styles.labelContainer}>
-          {keywordTagLabels.map(chip => {
-            return (
-              <Chip 
-                key={chip}
-                onClose={handleKeywordTagLabelOnClose(chip)}
-                style={styles.chip}
-              >
-                {chip}
-              </Chip>
-            )
-          })}
+          {
+            keywordTagLabels.map(chip => {
+              return (
+                <Chip 
+                  key={chip}
+                  onClose={handleKeywordTagLabelOnClose(chip)}
+                  style={styles.chip}
+                >
+                  {chip}
+                </Chip>
+              )
+            })
+          }
         </View>
         <View style={styles.cameraInputContainerStyle}>
           <Text style={styles.cameraInputLabelStyle}>{mapping["Product Images"]}</Text>
@@ -148,26 +141,24 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
               })}
           </View>
         </View>
-        <View style={{ margin: 8 }}></View>
-        <Input
+        <View style={styles.verticalViewBox1}></View>
+        <InputComponent
           multiline
-          inputContainerStyle={styles.textAreaContainer}
           inputStyle={styles.textArea}
           label={mapping["Remarks"]}
-          labelStyle={styles.label}
           numberOfLines={3}
           onChangeText={handleInputOnChange("remarks")}
           placeholder={mapping['Add Remarks (Optional)']}
           value={inputValues.remarks}
         />
-        <View style={{ margin: 8 }}></View>
+        <View style={styles.verticalViewBox1}></View>
           <RatingComponent 
             defaultRating={rating}
             label={mapping["Rating"]}
             onFinishRating={handleOnFinishRating}
             showRating={false}
           />
-        <View style={{ margin: 8 }}></View>
+        <View style={styles.verticalViewBox1}></View>
         <Button
           buttonStyle={styles.submitButtonStyle}
           containerStyle={styles.submitButtonContainerStyle}
@@ -176,7 +167,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           titleStyle={styles.submitButtonTitleStyle}
         >
         </Button>
-        <View style={{ height: 180 }}></View>
+        <View style={styles.verticalViewBox1}></View>
       </ScrollView>
       <FloatingMenuComponent 
         currenScreen="BarCodeScanner"

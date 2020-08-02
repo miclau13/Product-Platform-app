@@ -1,34 +1,23 @@
 import { StyleSheet } from 'react-native';
 
-import { buttonTextWithWhiteBackgroudColor, pageBackgroundColor } from '../../../styles';
+import { buttonTextWithWhiteBackgroudColor, pageBackgroundColor, primaryBorderColor } from '../../../styles';
 
 const styles = StyleSheet.create({
-  chip: {
-    margin: 4,
-  },
+
   dropDownContainer: {
     paddingVertical: 8,
     paddingRight: 8,
   },
-  label: {
-    color: buttonTextWithWhiteBackgroudColor,
-  },
-  labelContainer: {
-    flex: 1, 
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingVertical: 8,
-  },
+
+
   textAreaContainer: {
-    borderColor: 'grey',
+    backgroundColor: pageBackgroundColor,
+    borderColor: primaryBorderColor,
     borderWidth: 1,
     marginVertical: 8,
     padding: 5
   },
-  textArea: {
-    height: 150,
-    justifyContent: "flex-start"
-  },
+
   tileContainerStyle: {
     flex: 0.2,
     flexGrow: 1,
@@ -65,6 +54,42 @@ const styles = StyleSheet.create({
   },
   submitButtonStyle: {
     backgroundColor: pageBackgroundColor,
+  },
+
+
+  // Update 2/8
+  chip: {
+    margin: 4,
+  },
+  contanier: {
+    backgroundColor: 'white',
+  },
+  errorBorder: {
+    borderColor: 'red',
+  },
+  inputContainer: {
+    backgroundColor: pageBackgroundColor,
+    borderColor: primaryBorderColor,
+    borderWidth: 1,
+    marginVertical: 4,
+    padding: 4
+  },
+  label: {
+    color: buttonTextWithWhiteBackgroudColor,
+  },
+  labelContainer: {
+    flex: 1, 
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginVertical: 4,
+    marginLeft: 4,
+  },
+  textArea: {
+    height: 150,
+    justifyContent: "flex-start"
+  },
+  verticalViewBox1: {
+    marginVertical: 8,
   },
 });
 

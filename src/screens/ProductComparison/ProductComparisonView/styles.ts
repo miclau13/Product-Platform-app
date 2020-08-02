@@ -1,12 +1,17 @@
 import { StyleSheet } from 'react-native';
 
+import { pageBackgroundColor, primaryBorderColor } from '../../../styles';
+
 const styles = StyleSheet.create({
   chip: {
+    backgroundColor: pageBackgroundColor,
+    borderColor: primaryBorderColor,
     marginBottom: 4,
     marginRight: 4,
-    fontSize: 8
+    fontSize: 8,
   },
   container: {
+    backgroundColor: 'white',
     flex: 1,
   },
   contentContainer: {
@@ -19,8 +24,9 @@ const styles = StyleSheet.create({
   gridContainer: {
     alignItems: 'center',
     backgroundColor: 'white',
+    borderColor: primaryBorderColor,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#e1e8ee',
     flexDirection: 'row', 
     margin: 8,
     marginBottom: 0,

@@ -42,6 +42,12 @@ const mapping = {
   "Rating": "評分",
   "Submit": "送出",
 
+  // Add Product Error
+  "Please Enter the brand name": "請輸入品牌名稱",
+  "Please Enter the product name": "請輸入產品名稱",
+  "Please Enter the reference price": "請輸入參考零售價",
+  "Please Enter the origin": "請輸入來源地",
+
   // Product Info
   "Product Info": "基本資料",
 

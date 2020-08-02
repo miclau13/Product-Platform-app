@@ -106,12 +106,13 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   }, []);
   
   const handleKeywordTagAddIconOnPress = React.useCallback<AddProductViewProps['handleKeywordTagAddIconOnPress']>(() => {
-    if (keywordTagLabels.map(label => label.toUpperCase()).includes(keywordTagInput.toUpperCase())) {
+    if (!keywordTagInput || keywordTagLabels.map(label => label.toUpperCase()).includes(keywordTagInput.toUpperCase())) {
+      setKeywordTagInput("");
       return;
     }
     setKeywordTagLabels(value => ([...value, keywordTagInput]));
     setKeywordTagInput("");
-  }, [keywordTagInput, keywordTagLabels, setKeywordTagLabels, setKeywordTagInput]);
+  }, [keywordTagInput, keywordTagLabels]);
 
   const handleKeywordTagInputOnChangeText = React.useCallback<AddProductViewProps['handleKeywordTagInputOnChangeText']>((value) => {
     setKeywordTagInput(value);
@@ -228,6 +229,13 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     try {
       setLoading(true);
       const deviceId = await SecureStore.getItemAsync("deviceId");
+      console.log("boyd", JSON.stringify({
+        ...inputValues,
+        rating,
+        category: selectedCategory,
+        labels: keywordTagLabels,
+        deviceId: deviceId,
+      }))
       const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
       // const uri = productId ? `https://miclo1.azurewebsites.net/products/${productId}` :`https://miclo1.azurewebsites.net/products`;
       const response = await fetch(uri, {
@@ -246,6 +254,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       });
       await productListRefetch();
       const result = await response.json() || [];
+      // console.log("result",result)
       navigation.navigate("ProductInfo", { productId: result._id });
     } catch (error) {
       console.log(" handleSubmitButtonOnPress error:", error);
