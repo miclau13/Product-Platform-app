@@ -323,6 +323,7 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
     expandedProductList,
     navigation,
     productComparisonInfoList,
+    handleCalculateIconOnPress,
     handleInfoIconOnPress,
     ...productInfoGridViewProps
   } = props;
@@ -333,10 +334,16 @@ const ProductInfoView: React.ComponentType<ProductInfoViewProps> = (props) => {
         <Text h4>{mapping[props.productInfo.category]}</Text>
         <View style={{ paddingHorizontal: 4 }}/>
         <Icon
-          containerStyle={{ marginRight: 16 }}
           onPress={handleInfoIconOnPress}
           name='info-outline'
           size={45}
+          underlayColor={"grey"}
+        />
+        <Icon
+          onPress={handleCalculateIconOnPress}
+          name='calculator'
+          size={45}
+          type="material-community"
           underlayColor={"grey"}
         />
       </View>

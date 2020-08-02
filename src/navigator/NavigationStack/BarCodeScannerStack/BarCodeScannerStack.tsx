@@ -20,6 +20,7 @@ import RecordsScreen, { options as RecordsScreenOptions } from "../../../screens
 import TermsScreen, { options as TermsScreenOptions } from "../../../screens/Terms";
 import PrivacyScreen, { options as PrivacyScreenOptions } from "../../../screens/Privacy";
 import InfoScreen, { options as InfoScreenOptions } from "../../../screens/Info";
+import CalculatorScreen, { options as CalculatorScreenOptions } from "../../../screens/Calculator";
 
 export type BarCodeScannerStackParamList = {
   AddProduct: {
@@ -52,6 +53,7 @@ export type BarCodeScannerStackParamList = {
   Terms: undefined,
   Privacy: undefined,
   Info: undefined,
+  Calculator: undefined,
 };
 
 const BarCodeScannerStack = createStackNavigator();
@@ -85,6 +87,7 @@ const BarCodeScannerStackScreen = (props) => {
       <BarCodeScannerStack.Screen name="Terms" component={TermsScreen} options={TermsScreenOptions}/>
       <BarCodeScannerStack.Screen name="Privacy" component={PrivacyScreen} options={PrivacyScreenOptions}/>
       <BarCodeScannerStack.Screen name="Info" component={InfoScreen} options={InfoScreenOptions}/>
+      <BarCodeScannerStack.Screen name="Calculator" component={CalculatorScreen} options={CalculatorScreenOptions}/>
     </BarCodeScannerStack.Navigator>
   );
 };

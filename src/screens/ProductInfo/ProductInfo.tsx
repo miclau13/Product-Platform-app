@@ -39,6 +39,7 @@ export interface ProductInfoGridViewProps {
 }
 export interface ProductInfoViewProps extends ProductInfoGridViewProps {
   handleExpand(id: string): ListItemProps['onPress'];
+  handleCalculateIconOnPress: IconProps['onPress'];
   handleInfoIconOnPress: IconProps['onPress'];
   expandedProductList: string[];  
   navigation: ProductInfoScreenNavigationProp;
@@ -78,6 +79,10 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       productId,
     });
   }, [navigation, productId]);
+
+  const handleCalculateIconOnPress = React.useCallback<ProductInfoViewProps['handleCalculateIconOnPress']>(() => {
+    navigation.navigate("Calculator");
+  }, [navigation]);
 
   const handleEditIconOnPress = React.useCallback<ProductInfoViewProps['handleEditIconOnPress']>(() => {
     navigation.navigate("AddProduct", { productId });
@@ -146,6 +151,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
       favorite={favorite}
       expandedProductList={expandedProductList}
       handleCompareMoreButtonOnPress={handleCompareMoreButtonOnPress}
+      handleCalculateIconOnPress={handleCalculateIconOnPress}
       handleEditIconOnPress={handleEditIconOnPress}
       handleExpand={handleExpand}
       handleFavoriteIconOnPress={handleFavoriteIconOnPress}

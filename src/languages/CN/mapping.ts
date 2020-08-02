@@ -71,7 +71,9 @@ const mapping = {
   "Info": "註解",
 
   // Comment
-  "Your comments are important!": "你的意見很重要！"
+  "Your comments are important!": "你的意見很重要！",
+  // Calculator
+  "Calculator": "計算機",
 };
 
 export default mapping
