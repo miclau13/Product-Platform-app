@@ -236,8 +236,8 @@ const AddProduct: React.ComponentType<Props> = (props) => {
         labels: keywordTagLabels,
         deviceId: deviceId,
       }))
-      const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
-      // const uri = productId ? `https://miclo1.azurewebsites.net/products/${productId}` :`https://miclo1.azurewebsites.net/products`;
+      // const uri = productId ? `http://192.168.0.106:5000/products/${productId}` :`http://192.168.0.106:5000/products/`;
+      const uri = productId ? `https://miclo1.azurewebsites.net/products/${productId}` :`https://miclo1.azurewebsites.net/products`;
       const response = await fetch(uri, {
         method: 'post',
         headers: {
