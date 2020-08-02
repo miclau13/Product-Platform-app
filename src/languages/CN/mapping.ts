@@ -69,6 +69,9 @@ const mapping = {
   "Terms & Conditions": "使用條款",
   "Language": "切換語言",
   "Info": "註解",
+
+  // Comment
+  "Your comments are important!": "你的意見很重要！"
 };
 
 export default mapping

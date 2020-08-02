@@ -6,6 +6,8 @@ import styles from './styles';
 import { CommentsViewProps } from '../Comments';
 import RatingComponent from '../../../components/RatingComponent';
 import mapping from '../../../languages/CN/mapping';
+import InputComponent from '../../../components/InputComponent';
+import ButtonComponent from '../../../components/ButtonComponent';
 
 const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
   const { 
@@ -29,23 +31,20 @@ const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
         label={mapping["Rating"]}
       />
       <View style={{ margin: 8 }}></View>
-      <Input
+      <InputComponent
         multiline
-        inputContainerStyle={styles.textAreaContainer}
         inputStyle={styles.textArea}
         label={mapping["Comments"]}
-        labelStyle={styles.label}
         numberOfLines={3}
         onChangeText={handleOnChangeComments}
-        placeholder='Your comments are important!'
+        placeholder={mapping['Your comments are important!']}
         value={comments}
       />
       <View style={{ margin: 8 }}></View>
-        <Button
-          onPress={handleSubmitButtonOnPress}
-          title={mapping['Submit']}
-        >
-        </Button> 
+      <ButtonComponent
+        onPress={handleSubmitButtonOnPress}
+        title={mapping['Submit']}
+      />
     </ScrollView>
   );
 }

@@ -5,11 +5,13 @@ import { Chip } from 'react-native-paper';
 
 import styles from './styles';
 import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
+import ButtonComponent from '../../../components/ButtonComponent';
 import DropdownInputComponent from '../../../components/DropdownInputComponent';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import InputComponent from '../../../components/InputComponent';
 import RatingComponent from '../../../components/RatingComponent';
 import mapping from '../../../languages/CN/mapping';
+
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
   const { title, ...tileProps } = props;
@@ -159,14 +161,10 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
             showRating={false}
           />
         <View style={styles.verticalViewBox1}></View>
-        <Button
-          buttonStyle={styles.submitButtonStyle}
-          containerStyle={styles.submitButtonContainerStyle}
+        <ButtonComponent 
           onPress={onSubmitButtonPress}
           title={mapping['Submit']}
-          titleStyle={styles.submitButtonTitleStyle}
-        >
-        </Button>
+        />
         <View style={styles.verticalViewBox1}></View>
       </ScrollView>
       <FloatingMenuComponent 

@@ -44,17 +44,6 @@ const styles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'row',
   },
-  submitButtonContainerStyle: {
-    alignSelf: 'center',
-    margin: 8, 
-    width: '50%', 
-  },
-  submitButtonTitleStyle: {
-    color: buttonTextWithWhiteBackgroudColor,
-  },
-  submitButtonStyle: {
-    backgroundColor: pageBackgroundColor,
-  },
 
 
   // Update 2/8
