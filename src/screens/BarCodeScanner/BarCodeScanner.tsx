@@ -112,11 +112,13 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
     // Get the result filtered by category
     result.filter(product => product.category === selectedCategory)
     // Update the result with name
-    result = result.filter(product => 
-      product.name.toLowerCase().includes(search.toLowerCase()) 
-      || product.origin.toLowerCase().includes(search.toLowerCase()) 
-      // product.labels.includes(search.toLowerCase())
-    );
+    result = result.filter(product => {
+      return (
+        product.name.toLowerCase().includes(search.toLowerCase()) 
+        || product.origin.toLowerCase().includes(search.toLowerCase()) 
+        || product.labels.find(label => label.includes(search))
+      )
+    });
     // Filter the result with selected labels
     const selectedLabels = chipList.filter(chip => chip.selected);
     if (selectedLabels.length > 0) {
