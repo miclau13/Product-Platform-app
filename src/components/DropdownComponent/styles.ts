@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: pageBackgroundColor,
     borderColor: '#86939e',
     borderRadius: 15,
-    borderWidth: 0.5,
+    // borderWidth: 0.5,
   }
 });
 

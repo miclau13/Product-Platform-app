@@ -2,6 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { ImageProps } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 import { getDefaultPageList } from './utils';
 import IntroView from './IntroView';
@@ -14,8 +15,11 @@ BarCodeScannerStackParamList,
   'Intro'
 >;
 
+type IntroScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "Intro">;
+
 type Props = {
   navigation: IntroScreenNavigationProp;
+  route: IntroScreenRouteProp;
 };
 
 export type Page = {
@@ -39,13 +43,15 @@ export interface IntroViewProps {
 const pageList = getDefaultPageList();
 
 const Intro: React.ComponentType<Props> = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const previousScreen = route?.params?.previousScreen;
   const { removeIntro } = useDisplayIntroContext();
   const { selectedCategory } = useSelectCategoryContext();
   const _doneBtnHandle: IntroViewProps['_doneBtnHandle'] = async () => {
     // navigation.navigate("HomeStack");
     await SecureStore.setItemAsync("displayIntro", "NO");
     removeIntro();
+    navigation.navigate(previousScreen);
   };
   const _nextBtnHandle: IntroViewProps['_nextBtnHandle'] = (index) => {
   };
@@ -54,7 +60,11 @@ const Intro: React.ComponentType<Props> = (props) => {
   const _onSkipBtnHandle: IntroViewProps['_onSkipBtnHandle'] = async (index) => {
     await SecureStore.setItemAsync("displayIntro", "NO");
     removeIntro();
-    navigation.navigate(!selectedCategory ? "ProductCategories" :"BarCodeScanner");
+    if (previousScreen) {
+      navigation.navigate(previousScreen);
+    } else {
+      navigation.navigate(!selectedCategory ? "ProductCategories" : "BarCodeScanner");
+    }
   };
 
   return (

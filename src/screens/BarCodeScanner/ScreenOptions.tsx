@@ -11,7 +11,7 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
   const { navigation, route } = props;
   const headerTitle = (route.params && mapping[route.params["headerTitle"]]) || mapping["Scanner"];
   const handleHeaderRightOnPress: IconProps['onPress'] = () => {
-    navigation.navigate("Info");
+    navigation.navigate("Intro", { previousScreen: "BarCodeScanner" });
   };
 
   return {
@@ -22,7 +22,7 @@ const options: RouteConfig<BarCodeScannerStackParamList, keyof BarCodeScannerSta
         <Icon
           containerStyle={{ marginRight: 16 }}
           onPress={handleHeaderRightOnPress}
-          name="info-outline"
+          name="help-outline"
           size={45}
           underlayColor={"grey"}
         />

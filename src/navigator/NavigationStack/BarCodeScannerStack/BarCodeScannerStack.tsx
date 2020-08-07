@@ -49,7 +49,9 @@ export type BarCodeScannerStackParamList = {
   RecordsHistory: undefined;
   RecordsSaved: undefined;
   More: undefined;
-  Intro: undefined;
+  Intro: {
+    previousScreen: "More" | "BarCodeScanner";
+  };
   Terms: undefined,
   Privacy: undefined,
   Info: undefined,

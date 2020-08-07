@@ -41,6 +41,8 @@ const mapping = {
   "Add Remarks (Optional)": `比多啲資料，可以俾其他平台用家對產品更了解！`,
   "Rating": "評分",
   "Submit": "送出",
+  "e.g. HK": "例如：香港 ",
+  "Please enter the tags": "麻煩每次輸入一項產品特點，再按右面+號，成為新hashtag",
 
   // Add Product Error
   "Please Enter the brand name": "請輸入品牌名稱",

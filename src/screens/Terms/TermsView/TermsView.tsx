@@ -18,7 +18,7 @@ const TermsView: React.ComponentType<TermsViewProps> = (props) => {
   } = props;
   return (
     <ScrollView style={styles.container}>
-      {/* <Text h4 h4Style={{ fontWeight: 'bold' }}>{title1}</Text> */}
+      <Text h4 h4Style={{ fontWeight: 'bold' }}>{title1}</Text>
       <View style={{ marginVertical: 4 }}></View>
       <Text>{content1}</Text>
       <View style={{ marginVertical: 4 }}></View>

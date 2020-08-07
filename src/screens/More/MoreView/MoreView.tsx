@@ -34,7 +34,7 @@ const MoreView: React.ComponentType<MoreViewProps> = (props) => {
       </View>
       <View style={{ marginVertical: 32 }}></View>
       <Text h4 style={{ alignSelf: 'center'}}>App Version</Text>
-      <Text h4 style={{ alignSelf: 'center'}}>{`V${version}`}</Text>
+      <Text h4 style={{ alignSelf: 'center'}}>{`${version}`}</Text>
       <View style={{ marginVertical: 4 }}></View>
       <FloatingMenuComponent 
         currenScreen="BarCodeScanner"

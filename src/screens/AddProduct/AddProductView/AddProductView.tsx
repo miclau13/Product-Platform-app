@@ -90,7 +90,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           errorMessage={mapping["Please Enter the brand name"]}   
           label={mapping["Product Brand"]}
           onChangeText={handleInputOnChange("brandName")}
-          placeholder='e.g. H&M'
+          // placeholder='e.g. H&M'
           value={inputValues.brandName}
         />
         <View style={styles.verticalViewBox1}></View>
@@ -98,7 +98,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           errorMessage={mapping["Please Enter the product name"]}   
           label={mapping["Product Name"]}
           onChangeText={handleInputOnChange("name")}
-          placeholder='e.g. Koala'
+          // placeholder='e.g. Koala'
           value={inputValues.name}
         />
         <View style={styles.verticalViewBox1}></View>
@@ -116,7 +116,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           errorMessage={mapping["Please Enter the origin"]}  
           label={mapping["Origin"]}
           onChangeText={handleInputOnChange("origin")}
-          placeholder='e.g. Japan'
+          placeholder={mapping['e.g. HK']}
           value={inputValues.origin}
         />
         <View style={styles.verticalViewBox1}></View>
@@ -126,6 +126,7 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           rightIconContainerStyle={{ marginRight: 8 }}
           value={keywordTagInput}
           onChangeText={handleKeywordTagInputOnChangeText}
+          placeholder={mapping["Please enter the tags"]}
         />
         <View style={styles.labelContainer}>
           {

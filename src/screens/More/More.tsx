@@ -40,7 +40,12 @@ const More: React.ComponentType<Props> = (props) => {
 
   const handleListItemOnPress = React.useCallback(id => () => {
     // console.log(optionList[id].screen);
-    navigation.navigate(optionList[id].screen);
+    if (optionList[id].screen === "Intro") {
+      navigation.navigate("Intro", { previousScreen: "More" });
+    } else {
+      navigation.navigate(optionList[id].screen);
+    }
+    
   }, [optionList])
   
   if (loading) {
