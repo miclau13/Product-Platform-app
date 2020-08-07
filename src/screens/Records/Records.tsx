@@ -65,7 +65,9 @@ const Records: React.ComponentType<Props> = (props) => {
   const recordsItemsList = React.useMemo(() => { 
     const productIdList = productComparisonList.filter(productComparison => productComparison.comparionsList).map(productComparison => productComparison.productId);
     const result = getDefaultAllList(productIdList.map(productId => {
-      return find(productDataList, (product) => product.id === productId);
+      const product = find(productDataList, (product) => product.id === productId);
+      const updatedAt = productComparisonList.find(productComparison => productComparison.productId === productId).updatedAt;
+      return { ...product, updatedAt }
     }), favoritedProductList);
     return result || [];
   }, [productComparisonList, productDataList, favoritedProductList]);
@@ -73,7 +75,9 @@ const Records: React.ComponentType<Props> = (props) => {
   const recordsItemsComparisonList = React.useMemo(() => {
     const productIdList = productComparisonList.filter(productComparison => productComparison.comparionsList.length > 0).map(productComparison => productComparison.productId);
     const result = getDefaultAllList(productIdList.map(productId => {
-      return find(productDataList, (product) => product.id === productId);
+      const product = find(productDataList, (product) => product.id === productId);
+      const updatedAt = productComparisonList.find(productComparison => productComparison.productId === productId).updatedAt;
+      return { ...product, updatedAt }
     }), favoritedProductList)
     return result || [];
   }, [productComparisonList, productDataList, favoritedProductList]);
