@@ -9,6 +9,7 @@ import ProductInfoView from './ProductInfoView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { Product, useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
+import { useProductRatingListContext } from '../../context/ProductRatingListContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import favoriteProduct from '../../api/favoriteProduct';
 import ratingProduct from '../../api/ratingProduct';
@@ -51,6 +52,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   const { productId } = route.params;
   const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
   const { productComparisonList, refetch: productComparisonListRefetch } = useProductComparisonListContext();
+  const { productRatingList, refetch: productRatingListRefetch } = useProductRatingListContext();
   const [loading] = React.useState(false);
   const [favorite, setFavorite] = React.useState(productDataList.filter(product => product.id === productId)[0].saved);
   const [expandedProductList, setExpandedProductList] = React.useState([]);
@@ -69,10 +71,15 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
   }, [favorite, productDataList, rating]);
 
   const productComparisonInfoList = React.useMemo<Product[]>(() => {
+    // console.log("productRatingList",productRatingList)
     const filteredProductComparisonList = (productComparisonList || []).filter(productComparison => productComparison.productId === productId);
     const selectedProductComparisonList = filteredProductComparisonList.length > 0 ? filteredProductComparisonList[0].comparionsList : [];
-    return selectedProductComparisonList || [];
-  }, [productComparisonList, productId]);
+    const resultWithRating = selectedProductComparisonList.map(selectedProduct => {
+      const rating = (productRatingList.find(productRating => productRating.productId === selectedProduct.id) || {}).rating;
+      return { ...selectedProduct, rating };
+    })
+    return resultWithRating || [];
+  }, [productComparisonList, productRatingList, productId]);
 
   const handleCompareMoreButtonOnPress = React.useCallback<ProductInfoViewProps['handleCompareMoreButtonOnPress']>(() => {
     navigation.navigate("ProductComparison", { 

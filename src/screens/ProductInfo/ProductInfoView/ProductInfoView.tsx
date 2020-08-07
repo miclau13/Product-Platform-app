@@ -197,6 +197,8 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
   const favorite = productInfo.saved || false;
   const imageUri = productInfo.photos.length > 0 ? productInfo.photos[0] : "https://cdn.ztore.com/images/ztore/production/product/750px/1032361_1.jpg";
   const currentPage = productInfo.photos.findIndex(_photo => _photo === imageUri);
+  console.log("productInfo",productInfo)
+  // console.log("rating",rating)
   
   const ImageComponent = () => {
     return (
@@ -242,9 +244,9 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
         />
         <View style={{ marginVertical: 8 }}/>
         {
-          expanded 
+          expanded && rating
             ? <AirbnbRating
-              isDisabled
+                isDisabled
                 defaultRating={rating}
                 onFinishRating={() => {}}
                 selectedColor={primaryIconColor}

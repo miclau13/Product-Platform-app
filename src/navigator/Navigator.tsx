@@ -11,7 +11,8 @@ import { MoreInfo, MoreInfoContextProvider } from '../context/MoreInfoContext';
 import { Product, ProductListContextProvider } from '../context/ProductListContext';
 import { ProductComparison, ProductComparisonListContextProvider } from '../context/ProductComparisonListContext';
 import { SelectCategoryContextProvider } from '../context/SelectCategoryContext';
-import favoritedProductListContext, { FavoritedProduct, FavoritedProductListContextProvider } from '../context/FavoritedProductListContext';
+import { FavoritedProduct, FavoritedProductListContextProvider } from '../context/FavoritedProductListContext';
+import { ProductRating, ProductRatingListContextProvider } from '../context/ProductRatingListContext';
 
 export type StackParamList = {};
 
@@ -22,16 +23,18 @@ interface State {
   productList: Array<Product> | [] ,
   productComparisonList: Array<ProductComparison> | [] ,
   favoritedProductList: Array<FavoritedProduct> | [],
+  productRatingList:  Array<ProductRating> | [] ,
   moreInfo: MoreInfo,
 }
 
 interface Action {
-  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST' | 'UPDATE_MORE_INFO' | 'UPDATE_FAVORITED_PRODUCT_LIST';
+  type: 'REMOVE_INTRO' | 'UPDATE_SELECTED_CATEGORY' | 'DISABLE_LOADING' | 'UPDATE_PRODUCT_LIST' | 'UPDATE_PRODUCT_COMPARISON_LIST' | 'UPDATE_MORE_INFO' | 'UPDATE_FAVORITED_PRODUCT_LIST' | 'UPDATE_PRODUCT_RATING_LIST';
   value?: string;
   productList?: State['productList'];
   productComparisonList?: State['productComparisonList'];
   moreInfo?: State['moreInfo'];
   favoritedProductList?: State['favoritedProductList'];
+  productRatingList?: State['productRatingList'];
 };
 
 const initialState = {
@@ -41,6 +44,7 @@ const initialState = {
   productList: [],
   productComparisonList: [],
   favoritedProductList: [],
+  productRatingList: [],
   moreInfo: {
     aboutUs: {
       title: "",
@@ -131,6 +135,12 @@ const reducer = (prevState: State, action: Action) => {
         ...prevState,
         favoritedProductList: action.favoritedProductList,
       };
+    case 'UPDATE_PRODUCT_RATING_LIST':
+      return {
+        ...prevState,
+        productRatingList: action.productRatingList,
+      };
+      
   }
 };
 
@@ -170,6 +180,11 @@ const Navigator = () => {
     refetch: () => fetchFavoritedProductList(),
     favoritedProductList: state.favoritedProductList,
   }), [state.favoritedProductList]);
+
+  const productRatingListContext = React.useMemo(() => ({
+    refetch: () => fetchProductRatingList(),
+    productRatingList: state.productRatingList,
+  }), [state.productRatingList]);
 
   const fetchProductList = async () => {
     try {
@@ -261,6 +276,27 @@ const Navigator = () => {
     }
   }
 
+  const fetchProductRatingList = async () => {
+    try { 
+      const deviceId = await SecureStore.getItemAsync("deviceId");
+      // const response = await fetch(`http://192.168.0.106:5000/product-comparisons/device/${deviceId}`, {
+      const response = await fetch(`https://miclo1.azurewebsites.net/product-rating/device/${deviceId}`, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json() || [];
+      const productRatingList = result;
+      dispatch({ type: 'UPDATE_PRODUCT_RATING_LIST', productRatingList });
+    } catch (error) {
+      console.log(" fetchProductRatingList error:", error);
+    } finally {
+      dispatch({ type: 'DISABLE_LOADING' });
+    }
+  }
+
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let displayIntro, selectedCategory, deviceID;
@@ -289,6 +325,7 @@ const Navigator = () => {
     fetchProductComparisonList();
     fetchMoreInfo();
     fetchFavoritedProductList();
+    fetchProductRatingList();
     return () => {}
   }, []);
 
@@ -307,9 +344,11 @@ const Navigator = () => {
         <ProductListContextProvider value={productListContext}>
           <ProductComparisonListContextProvider value={productComparisonListContext}>
             <FavoritedProductListContextProvider value={favoritedProductListContext}>
-              <MoreInfoContextProvider value={moreInfoContext}>
-                <RootTab />
-              </MoreInfoContextProvider>
+              <ProductRatingListContextProvider value={productRatingListContext}>
+                <MoreInfoContextProvider value={moreInfoContext}>
+                  <RootTab />
+                </MoreInfoContextProvider>
+              </ProductRatingListContextProvider>
             </FavoritedProductListContextProvider>
           </ProductComparisonListContextProvider>
         </ProductListContextProvider>
