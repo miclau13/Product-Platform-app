@@ -39,7 +39,8 @@ const Comments: React.ComponentType<Props> = (props) => {
       setLoading(true);
       setVisible(true);
       const deviceId = await SecureStore.getItemAsync("deviceId");
-      const uri = id ? `https://miclo1.azurewebsites.net/profiles/update/${id}` : `https://miclo1.azurewebsites.net/profiles/add`;
+      // const uri = id ? `https://miclo1.azurewebsites.net/profiles/update/${id}` : `https://miclo1.azurewebsites.net/profiles/add`;
+      const uri = `https://miclo1.azurewebsites.net/profiles/add`;
       const response = await fetch(uri, {
         method: 'post',
         headers: {
