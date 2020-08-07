@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
   },
   inputContainer: {
-    backgroundColor: pageBackgroundColor,
+    // backgroundColor: pageBackgroundColor,
     borderColor: primaryBorderColor,
     borderWidth: 1,
     marginVertical: 4,
