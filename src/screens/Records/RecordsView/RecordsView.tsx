@@ -30,15 +30,15 @@ export const RecordsListItemView: React.ComponentType<RecordsListItemViewProps> 
       <ListItem
         bottomDivider
         leftAvatar={item.leftAvatar}
-        rightIcon={      
-          item.favorite      
-            ? <Icon
-              color='#00aced'
-              name={item.favorite ? 'favorite' : 'favorite-border'}
-              // onPress={favoriteIconOnPress(item.id)}
-              />
-            : undefined
-        }
+        // rightIcon={      
+        //   item.favorite      
+        //     ? <Icon
+        //       color='#00aced'
+        //       name={item.favorite ? 'favorite' : 'favorite-border'}
+        //       // onPress={favoriteIconOnPress(item.id)}
+        //       />
+        //     : undefined
+        // }
         rightTitle={item.rightTitle}
         subtitle={item.subtitle}
         title={item.title}
