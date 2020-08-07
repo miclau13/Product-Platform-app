@@ -1,10 +1,8 @@
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
-import { AirbnbRatingProps, ButtonProps, InputProps } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { getDefaultOptionList } from './utils';
-import CommentsView from './CommentsView';
+import CommentsView, { CommentsViewProps } from './CommentsView';
 import LoadingComponent from '../../components/LoadingComponent';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
@@ -17,15 +15,6 @@ type Props = {
   navigation: CommentsScreenNavigationProp;
 };
 
-export interface CommentsViewProps {
-  comments: string;
-  handleOnChangeComments: InputProps['onChangeText'];
-  handleOnFinishRating: AirbnbRatingProps['onFinishRating'];
-  handleSubmitButtonOnPress: ButtonProps['onPress'];
-  rating: number;
-};
-
-
 const Comments: React.ComponentType<Props> = (props) => {
   const { navigation } = props;
 
@@ -33,6 +22,9 @@ const Comments: React.ComponentType<Props> = (props) => {
   const [comments, setComments] = React.useState('');
   const [rating, setRating] = React.useState(5);
   const [id, setID] = React.useState('');
+  const [visible, setVisible] = React.useState(false);
+
+  const onDismissSnackBar = React.useCallback(() => setVisible(false), []);
 
   const handleOnChangeComments = React.useCallback<CommentsViewProps['handleOnChangeComments']>((value) => {
     setComments(value);
@@ -45,6 +37,7 @@ const Comments: React.ComponentType<Props> = (props) => {
   const handleSubmitButtonOnPress = React.useCallback<CommentsViewProps['handleSubmitButtonOnPress']>(async () => {
     try {
       setLoading(true);
+      setVisible(true);
       const deviceId = await SecureStore.getItemAsync("deviceId");
       const uri = id ? `https://miclo1.azurewebsites.net/profiles/update/${id}` : `https://miclo1.azurewebsites.net/profiles/add`;
       const response = await fetch(uri, {
@@ -109,6 +102,9 @@ const Comments: React.ComponentType<Props> = (props) => {
       handleOnFinishRating={handleOnFinishRating}
       handleSubmitButtonOnPress={handleSubmitButtonOnPress}
       rating={rating}
+
+      visible={visible}
+      onDismissSnackBar={onDismissSnackBar}
     />
   )
 };

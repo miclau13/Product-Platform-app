@@ -4,7 +4,7 @@ import { AirbnbRating, AirbnbRatingProps, Text } from 'react-native-elements';
 
 import styles, { selectedColor } from './styles';
 
-interface RatingComponentProps extends AirbnbRatingProps {
+export interface RatingComponentProps extends AirbnbRatingProps {
   label?: string;
 }
 

@@ -77,6 +77,9 @@ const mapping = {
 
   // Comment
   "Your comments are important!": "你嘅意見對我地成長好重要!",
+  "Close": "關閉",
+  "Sent": "已送出",
+
   // Calculator
   "Calculator": "計算機",
 };
