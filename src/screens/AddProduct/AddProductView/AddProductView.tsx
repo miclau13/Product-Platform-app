@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { Button, Input, Text, Tile } from 'react-native-elements';
+import { Text, Tile } from 'react-native-elements';
 import { Chip } from 'react-native-paper';
 
 import styles from './styles';
@@ -9,9 +9,9 @@ import ButtonComponent from '../../../components/ButtonComponent';
 import DropdownInputComponent from '../../../components/DropdownInputComponent';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import InputComponent from '../../../components/InputComponent';
+import OverlayComponent from '../../../components/OverlayComponent';
 import RatingComponent from '../../../components/RatingComponent';
 import mapping from '../../../languages/CN/mapping';
-
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
   const { title, ...tileProps } = props;
@@ -48,6 +48,9 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
     onSubmitButtonPress,
     rating,
     inputValues,
+    errors,
+    shouldOpenErrorModal,
+    onBackdropPress,
 
     // For Dropdown
     handleDropdownOnValueDown,
@@ -57,6 +60,19 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
 
   return (
     <SafeAreaView style={styles.contanier}>
+      <OverlayComponent isVisible={shouldOpenErrorModal} onBackdropPress={onBackdropPress}>
+        <>
+          {
+            errors.map(error => {
+              return (
+                <View key={error} style={{ marginVertical: 8 }}>
+                  <Text style={{ color: 'red' }}>{mapping[`Please Enter the ${error}`]}</Text>
+                </View>
+              )
+            }) 
+          }
+        </>
+      </OverlayComponent>
       <ScrollView>
         <View style={styles.verticalViewBox1}></View>
         <DropdownInputComponent

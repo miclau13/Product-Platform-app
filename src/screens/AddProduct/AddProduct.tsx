@@ -57,6 +57,8 @@ export interface AddProductViewProps {
   onImagePress(index: number): TileProps['onPress'];
   onSubmitButtonPress: ButtonProps['onPress'];
   rating: number;
+  errors: string[];
+  shouldOpenErrorModal: boolean;
   // For Dropdown
   handleDropdownOnValueDown: PickerProps['onValueChange'];
   handleIOSDropdownOnDonePress: PickerProps['onDonePress'];
@@ -73,6 +75,8 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
   const productId = route?.params?.productId;
   const [loading, setLoading] = React.useState(false);
+  const [errors, setErrors] = React.useState(['brandName', 'name', 'origin']);
+  const [shouldOpenErrorModal, setShouldOpenErrorModal] = React.useState(false);
   const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
     return {
       index,
@@ -102,7 +106,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   const handleInputOnChange = React.useCallback<AddProductViewProps['handleInputOnChange']>(field => value => {
     setInputValues(values => {
       return ({ ...values, [field]: value });
-    })
+    });
   }, []);
   
   const handleKeywordTagAddIconOnPress = React.useCallback<AddProductViewProps['handleKeywordTagAddIconOnPress']>(() => {
@@ -226,6 +230,29 @@ const AddProduct: React.ComponentType<Props> = (props) => {
   };
 
   const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(async () => {
+    
+    function checkIfErrors() {
+      const errorCheckingList = ['brandName', 'name', 'price', 'origin'];
+      let error = false;
+      errorCheckingList.forEach(field => {
+        if(!inputValues[field] && inputValues[field] !== 0) {
+          setErrors(errors => {
+            if (!errors.includes(field)) {
+              return [...errors, field];
+            }
+            return errors
+          });
+          error = true;
+        } else {
+          setErrors(errors => errors.filter(error => error !== field));
+        }
+      });
+      return error;
+    }
+    if (checkIfErrors()) {
+      setShouldOpenErrorModal(true);
+      return;
+    }
     try {
       setLoading(true);
       const deviceId = await SecureStore.getItemAsync("deviceId");
@@ -261,7 +288,11 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     } finally {
       setLoading(false);
     }
-  }, [inputValues, keywordTagLabels, productId, rating, selectedCategory]);
+  }, [inputValues, keywordTagLabels, productId, rating, selectedCategory, setErrors]);
+
+  const onBackdropPress = React.useCallback(() => {
+    setShouldOpenErrorModal(shouldOpen => !shouldOpen)
+  }, []);
 
   if (loading) {
     return (
@@ -284,6 +315,9 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       onImagePress={onImagePress}
       onSubmitButtonPress={onSubmitButtonPress}
       rating={rating}
+      errors={errors}
+      shouldOpenErrorModal={shouldOpenErrorModal}
+      onBackdropPress={onBackdropPress}
       // For Dropdown
       handleDropdownOnValueDown={handleDropdownOnValueDown}
       handleIOSDropdownOnDonePress={handleIOSDropdownOnDonePress}
