@@ -142,6 +142,7 @@ const ProductInfo: React.ComponentType<Props> = (props) => {
     const unsubscribe = navigation.addListener('blur', async() => {
       await productListRefetch();
       await productComparisonListRefetch();
+      await productRatingListRefetch();
     });
 
     return unsubscribe;
