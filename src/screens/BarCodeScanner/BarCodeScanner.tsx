@@ -14,6 +14,7 @@ import BarCodeScannerView, { NoAccessView, RequestingAccessView } from './BarCod
 import { useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
+import { useMoreInfoContext } from '../../context/MoreInfoContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { getDefaultProductList, Product } from '../ProductSearch';
 import mapping from '../../languages/CN/mapping';
@@ -63,8 +64,9 @@ export interface BarCodeScannerViewProps {
 const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
   const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
-  const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
+  // const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
+  const { moreInfo } = useMoreInfoContext();
   const [hasBarCodeScannerPermission, setHasBarCodeScannerPermission] = useState(null);
   const [isSearchViewVisible, setIsSearchViewVisible] = useState(false);
   React.useEffect(() => {
@@ -86,15 +88,18 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   }, [productDataList]);
 
   const [chipList, setChipList] = React.useState([]);
-
   React.useEffect(() => {
-    const chipList = productDataList.reduce((acc, product) => {
-      const list = product.labels.map(label => label)
-      return [...acc, ...list];
-    }, []);
-    const uniqueChipList = uniq(chipList);
-    setChipList(uniqueChipList.map(label => ({ name: label, selected: false })))
-  }, [productDataList]);
+    setChipList(moreInfo.labels.map(label => ({ name: label, selected: false })))
+  }, [moreInfo]);
+
+  // React.useEffect(() => {
+  //   const chipList = productDataList.reduce((acc, product) => {
+  //     const list = product.labels.map(label => label)
+  //     return [...acc, ...list];
+  //   }, []);
+  //   const uniqueChipList = uniq(chipList);
+  //   setChipList(uniqueChipList.map(label => ({ name: label, selected: false })))
+  // }, [productDataList]);
 
   const handleChipOnPress = React.useCallback(name => () => {
     const result = chipList.map(chip => {

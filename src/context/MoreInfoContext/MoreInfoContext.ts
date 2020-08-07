@@ -1,6 +1,7 @@
 import React from 'react';
 
 export type MoreInfo = {
+  labels: string[],
   aboutUs: {
     title: string;
     content: string;
@@ -53,6 +54,7 @@ export type MoreInfo = {
 };
 
 const initialValue: { moreInfo: MoreInfo, refetch(): void } = { moreInfo: {
+  labels: [],
   aboutUs: {
     title: "",
     content: "",

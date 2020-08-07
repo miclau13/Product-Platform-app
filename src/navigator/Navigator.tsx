@@ -46,6 +46,7 @@ const initialState = {
   favoritedProductList: [],
   productRatingList: [],
   moreInfo: {
+    labels: [],
     aboutUs: {
       title: "",
       content: "",
