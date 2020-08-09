@@ -11,6 +11,7 @@ const SearchBarComponent: React.ComponentType<SearchBarProps> = (props) => {
       containerStyle={styles.container}
       placeholder="搜尋"
       inputStyle={styles.inputStyle}
+      allowFontScaling={false}
       {...props}
     />
   )

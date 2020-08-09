@@ -18,6 +18,7 @@ export const screenOptions: StackNavigationOptions | ((props: {
       fontSize: 24,
     },
     headerTintColor: '#4472C4',
+    headerTitleAllowFontScaling: false,
     // headerShown: false,
   })
 };

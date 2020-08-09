@@ -18,7 +18,7 @@ const DropdownComponent: React.ComponentType<PickerProps> = (props) => {
       }}
       placeholder={{}}
       useNativeAndroidPickerStyle={false}
-      textInputProps={{ underlineColor: 'yellow' }}
+      textInputProps={{ underlineColor: 'yellow', allowFontScaling: false }}
       Icon={() => (<Icon name="expand-more"/>)}
       {...props}
     />

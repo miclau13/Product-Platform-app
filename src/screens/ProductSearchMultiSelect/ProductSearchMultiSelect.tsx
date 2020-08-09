@@ -15,6 +15,7 @@ import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/Ba
 import { useProductListContext } from '../../context/ProductListContext';
 import { useProductComparisonListContext } from '../../context/ProductComparisonListContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
+import { useMoreInfoContext } from '../../context/MoreInfoContext';
 import favoriteProduct from '../../api/favoriteProduct';
 
 type ProductSearchMultiSelectScreenNavigationProp = StackNavigationProp<
@@ -61,6 +62,7 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
   const { productId, originalSelectedProductIdList } = route.params;
 
+  const { moreInfo } = useMoreInfoContext();
   const { productList: productDataList, refetch: productListRefetch } = useProductListContext();
   const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
   const { selectedCategory: defaultSelectedCategory, updateCategoryList } = useSelectCategoryContext();
@@ -70,14 +72,18 @@ const ProductSearchMultiSelect: React.ComponentType<Props> = (props) => {
 
   const [chipList, setChipList] = React.useState([]);
 
+  // React.useEffect(() => {
+  //   const chipList = productDataList.filter(product => product.id !== productId).reduce((acc, product) => {
+  //     const list = product.labels.map(label => label)
+  //     return [...acc, ...list];
+  //   }, []);
+  //   const uniqueChipList = uniq(chipList);
+  //   setChipList(uniqueChipList.map(label => ({ name: label, selected: false })))
+  // }, [productDataList, productId]);
+
   React.useEffect(() => {
-    const chipList = productDataList.filter(product => product.id !== productId).reduce((acc, product) => {
-      const list = product.labels.map(label => label)
-      return [...acc, ...list];
-    }, []);
-    const uniqueChipList = uniq(chipList);
-    setChipList(uniqueChipList.map(label => ({ name: label, selected: false })))
-  }, [productDataList, productId]);
+    setChipList(moreInfo.labels.map(label => ({ name: label, selected: false })))
+  }, [moreInfo]);
 
   const handleChipOnPress = React.useCallback(name => () => {
     const result = chipList.map(chip => {

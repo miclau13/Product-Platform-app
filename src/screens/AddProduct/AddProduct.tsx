@@ -277,6 +277,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
           category: selectedCategory,
           labels: keywordTagLabels,
           deviceId: deviceId,
+          isValid: 0,
         }),
       });
       await productListRefetch();

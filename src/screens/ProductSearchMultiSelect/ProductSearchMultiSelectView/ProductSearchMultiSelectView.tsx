@@ -10,6 +10,7 @@ import { ProductSearchMultiSelectViewProps, ProductSearchMultiSelectComponentVie
 import DropdownComponent from '../../../components/DropdownComponent';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import SearchBarComponent from '../../../components/SearchComponent';
+import ChipComponent from '../../../components/ChipComponent';
 import { buttonPrimaryColor } from '../../../styles';
 import mapping from '../../../languages/CN/mapping';
 import ImageCarousel from '../../../components/ImageCarousel';
@@ -151,14 +152,19 @@ const ProductSearchMultiSelectComponent: React.ComponentType<ProductSearchMultiS
       <ScrollView horizontal style={styles.labelContainer}>
         {chipList.map(chip => {
           return (
-            <Chip 
+            // <Chip 
+            //   key={chip.name}
+            //   onPress={handleChipOnPress(chip.name)}
+            //   selected={chip.selected}
+            //   style={styles.chip}
+            // >
+            //   {chip.name}
+            // </Chip>
+            <ChipComponent
               key={chip.name}
               onPress={handleChipOnPress(chip.name)}
-              selected={chip.selected}
-              style={styles.chip}
-            >
-              {chip.name}
-            </Chip>
+              title={chip.name}
+            />
           )
         })}
       </ScrollView>

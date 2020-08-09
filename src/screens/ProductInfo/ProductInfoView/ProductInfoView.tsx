@@ -10,6 +10,7 @@ import { Product, ProductInfoViewProps, ProductInfoGridViewProps } from '../Prod
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import OptionMenuComponent from '../../../components/OptionMenuComponent';
 import ImageCarousel from '../../../components/ImageCarousel';
+import ChipComponent from '../../../components/ChipComponent';
 import mapping from '../../../languages/CN/mapping';
 
 import { pageBackgroundColor, primaryIconColor, primaryBorderColor, screenHeight } from '../../../styles';
@@ -163,12 +164,11 @@ const ProductInfoSubjectGridView: React.ComponentType<ProductInfoSubjectGridView
               {
                 labels.map(label => {
                   return (
-                    <Chip 
-                      key={label} 
-                      style={styles.chip}
-                    >
-                      {label}
-                    </Chip>
+                    <ChipComponent
+                      disabled
+                      key={label}
+                      title={label}
+                    />
                   )
                 })
               }
@@ -304,12 +304,11 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
           {
             expanded && labels.map(label => {
               return (
-                <Chip 
-                  key={label} 
-                  style={styles.chip}
-                >
-                  {label}
-                </Chip>
+                <ChipComponent
+                  disabled
+                  key={label}
+                  title={label}
+                />
               )
             })
           }

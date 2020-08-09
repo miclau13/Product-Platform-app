@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Dimensions, StyleSheet,  View } from 'react-native';
+import { Icon, Text } from 'react-native-elements';
 
 import mapping from '../../languages/CN/mapping';
 

@@ -20,7 +20,8 @@ const IntroView: React.ComponentType<IntroViewProps> = (props) => {
       onSkipBtnClick={_onSkipBtnHandle}
       onSlideChange={_onSlideChangeHandle}
       pageArray={pageList}
-    />
+    >
+      </AppIntro>
   );
 }
 export default React.memo(IntroView);

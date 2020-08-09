@@ -11,6 +11,7 @@ import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
 import InputComponent from '../../../components/InputComponent';
 import OverlayComponent from '../../../components/OverlayComponent';
 import RatingComponent from '../../../components/RatingComponent';
+import ChipComponent from '../../../components/ChipComponent';
 import mapping from '../../../languages/CN/mapping';
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
@@ -132,13 +133,12 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
           {
             keywordTagLabels.map(chip => {
               return (
-                <Chip 
+                <ChipComponent
+                  isClose
                   key={chip}
-                  onClose={handleKeywordTagLabelOnClose(chip)}
-                  style={styles.chip}
-                >
-                  {chip}
-                </Chip>
+                  onPress={handleKeywordTagLabelOnClose(chip)}
+                  title={chip}
+                />
               )
             })
           }

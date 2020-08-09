@@ -199,7 +199,7 @@ const Navigator = () => {
         },
       });
       const result = await response.json() || [];
-      const productList = result;
+      const productList = result.filter(product => product.isValid);
       dispatch({ type: 'UPDATE_PRODUCT_LIST', productList });
     } catch (error) {
       console.log(" fetchProductList error:", error);

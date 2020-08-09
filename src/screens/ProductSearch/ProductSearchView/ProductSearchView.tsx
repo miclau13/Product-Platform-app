@@ -10,6 +10,7 @@ import { ProductSearchViewProps, ProductSearchItemCardProps } from '../ProductSe
 import { buttonPrimaryColor } from '../../../styles';
 import mapping from '../../../languages/CN/mapping';
 import ImageCarousel from '../../../components/ImageCarousel';
+import ChipComponent from '../../../components/ChipComponent';
 
 const renderCarousel = (photos, currentPage) => {
   return (
@@ -154,14 +155,11 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
       <ScrollView horizontal style={styles.labelContainer}>
         {chipList.map(chip => {
           return (
-            <Chip 
+            <ChipComponent 
               key={chip.name}
+              title={chip.name}
               onPress={handleChipOnPress(chip.name)}
-              selected={chip.selected}
-              style={styles.chip}
-            >
-              {chip.name}
-            </Chip>
+            />
           )
         })}
       </ScrollView>

@@ -10,6 +10,14 @@ import { primaryIconColor } from './src/styles';
 const theme = {
   Icon: {
     color: primaryIconColor
+  },
+  Text: {
+    allowFontScaling: false
+  },
+  Button: {
+    titleProps: {
+      allowFontScaling: false
+    }
   }
 };
 

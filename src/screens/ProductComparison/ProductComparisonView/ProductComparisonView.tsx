@@ -1,8 +1,7 @@
 import { map, pick } from 'lodash';
 import React from 'react';
-import { Image as RNImage, TouchableOpacity } from 'react-native';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-import { Icon, Image } from 'react-native-elements';
+import { Image as RNImage, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Icon,Text  } from 'react-native-elements';
 import Lightbox from 'react-native-lightbox';
 import { Chip } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
@@ -10,6 +9,7 @@ import NumberFormat from 'react-number-format';
 import styles from './styles';
 import { ProductComparisonViewProps, ProductComparisonGridViewProps } from '../ProductComparison';
 import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
+import ChipComponent from '../../../components/ChipComponent';
 import ImageCarousel from '../../../components/ImageCarousel';
 
 const renderCarousel = (photos, currentPage) => {
@@ -84,7 +84,11 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
             <View style={styles.labelContainer}>
               {(labels || []).map(label => {
                 return (
-                  <Chip key={label} style={styles.chip}>{label}</Chip>
+                  <ChipComponent
+                    disabled
+                    key={label}
+                    title={label}
+                  />
                 )
               })}
             </View>
