@@ -1,9 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 
+import { MoreInfo } from '@context/MoreInfoContext';
 import styles from './styles';
-import { AboutUsViewProps } from '../AboutUs';
+
+export interface AboutUsViewProps {
+  aboutUs: MoreInfo['aboutUs'];
+};
 
 const AboutUsView: React.ComponentType<AboutUsViewProps> = (props) => {
   const { 
