@@ -2,8 +2,12 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
+import { MoreInfo } from '@context/MoreInfoContext';
 import styles from './styles';
-import { PrivacyViewProps } from '../Privacy';
+
+export interface PrivacyViewProps {
+  privacy: MoreInfo['privacy'];
+};
 
 const PrivacyView: React.ComponentType<PrivacyViewProps> = (props) => {
   const { 
