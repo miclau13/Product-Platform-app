@@ -6,6 +6,19 @@
     "moduleResolution": "node",
     "noEmit": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@assets/*": ["assets/*"],
+      "@api/*": ["src/api/*"],
+      "@components/*": ["src/components/*"],
+      "@context/*": ["src/context/*"],
+      "@hooks/*": [ "src/hooks/*"],
+      "@languages/*": [ "src/languages/*"],
+      "@navigator/*": ["src/navigator/*"],
+      "@screens/*": [ "src/screens/*"],
+      "@styles/*": ["src/styles/*"],
+    }
   }
 }
