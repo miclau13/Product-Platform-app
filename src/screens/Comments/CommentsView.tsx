@@ -3,11 +3,11 @@ import { ScrollView, View } from 'react-native';
 import { ButtonProps, InputProps } from 'react-native-elements';
 import { Snackbar } from 'react-native-paper';
 
+import ButtonComponent from '@components/ButtonComponent';
+import InputComponent from '@components/InputComponent';
+import RatingComponent, { RatingComponentProps } from '@components/RatingComponent';
+import mapping from '@languages/CN/mapping';
 import styles from './styles';
-import RatingComponent, { RatingComponentProps } from '../../../components/RatingComponent';
-import mapping from '../../../languages/CN/mapping';
-import InputComponent from '../../../components/InputComponent';
-import ButtonComponent from '../../../components/ButtonComponent';
 
 export interface CommentsViewProps {
   comments: string;

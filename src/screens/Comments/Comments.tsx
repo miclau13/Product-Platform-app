@@ -2,9 +2,9 @@ import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import LoadingComponent from '@components/LoadingComponent';
+import { BarCodeScannerStackParamList } from '@navigator/NavigationStack/BarCodeScannerStack';
 import CommentsView, { CommentsViewProps } from './CommentsView';
-import LoadingComponent from '../../components/LoadingComponent';
-import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 
 type CommentsScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const Comments: React.ComponentType<Props> = (props) => {
-  const { navigation } = props;
+  // const { navigation } = props;
 
   const [loading, setLoading] = React.useState(false);
   const [comments, setComments] = React.useState('');
