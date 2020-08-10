@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { headerPrimaryColor } from '../../../styles';
+import { headerPrimaryColor } from '@styles/styles';
 
 const styles = StyleSheet.create({
   container: {
