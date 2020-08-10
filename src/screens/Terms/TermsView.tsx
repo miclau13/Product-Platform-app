@@ -2,8 +2,12 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
+import { MoreInfo } from '@context/MoreInfoContext';
 import styles from './styles';
-import { TermsViewProps } from '../Terms';
+
+export interface TermsViewProps {
+  terms: MoreInfo['terms'];
+};
 
 const TermsView: React.ComponentType<TermsViewProps> = (props) => {
   const { 
