@@ -2,8 +2,13 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { Text } from 'react-native-elements';
 
+import { MoreInfo } from '@context/MoreInfoContext';
 import styles from './styles';
-import { FAQViewProps } from '../FAQ';
+
+export interface FAQViewProps {
+  faq: MoreInfo['faq'];
+};
+
 
 const FAQView: React.ComponentType<FAQViewProps> = (props) => {
   const { 
@@ -13,7 +18,7 @@ const FAQView: React.ComponentType<FAQViewProps> = (props) => {
   } = props;
   return (
     <ScrollView style={styles.container}>
-      <Text h5>{content}</Text>
+      <Text>{content}</Text>
     </ScrollView>
   );
 }
