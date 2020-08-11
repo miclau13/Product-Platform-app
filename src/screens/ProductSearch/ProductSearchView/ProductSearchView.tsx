@@ -157,6 +157,7 @@ const ProductSearchView: React.ComponentType<ProductSearchViewProps> = (props) =
           return (
             <ChipComponent 
               key={chip.name}
+              selected={chip.selected}
               title={chip.name}
               onPress={handleChipOnPress(chip.name)}
             />

@@ -74,7 +74,6 @@ const ProductSearch: React.ComponentType<Props> = (props) => {
     productList: productDataList, 
     setFavoritedProductIdList,
   } = props;
-
   const { refetch: productListRefetch } = useProductListContext();
   const { refetch: productComparisonListRefetch } = useProductComparisonListContext();
 

@@ -57,6 +57,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
     navigation,
     productList,
     setFavoritedProductIdList,
+    setChipList,
     // For ButtonGroup
     onButtonIndexPress,
     selectedButtonIndex,
@@ -125,6 +126,7 @@ const BarCodeScannerView: React.ComponentType<BarCodeScannerViewProps> = (props)
             navigation={navigation} 
             productList={productList} 
             setFavoritedProductIdList={setFavoritedProductIdList}
+            setChipList={setChipList}
           />
       }
       <FloatingMenuComponent 

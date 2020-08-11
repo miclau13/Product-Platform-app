@@ -5,12 +5,13 @@ import styles from './styles';
 
 interface ChipComponentProps extends ButtonProps {
   isClose?: boolean;
+  selected?: boolean;
 }
 
 const ChipComponent: React.ComponentType<ChipComponentProps> = (props) => {
-  const { disabled, isClose, icon, onPress, ...buttonProps } = props;
+  const { disabled, isClose, icon, onPress, selected = false, ...buttonProps } = props;
 
-  const [isSelected, setIsSelected] = React.useState(false);
+  const [isSelected, setIsSelected] = React.useState(selected);
 
   const onButtonPress = React.useCallback((event) => {
     if (disabled) {

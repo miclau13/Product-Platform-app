@@ -317,6 +317,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       navigation={navigation}
       productList={productList}
       setFavoritedProductIdList={setFavoritedProductIdList}
+      setChipList={setChipList}
       // For ButtonGroup
       onButtonIndexPress={onButtonIndexPress}
       selectedButtonIndex={selectedButtonIndex}

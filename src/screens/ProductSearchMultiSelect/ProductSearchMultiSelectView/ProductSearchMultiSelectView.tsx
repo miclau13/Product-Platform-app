@@ -163,6 +163,7 @@ const ProductSearchMultiSelectComponent: React.ComponentType<ProductSearchMultiS
             <ChipComponent
               key={chip.name}
               onPress={handleChipOnPress(chip.name)}
+              selected={chip.selected}
               title={chip.name}
             />
           )
