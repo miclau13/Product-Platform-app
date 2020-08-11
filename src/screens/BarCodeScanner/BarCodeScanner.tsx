@@ -199,32 +199,48 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
       // navigation.navigate('ProductCategories');
       // navigation.navigate('ProductInfo');
       setLoading(true);
-      const response = await fetch(`http://192.168.0.106:5000/products/barcodeNumber/${data}`, {
-      // const response = await fetch(`https://miclo1.azurewebsites.net/product-rating/device/${deviceId}`, {
-        method: 'get',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      const result = await response.json();
-      const deviceId = await SecureStore.getItemAsync("deviceId");
-      await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${result._id}`, {
-        method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          comparisonIdList: [],
-          deviceId,
-        }),
-      });
-      console.log("result",result)
+      try {
+        // const response = await fetch(`http://192.168.0.106:5000/products/barcodeNumber/${data}`, {
+        const response = await fetch(`https://miclo1.azurewebsites.net/products/barcodeNumber/${data}`, {
+          // const response = await fetch(`https://miclo1.azurewebsites.net/product-rating/device/${deviceId}`, {
+            method: 'get',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          });
+          const result = await response.json();
+          const deviceId = await SecureStore.getItemAsync("deviceId");
+          await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${result._id}`, {
+            method: 'post',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              comparisonIdList: [],
+              deviceId,
+            }),
+          });
+          console.log("result",result)
+          
+          navigation.navigate("ProductInfo", { 
+            productId: result._id,
+          });
+      } catch (error) {
+        console.log("error", error);
+        Alert.alert(
+          mapping["Results Not Found"],
+          mapping["Please share the information you have to us!"],
+          [
+            {text: mapping["No, Thanks!"], onPress: () => navigation.navigate('BarCodeScanner')},
+            {text: mapping["Add Product"], onPress: () =>{ 
+              navigation.navigate('AddProduct');
+            }},
+          ],
+        ); 
+      }
       setLoading(false);
-      navigation.navigate("ProductInfo", { 
-        productId: result._id,
-      });
     };
   }, [navigation]);
 
