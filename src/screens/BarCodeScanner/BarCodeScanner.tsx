@@ -189,7 +189,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
         mapping["Results Not Found"],
         mapping["Please share the information you have to us!"],
         [
-          {text: mapping["No, Thanks!"], onPress: () => null},
+          {text: mapping["No, Thanks!"], onPress: () => navigation.navigate('BarCodeScanner')},
           {text: mapping["Add Product"], onPress: () =>{ 
             navigation.navigate('AddProduct');
           }},
