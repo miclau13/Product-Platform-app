@@ -18,6 +18,7 @@ import { useMoreInfoContext } from '../../context/MoreInfoContext';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { getDefaultProductList, Product } from '../ProductSearch';
 import mapping from '../../languages/CN/mapping';
+import LoadingComponent from '../../components/LoadingComponent';
 
 type BarCodeScannerScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
@@ -82,6 +83,7 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   const [hasPhotoLibraryPermission, setHasPhotoLibraryPermission] = useState(false);
   // For ProductSearchView
   const [favoritedProductIdList, setFavoritedProductIdList] = React.useState<string[]>([]);
+  const [loading, setLoading] = React.useState(false);  
 
   React.useEffect(() => {
     setFavoritedProductIdList(productDataList.filter(product => product.saved).map(product => product.id))
@@ -178,9 +180,10 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   }, [selectedCategory]);
 
   // For BarCodeScannerView
-  const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(({ type, data }) => {
+  const handleBarCodeScanned = useCallback<BarCodeScannerViewProps['handleBarCodeScanned']>(async ({ type, data }) => {
     console.log("type", type)
     console.log("data", data)
+  
     if (data.match(/0{13}/g)) {
       Alert.alert(
         mapping["Results Not Found"],
@@ -193,8 +196,35 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
         ],
       ); 
     } else if (type && data) {
-      navigation.navigate('ProductCategories');
+      // navigation.navigate('ProductCategories');
       // navigation.navigate('ProductInfo');
+      setLoading(true);
+      const response = await fetch(`http://192.168.0.106:5000/products/barcodeNumber/${data}`, {
+      // const response = await fetch(`https://miclo1.azurewebsites.net/product-rating/device/${deviceId}`, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json();
+      const deviceId = await SecureStore.getItemAsync("deviceId");
+      await fetch(`https://miclo1.azurewebsites.net/product-comparisons/${result._id}`, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          comparisonIdList: [],
+          deviceId,
+        }),
+      });
+      console.log("result",result)
+      setLoading(false);
+      navigation.navigate("ProductInfo", { 
+        productId: result._id,
+      });
     };
   }, [navigation]);
 
@@ -259,6 +289,12 @@ const BarCodeScanner: React.ComponentType<Props> = (props) => {
   if (hasBarCodeScannerPermission === false) {
     return <NoAccessView />
   }
+
+  if (loading) {
+    return (
+      <LoadingComponent />
+    );
+  };
 
   return (
     <BarCodeScannerView 
