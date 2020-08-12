@@ -3,7 +3,7 @@ import { Button, ButtonProps, Icon } from 'react-native-elements';
 
 import styles from './styles';
 
-interface ChipComponentProps extends ButtonProps {
+export interface ChipComponentProps extends ButtonProps {
   isClose?: boolean;
   selected?: boolean;
 }

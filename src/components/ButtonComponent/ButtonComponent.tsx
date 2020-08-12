@@ -3,8 +3,7 @@ import { Button, ButtonProps } from 'react-native-elements';
 
 import styles from './styles';
 
-interface ButtonComponentProps extends ButtonProps {
-}
+export interface ButtonComponentProps extends ButtonProps {}
 
 const ButtonComponent: React.ComponentType<ButtonComponentProps> = (props) => {
   const { ...buttonProps } = props;

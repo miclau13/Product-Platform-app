@@ -1,23 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { buttonTextWithWhiteBackgroudColor, pageBackgroundColor, primaryBorderColor } from '../../../styles';
+import { buttonTextWithWhiteBackgroudColor, pageBackgroundColor, primaryBorderColor } from '@styles/styles';
 
 const styles = StyleSheet.create({
-
-  dropDownContainer: {
-    paddingVertical: 8,
-    paddingRight: 8,
-  },
-
-
-  textAreaContainer: {
-    backgroundColor: pageBackgroundColor,
-    borderColor: primaryBorderColor,
-    borderWidth: 1,
-    marginVertical: 8,
-    padding: 5
-  },
-
   tileContainerStyle: {
     flex: 0.2,
     flexGrow: 1,
@@ -44,7 +29,6 @@ const styles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'row',
   },
-
 
   // Update 2/8
   chip: {

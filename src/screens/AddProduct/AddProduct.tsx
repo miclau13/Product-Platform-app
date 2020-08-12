@@ -4,80 +4,41 @@ import * as Permissions from 'expo-permissions';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { ActionSheetIOS, Platform } from 'react-native';
-import { AirbnbRatingProps, ButtonProps, IconProps, InputProps, TileProps } from 'react-native-elements'; 
-import { PickerProps } from 'react-native-picker-select';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import AddProductView from './AddProductView';
+import LoadingComponent from '@components/LoadingComponent';
+import { Product, useProductListContext } from '@context/ProductListContext';
+import { useSelectCategoryContext } from '@context/SelectCategoryContext';
+import { BarCodeScannerStackParamList } from '@navigator/NavigationStack/BarCodeScannerStack';
 import { titleMap } from './utils';
-import { Product, useProductListContext } from '../../context/ProductListContext';
-import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
-import LoadingComponent from '../../components/LoadingComponent';
-import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
+import AddProductView, { AddProductViewProps } from './AddProductView';
 
-type AddProductScreenNavigationProp = StackNavigationProp<
+export type AddProductScreenNavigationProp = StackNavigationProp<
   BarCodeScannerStackParamList,
   'AddProduct'
 >;
 
-type  AddProductScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "AddProduct">;
+type AddProductScreenRouteProp = RouteProp<BarCodeScannerStackParamList, "AddProduct">;
 
 type Props = {
   navigation: AddProductScreenNavigationProp;
   route: AddProductScreenRouteProp;
 };
 
-type InputValues = {
-  name: string;
-  brandName: string;
-  price: number;
-  origin: string;
-  remarks: string;
-};
-
-export type AddProductTileViewProps = TileProps;
-export interface AddProductViewProps {
-  handleKeywordTagAddIconOnPress: IconProps['onPress'];
-  handleKeywordTagInputOnChangeText: InputProps['onChangeText'];
-  handleKeywordTagLabelOnClose(name: string): () => void;
-  handleInputOnChange(field: keyof InputValues): InputProps['onChangeText']
-  keywordTagLabels: string[];
-  keywordTagInput: string;
-  handleOnFinishRating: AirbnbRatingProps['onFinishRating'];
-  imageTileList: Array<imageTile>;
-  inputValues: {
-    name: string;
-    brandName: string;
-    price: number;
-    origin: string;
-    remarks: string;
-  };
-  navigation: AddProductScreenNavigationProp;
-  onImagePress(index: number): TileProps['onPress'];
-  onSubmitButtonPress: ButtonProps['onPress'];
-  rating: number;
-  errors: string[];
-  shouldOpenErrorModal: boolean;
-  // For Dropdown
-  handleDropdownOnValueDown: PickerProps['onValueChange'];
-  handleIOSDropdownOnDonePress: PickerProps['onDonePress'];
-  selectedCategory: string;
-};
-
-export type imageTile = {
-  index: number;
-  imageSrc: TileProps['imageSrc'];
-  title: string;
-};
+interface AddProduct {
+  launchCamera(index: number): void;
+  loading: boolean;
+  pickImage(index: number): void;
+}
 
 const AddProduct: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
   const productId = route?.params?.productId;
-  const [loading, setLoading] = React.useState(false);
-  const [errors, setErrors] = React.useState(['brandName', 'name', 'origin']);
-  const [shouldOpenErrorModal, setShouldOpenErrorModal] = React.useState(false);
-  const [imageTileList, setImageTileList] = React.useState(Array.from(Array(5)).map((item, index) => {
+  const [loading, setLoading] = React.useState<AddProduct['loading']>(false);
+  const [errors, setErrors] = React.useState<AddProductViewProps['errors']>(['brandName', 'name', 'origin']);
+  const [shouldOpenErrorModal, setShouldOpenErrorModal] = React.useState<AddProductViewProps['shouldOpenErrorModal']>(false);
+  const [imageTileList, setImageTileList] = React.useState<AddProductViewProps['imageTileList']>(Array.from(Array(5)).map((item, index) => {
     return {
       index,
       imageSrc: null,
@@ -91,17 +52,17 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     return product;
   }, [productDataList]);
   // Form values
-  const [selectedCategory, setSelectedCategory] = React.useState(defaultSelectedCategory);
-  const [inputValues, setInputValues] = React.useState({
+  const [selectedCategory, setSelectedCategory] = React.useState<AddProductViewProps['selectedCategory']>(defaultSelectedCategory);
+  const [inputValues, setInputValues] = React.useState<AddProductViewProps['inputValues']>({
     name: productInfo.name || "",
     brandName: productInfo.brandName || "",
     price: productInfo.price || 0,
     origin: productInfo.origin || "",
     remarks: productInfo.remarks ||  "",
   });
-  const [keywordTagInput, setKeywordTagInput] = React.useState("");
-  const [keywordTagLabels, setKeywordTagLabels] = React.useState(productInfo.labels || []);
-  const [rating, setRating] = React.useState(productInfo.rating || 0);
+  const [keywordTagInput, setKeywordTagInput] = React.useState<AddProductViewProps['keywordTagInput']>("");
+  const [keywordTagLabels, setKeywordTagLabels] = React.useState<AddProductViewProps['keywordTagLabels']>(productInfo.labels || []);
+  const [rating, setRating] = React.useState<AddProductViewProps['rating']>(productInfo.rating || 0);
 
   const handleInputOnChange = React.useCallback<AddProductViewProps['handleInputOnChange']>(field => value => {
     setInputValues(values => {
@@ -152,7 +113,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     }
   };
 
-  const launchCamera = async (index: number) => {
+  const launchCamera = React.useCallback<AddProduct['launchCamera']>(async (index) => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -171,9 +132,9 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       return imageTile;
     })
     setImageTileList(updatedImageTileList);
-  };
+  }, [ImagePicker, imageTileList]);
 
-  const pickImage = async (index: number) => {
+  const pickImage = React.useCallback<AddProduct['pickImage']>(async (index) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -192,9 +153,9 @@ const AddProduct: React.ComponentType<Props> = (props) => {
       return imageTile;
     })
     setImageTileList(updatedImageTileList);
-  };
+  }, [ImagePicker, imageTileList]);
 
-  const onImagePress = (index: number) => async () => {
+  const onImagePress = React.useCallback<AddProductViewProps['onImagePress']>((index) => async () => {
     if (imageTileList[index]['imageSrc']) {
       const updatedImageTileList = imageTileList.map((imageTile, _index) => {
         if (index == _index) {
@@ -227,10 +188,9 @@ const AddProduct: React.ComponentType<Props> = (props) => {
         }
       }
     );
-  };
+  }, [imageTileList, getPermissionAsync, launchCamera, pickImage]);
 
   const onSubmitButtonPress = React.useCallback<AddProductViewProps['onSubmitButtonPress']>(async () => {
-    
     function checkIfErrors() {
       const errorCheckingList = ['brandName', 'name', 'price', 'origin'];
       let error = false;
@@ -291,7 +251,7 @@ const AddProduct: React.ComponentType<Props> = (props) => {
     }
   }, [inputValues, keywordTagLabels, productId, rating, selectedCategory, setErrors]);
 
-  const onBackdropPress = React.useCallback(() => {
+  const onBackdropPress = React.useCallback<AddProductViewProps['onBackdropPress']>(() => {
     setShouldOpenErrorModal(shouldOpen => !shouldOpen)
   }, []);
 

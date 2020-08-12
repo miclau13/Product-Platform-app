@@ -1,18 +1,25 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { Text, Tile } from 'react-native-elements';
-import { Chip } from 'react-native-paper';
+import { IconProps, Text, Tile, TileProps, OverlayProps } from 'react-native-elements';
 
+import ButtonComponent, { ButtonComponentProps } from '@components/ButtonComponent';
+import ChipComponent, { ChipComponentProps } from '@components/ChipComponent';
+import DropdownInputComponent, { DropdownInputComponentProps } from '@components/DropdownInputComponent';
+import FloatingMenuComponent from '@components/FloatingMenuComponent';
+import InputComponent, { InputComponentProps } from '@components/InputComponent';
+import OverlayComponent, { OverlayComponentProps } from '@components/OverlayComponent';
+import RatingComponent, { RatingComponentProps } from '@components/RatingComponent';
+import mapping from '@languages/CN/mapping';
+import { AddProductScreenNavigationProp } from './AddProduct';
 import styles from './styles';
-import { AddProductViewProps, AddProductTileViewProps } from '../AddProduct';
-import ButtonComponent from '../../../components/ButtonComponent';
-import DropdownInputComponent from '../../../components/DropdownInputComponent';
-import FloatingMenuComponent from '../../../components/FloatingMenuComponent';
-import InputComponent from '../../../components/InputComponent';
-import OverlayComponent from '../../../components/OverlayComponent';
-import RatingComponent from '../../../components/RatingComponent';
-import ChipComponent from '../../../components/ChipComponent';
-import mapping from '../../../languages/CN/mapping';
+
+export type ImageTile = {
+  index: number;
+  imageSrc: TileProps['imageSrc'];
+  title: string;
+};
+
+export type AddProductTileViewProps = TileProps;
 
 const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props) => {
   const { title, ...tileProps } = props;
@@ -32,6 +39,37 @@ const AddProductTileView: React.ComponentType<AddProductTileViewProps> = (props)
       </View>
     </Tile>
   )
+};
+
+type InputValues = {
+  name: string;
+  brandName: string;
+  price: number;
+  origin: string;
+  remarks: string;
+};
+export interface AddProductViewProps {
+  handleKeywordTagAddIconOnPress: IconProps['onPress'];
+  handleKeywordTagInputOnChangeText: InputComponentProps['onChangeText'];
+  handleKeywordTagLabelOnClose(name: string): ChipComponentProps['onPress'];
+  handleInputOnChange(field: keyof InputValues): InputComponentProps['onChangeText'];
+  errors: string[];
+  keywordTagLabels: string[];
+  keywordTagInput: InputComponentProps['value'];
+  handleOnFinishRating: RatingComponentProps['onFinishRating'];
+  imageTileList: Array<ImageTile>;
+  inputValues: InputValues;
+  navigation: AddProductScreenNavigationProp;
+  onBackdropPress: OverlayProps['onBackdropPress'];
+  onImagePress(index: number): TileProps['onPress'];
+  onSubmitButtonPress: ButtonComponentProps['onPress'];
+  rating: RatingComponentProps['defaultRating'];
+  shouldOpenErrorModal: OverlayComponentProps['isVisible'];
+
+  // For Dropdown
+  handleDropdownOnValueDown: DropdownInputComponentProps['onValueChange'];
+  handleIOSDropdownOnDonePress: DropdownInputComponentProps['onDonePress'];
+  selectedCategory: DropdownInputComponentProps['value'];
 };
 
 const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
