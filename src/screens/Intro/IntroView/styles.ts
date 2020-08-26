@@ -53,7 +53,23 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold'
-  }
+  },
+
+
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: '#9DD6EB',
+    padding: 15,
+  },
+  image: {
+    flex: 1,
+    // width: 500,
+    // height: '80%',
+    resizeMode: "contain",
+    // justifyContent: "center"
+  },
 });
 
 export default styles;

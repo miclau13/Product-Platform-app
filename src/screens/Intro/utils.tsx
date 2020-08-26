@@ -1,22 +1,22 @@
 import { Page } from './Intro';
 
-const MaskCoverImage: Page['img'] = require('./assets/mask_cover.png');
-const SanitizerCoverImage: Page['img'] = require('./assets/sanitizer_cover.jpeg');
-const PaperRollCoverImage: Page['img'] = require('./assets/paper_roll_cover.jpeg');
-const RiceCoverImage: Page['img'] = require('./assets/rice_cover.jpeg');
+const MaskCoverImage: Page['img'] = require('./assets/tutor_how to use_image1.png');
+const SanitizerCoverImage: Page['img'] = require('./assets/tutor_how to use_image2.png');
+const PaperRollCoverImage: Page['img'] = require('./assets/tutor_how to use_image3.png');
+const RiceCoverImage: Page['img'] = require('./assets/tutor_how to use_image4.png');
 
 const pageList: Page[] = [
   { 
-    backgroundColor: '#D2B48E',
-    description: '(Description 1)',
-    fontColor: '#fff',
+    // backgroundColor: '#D2B48E',
+    // description: '(Description 1)',
+    // fontColor: '#fff',
     img: MaskCoverImage,
     imgStyle: {
-      height: 100,
-      width: 100, 
+      height: 500,
+      width: 500, 
     },
     level: 10,
-    title: "Intro Page 1", 
+    // title: "Intro Page 1", 
   },
   { 
     backgroundColor: '#ADD8E6',

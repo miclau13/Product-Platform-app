@@ -4,8 +4,8 @@ import { ImageProps } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import { getDefaultPageList } from './utils';
-import IntroView from './IntroView';
+// import { getDefaultPageList } from './utils';
+import IntroView, { IntroViewProps } from './IntroView';
 import { BarCodeScannerStackParamList } from '../../navigator/NavigationStack/BarCodeScannerStack';
 import { useDisplayIntroContext } from '../../context/DisplayIntroContext';
 import { useSelectCategoryContext } from '../../context/SelectCategoryContext';
@@ -32,15 +32,7 @@ export type Page = {
   title: string;
 };
 
-export interface IntroViewProps {
-  pageList: Page[];
-  _doneBtnHandle(): void;
-  _nextBtnHandle(index: number): void;
-  _onSlideChangeHandle(index: number, total: number): void;
-  _onSkipBtnHandle(index: number): void;
-};
-
-const pageList = getDefaultPageList();
+// const pageList = getDefaultPageList();
 
 const Intro: React.ComponentType<Props> = (props) => {
   const { navigation, route } = props;
@@ -73,7 +65,7 @@ const Intro: React.ComponentType<Props> = (props) => {
       _nextBtnHandle={_nextBtnHandle}
       _onSlideChangeHandle={_onSlideChangeHandle}
       _onSkipBtnHandle={_onSkipBtnHandle}
-      pageList={pageList}
+      // pageList={pageList}
     />
   )
 };

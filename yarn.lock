@@ -5053,10 +5053,10 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
-rn-falcon-app-intro@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/rn-falcon-app-intro/-/rn-falcon-app-intro-1.2.9.tgz#d98e96d0070f9e99a0649c091b98f4f2c4ddeb63"
-  integrity sha512-m6vBzj6z9J6kYmoddiWIjmGpvULmdXavq9F9lE4kVhPQKYK7ciTkrepevyKapH8MAowGLjz/u3nJIm2smGCqvA==
+rn-falcon-app-intro@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/rn-falcon-app-intro/-/rn-falcon-app-intro-1.3.0.tgz#e518e7dd8329f3e4ac9fa43ca76328ad5e871325"
+  integrity sha512-XLUKKN2YrZUoY8ygbrZ7hP5B2EkqSHZQCUUSajQIpf+QoN/iwJBF46gjyPTp25kvvpD4eJXYJ3q9ut3pK2c8zQ==
   dependencies:
     assign-deep "^0.4.5"
     prop-types "^15.5.8"
