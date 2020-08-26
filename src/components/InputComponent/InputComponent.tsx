@@ -10,10 +10,13 @@ const InputComponent: React.ComponentType<InputProps> = (props) => {
   return (
     <Input
       errorMessage={value ? '' : errorMessage}   
+      errorProps={{ allowFontScaling: false }}
       inputContainerStyle={[styles.inputContainer, !value && errorMessage && styles.errorBorder]}
       labelStyle={styles.label}
+      labelProps={{ allowFontScaling: false }}
       renderErrorMessage={false}
       value={value}
+      allowFontScaling={false}
       { ...inputProps }
     />
   )

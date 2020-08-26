@@ -18,6 +18,9 @@ const theme = {
     titleProps: {
       allowFontScaling: false
     }
+  },
+  Input: {
+    allowFontScaling: false
   }
 };
 

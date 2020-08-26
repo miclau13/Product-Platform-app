@@ -40,7 +40,7 @@ const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
       >
         <View style={{ margin: 8 }}></View>
         <RatingComponent 
-          defaultRating={rating}
+          defaultRating={rating || 0}
           onFinishRating={handleOnFinishRating}
           showRating={false}
           label={mapping["Rating"]}
@@ -57,6 +57,7 @@ const CommentsView: React.ComponentType<CommentsViewProps> = (props) => {
         />
         <View style={{ margin: 8 }}></View>
         <ButtonComponent
+          disabled={!rating && !comments}
           onPress={handleSubmitButtonOnPress}
           title={mapping['Submit']}
         />

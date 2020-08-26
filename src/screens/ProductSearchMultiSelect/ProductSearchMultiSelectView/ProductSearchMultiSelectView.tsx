@@ -109,7 +109,7 @@ const ProductSearchMultiSelectItemCard: React.ComponentType<ProductSearchMultiSe
         </Text>
         <View style={styles.priceContainer}>
           <NumberFormat 
-            decimalScale={0}
+            decimalScale={2}
             displayType={'text'} 
             prefix={'$'}
             renderText={value => <Text style={{ color: '#7F7F7F' }}>{`${value}`}</Text>}

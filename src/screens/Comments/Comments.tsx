@@ -20,7 +20,7 @@ const Comments: React.ComponentType<Props> = (props) => {
 
   const [loading, setLoading] = React.useState(false);
   const [comments, setComments] = React.useState('');
-  const [rating, setRating] = React.useState(5);
+  const [rating, setRating] = React.useState(0);
   const [id, setID] = React.useState('');
   const [visible, setVisible] = React.useState(false);
 
@@ -76,8 +76,8 @@ const Comments: React.ComponentType<Props> = (props) => {
         const result = await response.json();
         if (result && result[0]) {
           const { _id, comments, rating } = result[0];
-          setComments(comments);
-          setRating(rating);
+          // setComments(comments);
+          // setRating(rating);
           setID(_id)
         }
       } catch (error) {

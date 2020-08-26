@@ -144,7 +144,7 @@ const ProductInfoSubjectGridView: React.ComponentType<ProductInfoSubjectGridView
             containerStyle={styles.listItemContentContainer}
             title={
               <NumberFormat 
-                decimalScale={0}
+                decimalScale={2}
                 displayType={'text'} 
                 prefix={'$'}
                 renderText={value => <Text style={{ fontSize: 17, marginLeft: 10 }}>{`${productInfo.origin} ${value}`}</Text>}
@@ -285,7 +285,7 @@ const ProductInfoGridView: React.ComponentType<ProductInfoGridViewProps> = (prop
           containerStyle={styles.listItemContentContainer}
           title={
             <NumberFormat 
-              decimalScale={0}
+              decimalScale={2}
               displayType={'text'} 
               prefix={'$'}
               renderText={value => <Text style={{ fontSize: 17, marginLeft: 10 }}>{`${productInfo.origin} ${value}`}</Text>}

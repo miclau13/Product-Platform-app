@@ -109,7 +109,7 @@ const ProductSearchItemCard: React.ComponentType<ProductSearchItemCardProps> = (
           </Text> 
           <View style={{ marginHorizontal: 4 }}></View>
           <NumberFormat 
-            decimalScale={0}
+            decimalScale={2}
             displayType={'text'} 
             prefix={'$'}
             renderText={value => <Text style={{ color: '#7F7F7F' }}>{`${value}`}</Text>}

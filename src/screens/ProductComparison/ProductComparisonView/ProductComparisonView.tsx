@@ -67,7 +67,7 @@ const ProductComparisonGridView: React.ComponentType<ProductComparisonGridViewPr
                     {!isInNumberFormat 
                       ? <Text>{value}</Text> 
                       : <NumberFormat 
-                        decimalScale={0}
+                        decimalScale={2}
                         displayType={'text'} 
                         prefix={'$'}
                         renderText={value => <Text>{`${value}`}</Text>}
