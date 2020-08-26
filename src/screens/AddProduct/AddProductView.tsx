@@ -101,11 +101,13 @@ const AddProductView: React.ComponentType<AddProductViewProps> = (props) => {
     <SafeAreaView style={styles.contanier}>
       <OverlayComponent isVisible={shouldOpenErrorModal} onBackdropPress={onBackdropPress}>
         <>
+          <Text h4>{mapping["Please Provide more details"]}</Text>
+          <View style={styles.verticalViewBox1}></View>
           {
             errors.map(error => {
               return (
                 <View key={error} style={{ marginVertical: 8 }}>
-                  <Text style={{ color: 'red' }}>{mapping[`Please Enter the ${error}`]}</Text>
+                  <Text>{mapping[`Please Enter the ${error}`]}</Text>
                 </View>
               )
             }) 

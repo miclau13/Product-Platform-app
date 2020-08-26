@@ -52,6 +52,7 @@ const mapping = {
   "Please Enter the brandName": "請輸入品牌名稱",
   "Please Enter the name": "請輸入產品名稱",
   "Please Enter the price": "請輸入參考零售價",
+  "Please Provide more details": "請提供以下資料:",
 
   // Product Info
   "Product Info": "基本資料",
